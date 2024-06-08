@@ -1,6 +1,5 @@
 // components/Navbar.js
 'use client'
-// components/Navbar.js
 import { useEffect, useState } from 'react'
 import { Transition } from '@headlessui/react'
 import { Menu, X } from 'lucide-react'
@@ -8,7 +7,7 @@ import Link from 'next/link'
 
 type NavbarProps = {
 	theme?: 'light' | 'dark'
-	currentPath?: 'home' | 'events' | 'blog' | 'about'
+	currentPath?: 'home' | 'events' | 'blog' | 'about' | 'contact' | 'alliances'
 }
 
 const isActive = (currentPath: string, path: string) => {
@@ -49,6 +48,12 @@ export default function Navbar({ theme = 'light', currentPath = 'home' }: Navbar
 						Inicio
 					</Link>
 					<Link
+						href={'/alianzas'}
+						className={`hover:underline relative ${isActive(currentPath, 'alianzas')}`}
+					>
+						Alianzas
+					</Link>
+					<Link
 						href={'/eventos'}
 						className={`hover:underline relative ${isActive(currentPath, 'events')}`}
 					>
@@ -68,17 +73,19 @@ export default function Navbar({ theme = 'light', currentPath = 'home' }: Navbar
 					</Link>
 				</div>
 				<div className="hidden md:block">
-					<button
-						className={`${
-							theme === 'light'
-								? 'bg-primary hover:bg-primary-100 text-white'
-								: scrolled
-								? 'bg-primary hover:bg-primary-100 text-white'
-								: 'bg-white hover:bg-slate-100 text-primary'
-						} font-base font-roboto text-primary px-4 py-2 w-min rounded-xl hover:shadow-3xl hover:shadow-black  text-sm transition-all`}
-					>
-						Contactanos
-					</button>
+					<Link href={'/contacto'}>
+						<button
+							className={`${
+								theme === 'light'
+									? 'bg-primary hover:bg-primary-100 text-white'
+									: scrolled
+									? 'bg-primary hover:bg-primary-100 text-white'
+									: 'bg-white hover:bg-slate-100 text-primary'
+							} font-base font-roboto text-primary px-4 py-2 w-min rounded-xl hover:shadow-3xl hover:shadow-black  text-sm transition-all`}
+						>
+							Contactanos
+						</button>
+					</Link>
 				</div>
 				<div className="md:hidden">
 					<button
@@ -91,35 +98,58 @@ export default function Navbar({ theme = 'light', currentPath = 'home' }: Navbar
 			</div>
 			<Transition
 				show={isOpen}
-				enter="transition transform duration-300"
+				enter="transition transform duration-400"
 				enterFrom="translate-x-full"
 				enterTo="translate-x-0"
-				leave="transition transform duration-300"
+				leave="transition transform duration-400"
 				leaveFrom="translate-x-0"
 				leaveTo="translate-x-full"
 			>
-				<div className="flex flex-col items-center justify-center min-h-screen space-y-6 fixed inset-0 bg-white z-50">
+				<div className="flex flex-col items-center justify-center min-h-screen space-y-6 fixed inset-0 bg-white z-[100]">
 					<button
 						onClick={() => setIsOpen(false)}
 						className="text-primary-txt text-2xl self-end mr-6 absolute top-6 right-2"
 					>
 						<X className="text-foreground" />
 					</button>
-					<a href="#" className="text-foreground text-2xl">
+					<Link href={'/'} className="text-foreground text-2xl" onClick={() => setIsOpen(false)}>
 						Inicio
-					</a>
-					<a href="#" className="text-foreground text-2xl">
+					</Link>
+					<Link
+						href={'/eventos'}
+						className="text-foreground text-2xl"
+						onClick={() => setIsOpen(false)}
+					>
 						Eventos
-					</a>
-					<a href="#" className="text-foreground text-2xl">
+					</Link>
+					<Link
+						href={'/alianzas'}
+						className="text-foreground text-2xl"
+						onClick={() => setIsOpen(false)}
+					>
+						Alianzas
+					</Link>
+					<Link
+						href={'/blog'}
+						className="text-foreground text-2xl"
+						onClick={() => setIsOpen(false)}
+					>
 						Blog
-					</a>
-					<a href="#" className="text-foreground text-2xl">
+					</Link>
+					<Link
+						href={'/nosotros'}
+						className="text-foreground text-2xl"
+						onClick={() => setIsOpen(false)}
+					>
 						Nosotros
-					</a>
-					<a href="#" className="text-foreground text-2xl">
+					</Link>
+					<Link
+						href={'/contacto'}
+						className="text-foreground text-2xl"
+						onClick={() => setIsOpen(false)}
+					>
 						Contactanos
-					</a>
+					</Link>
 				</div>
 			</Transition>
 		</nav>

@@ -11,8 +11,8 @@ const Footer = () => {
 				<div className="block">
 					<ul className="flex flex-col list-none gap-4 sm:flex-row">
 						<li>
-							<Link href="/nosotros" className="hover:underline">
-								Nosotros
+							<Link href="/alianzas" className="hover:underline">
+								Alianzas
 							</Link>
 						</li>
 						<li>
@@ -26,13 +26,14 @@ const Footer = () => {
 							</Link>
 						</li>
 						<li>
-							<Link href="/alianzas" className="hover:underline">
-								Alianzas
+							<Link href="/nosotros" className="hover:underline">
+								Nosotros
 							</Link>
 						</li>
+
 						<li>
-							<Link href="/eventos" className="hover:underline">
-								Política de privacidad
+							<Link href="/aviso-de-privacidad" className="hover:underline">
+								Aviso de privacidad
 							</Link>
 						</li>
 					</ul>

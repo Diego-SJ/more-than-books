@@ -42,10 +42,10 @@ export default function EventCard({
 					width={500}
 					height={300}
 				/>
-				<div className="absolute top-3 left-3 bg-white text-gray-800 font-bold py-1 px-3 rounded">
+				<div className="absolute top-4 left-4 bg-white text-gray-800  py-1 px-3 rounded-3xl font-roboto font-thin text-sm">
 					{price ? `$${price}` : 'Gratis'}
 				</div>
-				<div className="absolute top-3 right-3 flex">
+				<div className="absolute top-4 right-4 flex">
 					<button className="bg-white p-2 rounded-full shadow hover:bg-slate-100">
 						<Copy size={20} />
 					</button>

@@ -16,7 +16,7 @@ export default function Home() {
 					<h1 className="text-5xl sm:text-7xl font-bold text-center px-2 max-w-[25ch] font-roboto">
 						Empoderando el aprendizaje del Inglés en las aulas
 					</h1>
-					<p className="text-lg text-center mt-4 px-2 font-didact">
+					<p className="text-xl md:text-2xl font-roboto font-thin text-center mt-4 px-2">
 						Descubre nuestros libros y recursos educativos diseñados para el éxito de tus
 						estudiantes.
 					</p>

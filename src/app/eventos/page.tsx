@@ -36,7 +36,7 @@ const EventsPage = () => {
 							<h1 className="text-white text-5xl sm:text-5xl mb-4 font-roboto font-semibold">
 								Eventos Destacados
 							</h1>
-							<p className="text-white text-base sm:text-lg font-didact">
+							<p className="text-white text-xl md:text-2xl font-roboto font-thin">
 								Forma parte de nuestra comunidad asistiendo A nuestros próximos eventos y
 								conferencias para mejorar tus habilidades y conocimientos.
 							</p>

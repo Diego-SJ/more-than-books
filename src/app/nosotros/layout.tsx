@@ -7,9 +7,9 @@ const didactGothic = Didact_Gothic({ subsets: ['latin'], weight: '400' })
 const roboto = Roboto({ subsets: ['latin'], weight: '400' })
 
 export const metadata: Metadata = {
-	title: 'Eventos de More than books',
+	title: 'Blog de More than books',
 	description:
-		'Eventos de More than books es una sección donde podrás encontrar los eventos más recientes de la librería.'
+		'Blog de More than books es una sección donde podrás encontrar noticias y artículos interesantes.'
 }
 
 export default function RootLayout({
@@ -19,7 +19,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="es">
-			<body className={`${inter.className} ${didactGothic.className} ${roboto.className} relative`}>
+			<body className={`${inter.className} ${didactGothic.className} ${roboto.className}`}>
 				{children}
 			</body>
 		</html>
