@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { Transition } from '@headlessui/react'
 import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 type NavbarProps = {
 	theme?: 'light' | 'dark'
@@ -42,13 +43,21 @@ export default function Navbar({ theme = 'light', currentPath = 'home' }: Navbar
 			}  ${scrolled ? 'bg-white border-b border-slate-300' : 'transparent'} transition-all`}
 		>
 			<div className="container mx-auto flex justify-between items-center">
-				<div className=" text-2xl font-bold text-inherit">MORETHANTBOOKS</div>
+				<Link href={'/'} className=" text-2xl font-bold text-inherit">
+					<Image
+						src="/images/webp/logo.webp"
+						alt="logo"
+						width={100}
+						height={100}
+						className={`h-10 ${scrolled || theme === 'light' ? '' : 'filter-white'}`}
+					/>
+				</Link>
 				<div className="hidden md:flex gap-5">
 					<Link href={'/'} className={`hover:underline relative ${isActive(currentPath, 'home')}`}>
 						Inicio
 					</Link>
 					<Link
-						href={'/alianzas'}
+						href={'/#alianzas'}
 						className={`hover:underline relative ${isActive(currentPath, 'alianzas')}`}
 					>
 						Alianzas
@@ -126,7 +135,7 @@ export default function Navbar({ theme = 'light', currentPath = 'home' }: Navbar
 						Eventos
 					</Link>
 					<Link
-						href={'/alianzas'}
+						href={'/#alianzas'}
 						className="text-foreground text-2xl"
 						onClick={() => setIsOpen(false)}
 					>

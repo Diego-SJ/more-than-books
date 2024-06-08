@@ -1,5 +1,6 @@
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
+import { Bird, HeartHandshake, ReplaceAll, Trophy } from 'lucide-react'
 
 import Image from 'next/image'
 import React from 'react'
@@ -123,33 +124,47 @@ const AboutUsPage = () => {
 					<h2 className="text-2xl text-center md:text-4xl font-roboto font-bold mb-10 w-full">
 						Nuestros <span className="font-roboto font-bold ">Valores</span>
 					</h2>
-					<div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-						<div className="bg-blue-500/10 text-foreground p-6 rounded-3xl">
-							<h3 className="text-2xl font-bold mb-2 font-roboto ">Respeto</h3>
-							<p className="text-lg font-roboto font-thin text-foreground/70">
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+						<div className="bg-white p-6 rounded-3xl shadow-xl text-center">
+							<div className="flex items-center justify-center h-16 w-16 rounded-full bg-green-100 shadow-lg shadow-green-500/50 mx-auto mb-4">
+								<HeartHandshake size={40} strokeWidth={1} className="text-green-600" />
+							</div>
+							<h3 className="text-xl font-semibold font-roboto">Respeto</h3>
+							<p className="text-foreground/60 mt-2 font-roboto font-thin">
 								Es de vital importancia fortalecer las relaciones humanas. El trato respetuoso es
 								clave para crear un ambiente de motivación y confianza.
 							</p>
 						</div>
-						<div className="bg-green-500/10 text-foreground p-6 rounded-3xl">
-							<h3 className="text-2xl font-bold mb-2 font-roboto ">Integridad</h3>
-							<p className="text-lg font-roboto font-thin text-foreground/70">
+
+						<div className="bg-white p-6 rounded-3xl shadow-xl text-center">
+							<div className="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 shadow-lg shadow-blue-500/50 mx-auto mb-4">
+								<Bird size={40} strokeWidth={1} className="text-blue-600" />
+							</div>
+							<h3 className="text-xl font-semibold font-roboto">Integridad</h3>
+							<p className="text-foreground/60 mt-2 font-roboto font-thin">
 								La honestidad y compromiso siempre deben anteponerse ante el desarrollo de las
 								actividades laborales.
 							</p>
 						</div>
-						<div className="bg-red-500/10 text-foreground p-6 rounded-3xl">
-							<h3 className="text-2xl font-bold mb-2 font-roboto ">Excelencia</h3>
-							<p className="text-lg  font-roboto font-thin text-foreground/70">
+
+						<div className="bg-white p-6 rounded-3xl shadow-xl text-center">
+							<div className="flex items-center justify-center h-16 w-16 rounded-full bg-violet-100 shadow-lg shadow-violet-500/50 mx-auto mb-4">
+								<Trophy size={40} strokeWidth={1} className="text-violet-600" />
+							</div>
+							<h3 className="text-xl font-semibold font-roboto">Excelencia</h3>
+							<p className="text-foreground/60 mt-2 font-roboto font-thin">
 								Estamos constantemente tras la búsqueda de mejorar nuestros servicios para ofrecer
 								una experiencia grata a nuestros usuarios.
 							</p>
 						</div>
-						<div className="bg-yellow-500/10 text-foreground p-6 rounded-3xl">
-							<h3 className="text-2xl font-bold mb-2 font-roboto ">Disponibilidad al cambio</h3>
-							<p className="text-lg font-roboto font-thin text-foreground/70">
-								Sabemos de los constantes cambios a los que estamos expuestos, por esta razón
-								estamos abiertos a la innovación y la búsqueda de nuevos proyectos.
+						<div className="bg-white p-6 rounded-3xl shadow-xl text-center">
+							<div className="flex items-center justify-center h-16 w-16 rounded-full bg-red-100 shadow-lg shadow-red-500/50 mx-auto mb-4">
+								<ReplaceAll size={40} strokeWidth={1} className="text-red-600" />
+							</div>
+							<h3 className="text-xl font-semibold font-roboto">Resiliencia</h3>
+							<p className="text-foreground/60 mt-2 font-roboto font-thin">
+								Cultivamos la resiliencia, manteniéndonos abiertos a la innovación y siempre en
+								busca de nuevos proyectos.
 							</p>
 						</div>
 					</div>

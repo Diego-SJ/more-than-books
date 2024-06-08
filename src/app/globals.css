@@ -75,6 +75,7 @@
 	}
 	body {
 		@apply bg-background text-foreground;
+		scroll-behavior: smooth;
 		font-family: 'Didact Gothic';
 	}
 }
@@ -198,4 +199,8 @@
 
 .bounce-3 {
 	animation: bounce-1 5s infinite reverse ease-in-out;
+}
+
+.filter-white {
+	filter: brightness(0) invert(1);
 }
