@@ -2,6 +2,7 @@
 import EventCard from '@/components/event-card'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
+import NewsLatter from '@/components/newlatter'
 import { Input } from '@/components/ui/input'
 import {
 	Select,
@@ -116,7 +117,8 @@ const EventsPage = () => {
 					))}
 				</div>
 			</main>
-			<Footer />
+			<NewsLatter />
+			<Footer mt={20} />
 		</>
 	)
 }

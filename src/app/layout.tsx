@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
-import { Inter, Didact_Gothic, Roboto } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import './globals.css'
 import Head from 'next/head'
+import { Toaster } from 'sonner'
 const roboto = Roboto({ subsets: ['latin'], weight: '400' })
 
 export const metadata: Metadata = {
@@ -24,6 +25,7 @@ export default function RootLayout({
 				/>
 			</Head>
 			<body className={`${roboto.className} scroll-smooth`}>{children}</body>
+			<Toaster position="top-right" />
 		</html>
 	)
 }
