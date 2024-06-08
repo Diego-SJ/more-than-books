@@ -5,12 +5,9 @@ import React from 'react'
 const PrivacyNoticePage = () => {
 	return (
 		<>
-			<Navbar currentPath="home" />
+			<Navbar currentPath="contact" />
 
 			<header className="container  flex flex-col sm:flex-row relative mt-28 max-w-[1200px] mx-auto">
-				<span className="moving w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-primary/5 z-0 absolute rounded-full right-[-5%] top-[-50%] animate-pulse sm:block"></span>
-				<span className="moving-2 w-[200px] sm:w-[200px] h-[200px] sm:h-[200px] bg-primary/5 z-0 absolute rounded-full left-[-10%] top-[50%] animate-pulse sm:block"></span>
-				<span className="moving w-[100px] sm:w-[100px] h-[100px] sm:h-[100px] bg-primary/5 z-0 absolute rounded-full right-[40%] top-[100%] animate-pulse sm:block"></span>
 				<div className="flex flex-col items-start w-full justify-center">
 					<h1 className="text-3xl sm:text-start font-roboto font-bold w-full text-center text-foreground">
 						AVISO DE PRIVACIDAD INTEGRAL DE MORE THAN BOOKS, S.A. DE C.V.

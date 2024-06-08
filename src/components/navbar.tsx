@@ -105,7 +105,10 @@ export default function Navbar({ theme = 'light', currentPath = 'home' }: Navbar
 				leaveFrom="translate-x-0"
 				leaveTo="translate-x-full"
 			>
-				<div className="flex flex-col items-center justify-center min-h-screen space-y-6 fixed inset-0 bg-white z-[100]">
+				<div className="flex flex-col items-center justify-center min-h-screen space-y-6 fixed inset-0 bg-white z-[100] pb-20">
+					<span className="moving w-[200px] h-[200px]  bg-primary/10 z-0 absolute rounded-full right-[0%] top-[-0%] animate-pulse sm:block"></span>
+					<span className="moving-2 w-[150px] h-[150px] bg-primary/10 z-0 absolute rounded-full left-[-10%] top-[50%] animate-pulse sm:block"></span>
+					<span className="moving w-[80px] h-[80px] bg-primary/10 z-0 absolute rounded-full right-[10%] bottom-[20%] animate-pulse sm:block"></span>
 					<button
 						onClick={() => setIsOpen(false)}
 						className="text-primary-txt text-2xl self-end mr-6 absolute top-6 right-2"
