@@ -24,17 +24,22 @@ const ContactForm = () => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className="grid gap-y-6 grid-cols-1 gap-x-8">
-			<div className="flex flex-col items-start ">
+		<form onSubmit={handleSubmit(onSubmit)} className="grid gap-y-6 grid-cols-1">
+			<div className="flex flex-col items-start w-full">
 				<label htmlFor="name" className="mb-2 text-sm font-medium text-gray-700">
 					Nombre *
 				</label>
-				<Input autoComplete="name" placeholder="Nombre" {...register('name', { required: true })} />
+				<Input
+					autoComplete="name"
+					placeholder="Nombre"
+					{...register('name', { required: true })}
+					className="w-full"
+				/>
 				{errors.name && (
 					<span className="text-red-600 font-roboto font-thin text-sm mt-1">Campo obligatorio</span>
 				)}
 			</div>
-			<div className="flex flex-col items-start w-full col-span-2">
+			<div className="flex flex-col items-start w-full">
 				<label htmlFor="email" className="mb-2 text-sm font-medium text-gray-700">
 					Correo Electrónico *
 				</label>
@@ -49,7 +54,7 @@ const ContactForm = () => {
 					<span className="text-red-600 font-roboto font-thin text-sm mt-1">Campo obligatorio</span>
 				)}
 			</div>
-			<div className="flex flex-col items-start w-full col-span-2">
+			<div className="flex flex-col items-start w-full">
 				<label htmlFor="message" className="mb-2 text-sm font-medium text-gray-700">
 					Mensaje *
 				</label>
@@ -61,7 +66,7 @@ const ContactForm = () => {
 					<span className="text-red-600 font-roboto font-thin text-sm mt-1">Campo obligatorio</span>
 				)}
 			</div>
-			<div className="col-span-2">
+			<div className="w-full">
 				<button
 					type="submit"
 					className="w-full border font-thin min-w-max font-roboto bg-primary text-secondary border-primary px-4 py-2 h-[44px] rounded-xl hover:bg-primary/90 hover:shadow-sm hover:shadow-black transition-all"
