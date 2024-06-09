@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 // components/MinimalistTestimonialsSection.js
 const testimonials = [
 	{
@@ -5,21 +7,21 @@ const testimonials = [
 		role: 'Director de Escuela',
 		message:
 			'More than Books ha transformado nuestra forma de enseñar. Los libros y recursos digitales son de excelente calidad y han mejorado significativamente el aprendizaje de nuestros estudiantes.',
-		image: 'https://api.dicebear.com/8.x/lorelei/svg?seed=Juan' // Reemplaza con la ruta a la imagen del testimonio
+		image: 'https://api.dicebear.com/8.x/lorelei/jpg?seed' // Reemplaza con la ruta a la imagen del testimonio
 	},
 	{
 		name: 'María García',
 		role: 'Profesora de Inglés',
 		message:
 			'Los eventos organizados por More than Books son siempre inspiradores y educativos. Me han ayudado a mejorar mis habilidades y a conocer nuevas metodologías de enseñanza.',
-		image: 'https://api.dicebear.com/8.x/lorelei/svg?seed=Maria' // Reemplaza con la ruta a la imagen del testimonio
+		image: 'https://api.dicebear.com/8.x/lorelei/jpg?seed=Maria' // Reemplaza con la ruta a la imagen del testimonio
 	},
 	{
 		name: 'Carlos López',
 		role: 'Coordinador Académico',
 		message:
 			'El soporte que recibimos de More than Books es excepcional. Siempre están dispuestos a ayudarnos y a proporcionar soluciones rápidas a nuestras necesidades.',
-		image: 'https://api.dicebear.com/8.x/lorelei/svg?seed=Carlos' // Reemplaza con la ruta a la imagen del testimonio
+		image: 'https://api.dicebear.com/8.x/lorelei/jpg?seed=Carlos' // Reemplaza con la ruta a la imagen del testimonio
 	}
 ]
 
@@ -44,9 +46,11 @@ export default function MinimalistTestimonialsSection() {
 						{testimonials.map((testimonial, index) => (
 							<div key={index} className="bg-white p-6 rounded-3xl text-left shadow-xl">
 								<div className="flex items-center mb-4">
-									<img
+									<Image
 										src={testimonial.image}
-										alt={testimonial.name}
+										alt={testimonial.name || 'Testimonial'}
+										width={300}
+										height={300}
 										className="w-12 h-12 rounded-full mr-4"
 									/>
 									<div>
