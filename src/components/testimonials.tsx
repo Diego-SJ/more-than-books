@@ -61,7 +61,7 @@ export default function MinimalistTestimonialsSection() {
 									</div>
 								</div>
 								<p className="text-gray-700 font-roboto font-extralight italic">
-									"{testimonial.message}"
+									&quot;{testimonial.message}&quot;
 								</p>
 							</div>
 						))}
