@@ -64,7 +64,7 @@ const EventsPage = ({ params: { blog_id } }: any) => {
 			onMounted.current = true
 			getArticles()
 		}
-	}, [onMounted])
+	}, [onMounted, blog_id, components])
 
 	const copyUrl = () => {
 		copyToClipboard(window.location.href)
@@ -146,7 +146,7 @@ const EventsPage = ({ params: { blog_id } }: any) => {
 										</div>
 										<div className="text-white/70 text-sm font-roboto font-thin">
 											{post?.created_at
-												? dayjs(post?.created_at).format('dddd d [de] MMMM [del] YYYY')
+												? dayjs(post?.created_at).format('dddd D [de] MMMM [del] YYYY')
 												: '- - -'}
 										</div>
 									</>
@@ -174,6 +174,7 @@ const EventsPage = ({ params: { blog_id } }: any) => {
 						layout="responsive"
 						width={720}
 						height={400}
+						priority
 						className="h-96"
 					/>
 				) : (

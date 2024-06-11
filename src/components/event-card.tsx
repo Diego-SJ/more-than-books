@@ -42,6 +42,7 @@ export default function EventCard({ imageSrc, price, date, title, content, slug 
 					alt="Event Image"
 					className="w-full h-48 object-cover transition-all"
 					width={500}
+					priority
 					height={300}
 				/>
 				<div className="absolute top-4 left-4 bg-white text-gray-800  py-1 px-3 rounded-3xl font-roboto font-thin text-sm">

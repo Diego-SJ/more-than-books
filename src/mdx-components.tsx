@@ -33,6 +33,7 @@ export function useMDXComponents(): MDXComponents {
 				height={500}
 				rel="blog post"
 				{...(props as ImageProps)}
+				alt="blog post"
 				className="mx-auto"
 			/>
 		),

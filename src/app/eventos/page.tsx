@@ -156,13 +156,14 @@ const EventsPage = () => {
 						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-8 mx-auto max-w-[1200px] px-6 sm:px-0">
 							{(posts || [])?.map((event, index) => (
 								<div
+									key={event?.slug}
 									data-aos="fade-up"
 									data-aos-duration="300"
 									data-aos-delay={index * 50}
 									data-aos-offset="150"
 									className="w-full"
 								>
-									<EventCard key={event?.slug} {...event} />
+									<EventCard {...event} />
 								</div>
 							))}
 						</div>

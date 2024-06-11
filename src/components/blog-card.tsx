@@ -46,6 +46,7 @@ export default function BlogCard({
 					className="w-full h-48 object-cover transition-all group-hover:scale-110 bg-slate-200"
 					width={500}
 					height={300}
+					priority
 				/>
 			</div>
 			<div className="pt-3 px-1 flex flex-col transition-all">

@@ -61,7 +61,7 @@ const BlogPage = () => {
 			return categoryMatch && searchMatch
 		})
 		setBlogPosts(filteredPosts)
-	}, [filters.category, filters.search])
+	}, [filters.category, filters.search, postsAux])
 
 	return (
 		<>
@@ -184,6 +184,7 @@ const BlogPage = () => {
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-8">
 						{(posts || [])?.map((post, index) => (
 							<div
+								key={post.id}
 								data-aos="fade-up"
 								data-aos-duration="300"
 								data-aos-delay={index * 50}
@@ -191,7 +192,6 @@ const BlogPage = () => {
 								className="w-full"
 							>
 								<BlogCard
-									key={post.id}
 									href={post?.slug}
 									title={post?.title}
 									description={post?.description}

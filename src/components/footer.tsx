@@ -15,6 +15,7 @@ const Footer = ({ mt = 20 }: FooterProps) => {
 						src="/images/webp/logo.webp"
 						alt="logo"
 						width={100}
+						priority
 						height={100}
 						className={`h-10 `}
 					/>

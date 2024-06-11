@@ -62,7 +62,7 @@ const EventsPage = ({ params: { event_id } }: any) => {
 			onMounted.current = true
 			getArticles()
 		}
-	}, [onMounted])
+	}, [onMounted, event_id, components])
 
 	const copyUrl = () => {
 		copyToClipboard(window.location.href)
@@ -98,7 +98,7 @@ const EventsPage = ({ params: { event_id } }: any) => {
 								<Clock className="text-primary mt-1" size={18} />
 								<div className="flex flex-col">
 									<p className="text-base sm:text-lg font-didact text-secondary-foreground/50">
-										{dayjs(post?.date).format('dddd d [de] MMMM [del] YYYY')}
+										{dayjs(post?.date).format('dddd D [de] MMMM [del] YYYY')}
 									</p>
 									<p className="text-base sm:text-lg font-didact">
 										{dayjs(post?.date).format('HH:mm a')}

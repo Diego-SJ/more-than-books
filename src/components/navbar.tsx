@@ -49,6 +49,7 @@ export default function Navbar({ theme = 'light', currentPath = 'home' }: Navbar
 						alt="logo"
 						width={100}
 						height={100}
+						priority
 						className={`h-10 ${scrolled || theme === 'light' ? '' : 'filter-white'}`}
 					/>
 				</Link>
