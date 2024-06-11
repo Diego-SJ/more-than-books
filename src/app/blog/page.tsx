@@ -70,7 +70,7 @@ const BlogPage = () => {
 				data-aos="fade-up"
 				data-aos-delay="0"
 				data-aos-duration="300"
-				className="mb-11 sm:mb-10 md:mb-8 container rounded-2xl max-w-[95%] xl:max-w-[1400px] flex justify-center items-center py-8 bg-primary mt-20 overflow-hidden relative"
+				className="mb-11 sm:mb-10 md:mb-8 container rounded-2xl max-w-[95%] xl:max-w-[95%] 2xl:max-w-[1400px] flex justify-center items-center py-8 bg-primary mt-20 overflow-hidden relative"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +106,7 @@ const BlogPage = () => {
 				<span className="moving-2 w-[200px] sm:w-[200px] h-[200px] sm:h-[200px] bg-primary/5 z-0 absolute rounded-full left-[10%] top-[50%] animate-pulse sm:block"></span>
 				<span className="moving w-[100px] sm:w-[100px] h-[100px] sm:h-[100px] bg-primary/5 z-0 absolute rounded-full right-[40%] top-[100%] animate-pulse sm:block"></span>
 				<div
-					data-aos="zoom-out-up"
+					data-aos="fade-up"
 					data-aos-delay="100"
 					data-aos-duration="300"
 					className="flex flex-col items-start w-full justify-center"
@@ -126,7 +126,7 @@ const BlogPage = () => {
 						width={500}
 						height={300}
 						className="w-auto h-auto object-contain drop-shadow-3xl"
-						data-aos="zoom-out-up"
+						data-aos="fade-up"
 						data-aos-delay="200"
 						data-aos-duration="300"
 					/>

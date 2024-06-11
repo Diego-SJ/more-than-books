@@ -36,7 +36,7 @@ export default function FAQSection() {
 	return (
 		<div className="text-center">
 			<div className="w-full text-left">
-				{faqs.map((faq, index) => (
+				{faqs?.map((faq, index) => (
 					<div
 						data-aos="zoom-in-left"
 						data-aos-duration="600"
