@@ -1,12 +1,18 @@
+'use client'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import NewsLatter from '@/components/newlatter'
 import { Bird, HeartHandshake, ReplaceAll, Trophy } from 'lucide-react'
-
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 const AboutUsPage = () => {
+	useEffect(() => {
+		AOS.init()
+	}, [])
+
 	return (
 		<>
 			<Navbar currentPath="about" />
@@ -15,13 +21,28 @@ const AboutUsPage = () => {
 				<span className="moving-2 w-[200px] md:w-[200px] h-[200px] md:h-[200px] bg-primary/5 z-0 absolute rounded-full left-[10%] top-[50%] animate-pulse md:block"></span>
 				<span className="moving w-[100px] md:w-[100px] h-[100px] md:h-[100px] bg-primary/5 z-0 absolute rounded-full right-[40%] top-[120%] animate-pulse md:block"></span>
 				<div className="flex flex-col items-start w-full justify-center py-10 md:py-0">
-					<p className="w-fit self-center md:self-start px-6 py-1 bg-primary/10 text-primary rounded-full mb-2 text-sm font-roboto font-thin">
+					<p
+						data-aos="fade-up"
+						data-aos-delay="100"
+						data-aos-duration="300"
+						className="w-fit self-center md:self-start px-6 py-1 bg-primary/10 text-primary rounded-full mb-2 text-sm font-roboto font-thin"
+					>
 						Nosotros
 					</p>
-					<h1 className="text-5xl md:text-start font-roboto font-bold mb-8 md:mb-4 w-full text-center text-foreground">
+					<h1
+						data-aos="fade-up"
+						data-aos-delay="200"
+						data-aos-duration="300"
+						className="text-5xl md:text-start font-roboto font-bold mb-8 md:mb-4 w-full text-center text-foreground"
+					>
 						Conoce <span className="font-roboto font-bold text-primary">nuestro</span> viaje
 					</h1>
-					<p className="text-xl text-center md:text-start md:text-2xl font-roboto font-thin md:mb-8 md:max-w-[80%] w-full text-foreground/60">
+					<p
+						data-aos="fade-up"
+						data-aos-delay="300"
+						data-aos-duration="300"
+						className="text-xl text-center md:text-start md:text-2xl font-roboto font-thin md:mb-8 md:max-w-[80%] w-full text-foreground/60"
+					>
 						Descubre la historia detrás de nuestra empresa, nuestros valores fundamentales y el
 						equipo dedicado que trabaja incansablemente para ofrecerte lo mejor.
 					</p>
@@ -33,6 +54,9 @@ const AboutUsPage = () => {
 						width={500}
 						height={300}
 						className="w-auto h-auto object-contain drop-shadow-3xl"
+						data-aos="zoom-out-up"
+						data-aos-delay="0"
+						data-aos-duration="300"
 					/>
 				</div>
 			</header>
@@ -41,13 +65,31 @@ const AboutUsPage = () => {
 					<div className="absolute inset-0 bounce-1 flex items-center justify-center -top-20">
 						<div className="bg-pink-200/50 rounded-full w-2/4 h-64 blur-3xl opacity-30"></div>
 					</div>
-					<p className="w-fit mx-auto px-6 py-1 bg-pink-500/10 text-pink-500 rounded-full mb-2 text-sm font-roboto font-thin">
+					<p
+						data-aos="fade-up"
+						data-aos-delay="0"
+						data-aos-duration="500"
+						data-aos-offset="200"
+						className="w-fit mx-auto px-6 py-1 bg-pink-500/10 text-pink-500 rounded-full mb-2 text-sm font-roboto font-thin"
+					>
 						Fundadores
 					</p>
-					<h2 className="text-2xl text-center md:text-4xl font-roboto font-bold mb-10 w-full">
+					<h2
+						data-aos="fade-up"
+						data-aos-delay="100"
+						data-aos-duration="500"
+						data-aos-offset="200"
+						className="text-2xl text-center md:text-4xl font-roboto font-bold mb-10 w-full"
+					>
 						Conoce a los <span className="font-roboto font-bold ">fundadores</span>
 					</h2>
-					<div className="flex gap-10 sm:gap-20 justify-center flex-col sm:flex-row">
+					<div
+						data-aos="fade-up-left"
+						data-aos-delay="200"
+						data-aos-offset="200"
+						data-aos-duration="800"
+						className="flex gap-10 sm:gap-20 justify-center flex-col sm:flex-row"
+					>
 						<div className="flex flex-col items-center">
 							<div className="rounded-full relative bg-slate-300">
 								<Image
@@ -61,7 +103,13 @@ const AboutUsPage = () => {
 							<h3 className="text-xl font-semibold font-roboto mt-4">Gabino Bandala</h3>
 							<p className="text-foreground/60 mt-2 font-roboto font-thin">CEO</p>
 						</div>
-						<div className="flex flex-col items-center">
+						<div
+							data-aos="fade-up-right"
+							data-aos-delay="200"
+							data-aos-offset="200"
+							data-aos-duration="800"
+							className="flex flex-col items-center"
+						>
 							<div className="rounded-full relative bg-slate-300">
 								<Image
 									src="/images/avatars/founder-2.webp"
@@ -87,6 +135,10 @@ const AboutUsPage = () => {
 								width={500}
 								height={300}
 								className="w-52 h-52 md:w-96 md:h-96 object-cover drop-shadow-sm z-[0] bounce-1 rounded-full"
+								data-aos="zoom-out-up"
+								data-aos-delay="0"
+								data-aos-offset="150"
+								data-aos-duration="800"
 							/>
 						</div>
 					</div>
@@ -94,33 +146,60 @@ const AboutUsPage = () => {
 						<div className="absolute inset-0 bounce-1 flex items-center justify-center -top-20">
 							<div className="bg-blue-200/90 rounded-full w-3/4 h-64 blur-3xl opacity-30"></div>
 						</div>
-						<p className="w-fit self-center md:self-start px-6 py-1 bg-blue-500/10 text-blue-500 rounded-full mb-2 text-sm font-roboto font-thin">
+						<p
+							data-aos="fade-up-right"
+							data-aos-delay="100"
+							data-aos-offset="150"
+							data-aos-duration="800"
+							className="w-fit self-center md:self-start px-6 py-1 bg-blue-500/10 text-blue-500 rounded-full mb-2 text-sm font-roboto font-thin"
+						>
 							Historia
 						</p>
-						<h2 className="text-3xl text-center md:text-start md:text-4xl font-roboto font-bold mb-4 w-full">
+						<h2
+							data-aos="fade-up-right"
+							data-aos-delay="200"
+							data-aos-offset="150"
+							data-aos-duration="800"
+							className="text-3xl text-center md:text-start md:text-4xl font-roboto font-bold mb-4 w-full"
+						>
 							Un paso al <span className="font-roboto font-bold text-blue-500">pasado</span>
 						</h2>
-						<p className="text-base md:text-lg text-justify md:text-start md:max-w-2xl font-roboto font-thin text-foreground/60 w-full mb-2">
+						<p
+							data-aos="fade-up-right"
+							data-aos-delay="300"
+							data-aos-offset="150"
+							data-aos-duration="800"
+							className="text-base md:text-lg text-justify md:text-start md:max-w-2xl font-roboto font-thin text-foreground/60 w-full mb-2"
+						>
 							More than Books se estableció en 2014 con la visión de revolucionar la forma en que
 							las personas acceden e interactúan con los recursos educativos en ELT.
 						</p>
-						<p className="text-base md:text-lg text-justify md:text-start md:max-w-2xl font-roboto font-thin text-foreground/60 w-full mb-2">
+						<p
+							data-aos="fade-up-right"
+							data-aos-delay="400"
+							data-aos-offset="150"
+							data-aos-duration="800"
+							className="text-base md:text-lg text-justify md:text-start md:max-w-2xl font-roboto font-thin text-foreground/60 w-full mb-2"
+						>
 							Desde sus inicios, More than Books se ha comprometido a brindar soluciones innovadoras
 							en el campo y la educación de ELT.
 						</p>
 					</div>
 				</section>
 
-				<section className="my-20 md:my-10 flex flex-col-reverse md:flex-row md:justify-center md:items-center gap-10 md:min-h-[70vh]">
+				<section className="my-20 md:my-10 flex flex-col-reverse md:flex-row md:justify-center md:items-center gap-4 md:gap-10 md:min-h-[70vh]">
 					<div className="flex justify-center">
 						<div className="rounded-full relative">
-							<span className="moving w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-green-500/10 z-0 absolute rounded-full right-[5%] -top-[25%] animate-pulse md:block"></span>
 							<Image
-								src="/images/webp/mtb.webp"
+								src="/images/webp/team-solving-problem.webp"
 								alt="mission"
 								width={500}
 								height={300}
-								className="w-52 h-52 md:w-96 md:h-96 object-cover drop-shadow-sm z-[0] bounce-1 rounded-full"
+								className="w-full h-full lg:w-[30rem] lg:h-[30rem] object-cover drop-shadow-sm z-[0] bounce-1 rounded-full"
+								data-aos="fade-up-right"
+								data-aos-delay="0"
+								data-aos-offset="150"
+								data-aos-duration="500"
 							/>
 						</div>
 					</div>
@@ -128,13 +207,31 @@ const AboutUsPage = () => {
 						<div className="absolute inset-0 bounce-1 flex items-center justify-center -top-20">
 							<div className="bg-green-200/90 rounded-full w-3/4 h-64 blur-3xl opacity-30"></div>
 						</div>
-						<p className="w-fit self-center md:self-start px-6 py-1 bg-green-500/10 text-green-500 rounded-full mb-2 text-sm font-roboto font-thin">
+						<p
+							data-aos="fade-up"
+							data-aos-delay="100"
+							data-aos-offset="150"
+							data-aos-duration="500"
+							className="w-fit self-center md:self-start px-6 py-1 bg-green-500/10 text-green-500 rounded-full mb-2 text-sm font-roboto font-thin"
+						>
 							Compañía
 						</p>
-						<h2 className="text-3xl text-center md:text-start md:text-4xl font-roboto font-bold mb-4 w-full">
+						<h2
+							data-aos="fade-up"
+							data-aos-delay="200"
+							data-aos-offset="150"
+							data-aos-duration="500"
+							className="text-3xl text-center md:text-start md:text-4xl font-roboto font-bold mb-4 w-full"
+						>
 							Sobre la <span className="font-roboto font-bold text-green-500">compañía</span>
 						</h2>
-						<p className="text-base md:text-lg text-justify md:text-start md:max-w-2xl font-roboto font-thin text-foreground/60 w-full mb-2">
+						<p
+							data-aos="fade-up"
+							data-aos-delay="300"
+							data-aos-offset="150"
+							data-aos-duration="500"
+							className="text-base md:text-lg text-justify md:text-start md:max-w-2xl font-roboto font-thin text-foreground/60 w-full mb-2"
+						>
 							More Than Books es una empresa que busca proporcionar ELT de alta calidad libros de
 							texto, recursos didácticos y cursos de desarrollo profesional para la comunidad ELT.
 							Por lo tanto, nuestro empresa cuenta con la distribución de Express Editorial en
@@ -148,13 +245,31 @@ const AboutUsPage = () => {
 						<div className="absolute inset-0 bounce-1 flex items-center justify-center -top-20">
 							<div className="bg-amber-200/70 rounded-full w-3/4 h-64 blur-3xl opacity-30"></div>
 						</div>
-						<p className="w-fit self-center md:self-start px-6 py-1 bg-amber-500/10 text-amber-500 rounded-full mb-2 text-sm font-roboto font-thin">
+						<p
+							data-aos="fade-up-right"
+							data-aos-delay="0"
+							data-aos-offset="150"
+							data-aos-duration="500"
+							className="w-fit self-center md:self-start px-6 py-1 bg-amber-500/10 text-amber-500 rounded-full mb-2 text-sm font-roboto font-thin"
+						>
 							FQA
 						</p>
-						<h2 className="text-3xl text-center md:text-start md:text-4xl font-roboto font-bold mb-4 w-full">
+						<h2
+							data-aos="fade-up-right"
+							data-aos-delay="100"
+							data-aos-offset="150"
+							data-aos-duration="500"
+							className="text-3xl text-center md:text-start md:text-4xl font-roboto font-bold mb-4 w-full"
+						>
 							Nuestra <span className="font-roboto font-bold text-amber-500">Misión</span>
 						</h2>
-						<p className="text-base sm:text-lg text-justify md:text-start md:text-xl md:max-w-2xl font-roboto font-thin text-foreground/60 w-full mb-2">
+						<p
+							data-aos="fade-up-right"
+							data-aos-delay="200"
+							data-aos-offset="150"
+							data-aos-duration="500"
+							className="text-base sm:text-lg text-justify md:text-start md:text-xl md:max-w-2xl font-roboto font-thin text-foreground/60 w-full mb-2"
+						>
 							Nuestra misión es brindar a los maestros oportunidades excepcionales de desarrollo
 							profesional a través de capacitaciones académicas y certificaciones internacionales,
 							asegurando que puedan educar a nuevas generaciones de niños y profesionales capaces de
@@ -169,6 +284,10 @@ const AboutUsPage = () => {
 								width={500}
 								height={300}
 								className="w-52 h-52 sm:w-72 sm:h-72 lg:w-96 lg:h-96 object-cover drop-shadow-xl z-[0] bounce-1 rounded-full"
+								data-aos="fade-up-right"
+								data-aos-delay="400"
+								data-aos-offset="150"
+								data-aos-duration="500"
 							/>
 						</div>
 					</div>
@@ -179,18 +298,42 @@ const AboutUsPage = () => {
 						<div className="absolute inset-0 bounce-1 flex items-center justify-center -top-20">
 							<div className="bg-sky-200/90 rounded-full w-3/4 h-64 blur-3xl opacity-30"></div>
 						</div>
-						<p className="w-fit self-center md:self-start px-6 py-1 bg-sky-500/10 text-sky-500 rounded-full mb-2 text-sm font-roboto font-thin">
+						<p
+							data-aos="fade-up-right"
+							data-aos-delay="0"
+							data-aos-offset="150"
+							data-aos-duration="500"
+							className="w-fit self-center md:self-start px-6 py-1 bg-sky-500/10 text-sky-500 rounded-full mb-2 text-sm font-roboto font-thin"
+						>
 							Visión
 						</p>
-						<h2 className="text-4xl text-center md:text-start md:text-4xl font-roboto font-bold mb-4 w-full">
+						<h2
+							data-aos="fade-up-right"
+							data-aos-delay="100"
+							data-aos-offset="150"
+							data-aos-duration="500"
+							className="text-4xl text-center md:text-start md:text-4xl font-roboto font-bold mb-4 w-full"
+						>
 							Nuestra <span className="font-roboto font-bold text-sky-500">Visión</span>
 						</h2>
-						<p className="text-base sm:text-lg text-justify md:text-start md:text-xl md:max-w-2xl font-roboto font-thin text-foreground/60 w-full mb-2">
+						<p
+							data-aos="fade-up-right"
+							data-aos-delay="200"
+							data-aos-offset="150"
+							data-aos-duration="500"
+							className="text-base sm:text-lg text-justify md:text-start md:text-xl md:max-w-2xl font-roboto font-thin text-foreground/60 w-full mb-2"
+						>
 							Nuestra visión es convertirnos en una presencia líder en México, Centro y Sudamérica.
 							Nuestro objetivo es ir más allá de las fronteras para llegar a todos los lugares donde
 							la enseñanza del inglés es crucial.
 						</p>
-						<p className="text-base sm:text-lg text-justify md:text-start md:text-xl md:max-w-2xl font-roboto font-thin text-foreground/60 w-full">
+						<p
+							data-aos="fade-up-right"
+							data-aos-delay="300"
+							data-aos-offset="150"
+							data-aos-duration="500"
+							className="text-base sm:text-lg text-justify md:text-start md:text-xl md:max-w-2xl font-roboto font-thin text-foreground/60 w-full"
+						>
 							A medida que nos expandimos y crecemos, nos comprometemos a mantener y fortalecer
 							nuestros valores fundamentales. Visualizamos un futuro en el que los estudiantes
 							tengan acceso a una educación de calidad, los maestros tengan acceso a metodologías
@@ -206,6 +349,10 @@ const AboutUsPage = () => {
 								width={500}
 								height={300}
 								className="w-52 h-52 sm:w-72 sm:h-72 lg:w-96 lg:h-96 object-cover drop-shadow-xl z-[0] bounce-1 rounded-full"
+								data-aos="fade-up-right"
+								data-aos-delay="400"
+								data-aos-offset="150"
+								data-aos-duration="500"
 							/>
 						</div>
 					</div>
@@ -215,13 +362,31 @@ const AboutUsPage = () => {
 					<div className="absolute inset-0 bounce-1 flex items-center justify-center -top-20">
 						<div className="bg-pink-200/50 rounded-full w-2/4 h-64 blur-3xl opacity-30"></div>
 					</div>
-					<p className="w-fit mx-auto px-6 py-1 bg-pink-500/10 text-pink-500 rounded-full mb-2 text-sm font-roboto font-thin">
+					<p
+						data-aos="fade-up"
+						data-aos-delay="0"
+						data-aos-offset="150"
+						data-aos-duration="500"
+						className="w-fit mx-auto px-6 py-1 bg-pink-500/10 text-pink-500 rounded-full mb-2 text-sm font-roboto font-thin"
+					>
 						Responsabilidad
 					</p>
-					<h2 className="text-2xl text-center md:text-4xl font-roboto font-bold mb-8 w-full">
+					<h2
+						data-aos="fade-up-right"
+						data-aos-delay="100"
+						data-aos-offset="150"
+						data-aos-duration="500"
+						className="text-2xl text-center md:text-4xl font-roboto font-bold mb-8 w-full"
+					>
 						Responsabilidad <span className="font-roboto font-bold ">Social</span>
 					</h2>
-					<p className="text-base sm:text-lg text-center mx-auto md:text-xl md:max-w-2xl font-roboto font-thin text-foreground/60 w-full">
+					<p
+						data-aos="fade-up-right"
+						data-aos-delay="200"
+						data-aos-offset="150"
+						data-aos-duration="500"
+						className="text-base sm:text-lg text-center mx-auto md:text-xl md:max-w-2xl font-roboto font-thin text-foreground/60 w-full"
+					>
 						Promovemos activamente la conciencia social y la sostenibilidad ambiental, contribuyendo
 						al desarrollo ecológico a través de programas de reforestación y generando conciencia
 						sobre la importancia del cuidado de nuestro medio ambiente.
@@ -229,14 +394,32 @@ const AboutUsPage = () => {
 				</section>
 
 				<section className="container px-0 sm:mx-auto py-20 relative ">
-					<p className="w-fit mx-auto px-6 py-1 bg-sky-500/10 text-sky-500 rounded-full mb-2 text-sm font-roboto font-thin">
+					<p
+						data-aos="fade-up"
+						data-aos-delay="0"
+						data-aos-offset="150"
+						data-aos-duration="500"
+						className="w-fit mx-auto px-6 py-1 bg-sky-500/10 text-sky-500 rounded-full mb-2 text-sm font-roboto font-thin"
+					>
 						Valores
 					</p>
-					<h2 className="text-2xl text-center md:text-4xl font-roboto font-bold mb-10 w-full">
+					<h2
+						data-aos="fade-up"
+						data-aos-delay="100"
+						data-aos-offset="150"
+						data-aos-duration="500"
+						className="text-2xl text-center md:text-4xl font-roboto font-bold mb-10 w-full"
+					>
 						Nuestros <span className="font-roboto font-bold ">Valores</span>
 					</h2>
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-						<div className="bg-white p-6 rounded-3xl shadow-xl text-center">
+						<div
+							data-aos="fade-up-right"
+							data-aos-delay="200"
+							data-aos-offset="150"
+							data-aos-duration="500"
+							className="bg-white p-6 rounded-3xl shadow-xl text-center"
+						>
 							<div className="flex items-center justify-center h-16 w-16 rounded-full bg-green-100 shadow-lg shadow-green-500/50 mx-auto mb-4">
 								<HeartHandshake size={40} strokeWidth={1} className="text-green-600" />
 							</div>
@@ -247,7 +430,13 @@ const AboutUsPage = () => {
 							</p>
 						</div>
 
-						<div className="bg-white p-6 rounded-3xl shadow-xl text-center">
+						<div
+							data-aos="fade-up"
+							data-aos-delay="400"
+							data-aos-offset="150"
+							data-aos-duration="500"
+							className="bg-white p-6 rounded-3xl shadow-xl text-center"
+						>
 							<div className="flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 shadow-lg shadow-blue-500/50 mx-auto mb-4">
 								<Bird size={40} strokeWidth={1} className="text-blue-600" />
 							</div>
@@ -258,7 +447,13 @@ const AboutUsPage = () => {
 							</p>
 						</div>
 
-						<div className="bg-white p-6 rounded-3xl shadow-xl text-center">
+						<div
+							data-aos="fade-down"
+							data-aos-delay="500"
+							data-aos-offset="150"
+							data-aos-duration="500"
+							className="bg-white p-6 rounded-3xl shadow-xl text-center"
+						>
 							<div className="flex items-center justify-center h-16 w-16 rounded-full bg-violet-100 shadow-lg shadow-violet-500/50 mx-auto mb-4">
 								<Trophy size={40} strokeWidth={1} className="text-violet-600" />
 							</div>
@@ -268,7 +463,13 @@ const AboutUsPage = () => {
 								una experiencia grata a nuestros usuarios.
 							</p>
 						</div>
-						<div className="bg-white p-6 rounded-3xl shadow-xl text-center">
+						<div
+							data-aos="fade-up-left"
+							data-aos-delay="300"
+							data-aos-offset="150"
+							data-aos-duration="500"
+							className="bg-white p-6 rounded-3xl shadow-xl text-center"
+						>
 							<div className="flex items-center justify-center h-16 w-16 rounded-full bg-red-100 shadow-lg shadow-red-500/50 mx-auto mb-4">
 								<ReplaceAll size={40} strokeWidth={1} className="text-red-600" />
 							</div>

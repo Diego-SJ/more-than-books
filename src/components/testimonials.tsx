@@ -33,18 +33,43 @@ export default function MinimalistTestimonialsSection() {
 					<div className="bg-pink-200/90 rounded-full w-3/4 h-64 blur-3xl opacity-30"></div>
 				</div>
 				<div className="flex flex-col w-full z-[1] relative">
-					<p className="w-fit px-6 py-1 mx-auto bg-pink-500/10 text-pink-500 rounded-full mb-2 text-sm font-roboto font-thin">
+					<p
+						data-aos="fade-up"
+						data-aos-duration="600"
+						data-aos-delay="0"
+						data-aos-offset="150"
+						className="w-fit px-6 py-1 mx-auto bg-pink-500/10 text-pink-500 rounded-full mb-2 text-sm font-roboto font-thin"
+					>
 						Testimonios
 					</p>
-					<h2 className="text-3xl text-center  md:text-4xl font-roboto font-bold mb-4 w-full">
+					<h2
+						data-aos="fade-up"
+						data-aos-duration="600"
+						data-aos-delay="150"
+						data-aos-offset="150"
+						className="text-3xl text-center  md:text-4xl font-roboto font-bold mb-4 w-full"
+					>
 						Testimonios
 					</h2>
-					<p className="text-base sm:text-lg text-center mx-auto md:text-xl md:max-w-2xl font-roboto font-thin text-foreground/60 w-full mb-2">
+					<p
+						data-aos="fade-up"
+						data-aos-duration="600"
+						data-aos-delay="300"
+						data-aos-offset="150"
+						className="text-base sm:text-lg text-center mx-auto md:text-xl md:max-w-2xl font-roboto font-thin text-foreground/60 w-full mb-2"
+					>
 						Lo que nuestros clientes dicen sobre nosotros
 					</p>
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
 						{testimonials.map((testimonial, index) => (
-							<div key={index} className="bg-white p-6 rounded-3xl text-left shadow-xl">
+							<div
+								data-aos="zoom-in"
+								data-aos-duration="500"
+								data-aos-delay={index * 200}
+								data-aos-offset="150"
+								key={index}
+								className="bg-white p-6 rounded-3xl text-left shadow-xl"
+							>
 								<div className="flex items-center mb-4">
 									<Image
 										src={testimonial.image}

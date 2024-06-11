@@ -37,7 +37,14 @@ export default function FAQSection() {
 		<div className="text-center">
 			<div className="w-full text-left">
 				{faqs.map((faq, index) => (
-					<div key={index} className="mb-4">
+					<div
+						data-aos="zoom-in-left"
+						data-aos-duration="600"
+						data-aos-delay={index * 150}
+						data-aos-offset="150"
+						key={index}
+						className="mb-4"
+					>
 						<button
 							onClick={() => toggleFAQ(index)}
 							className={`w-full text-left p-4 bg-white rounded-3xl shadow-sm focus:outline-none transition-all border border-slate-100 ${

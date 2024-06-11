@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Roboto } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'sonner'
@@ -8,8 +8,15 @@ export const metadata: Metadata = {
 	title: 'More than books',
 	description:
 		'More than books es una librería virtual que ofrece una amplia gama de libros de diferentes géneros.',
-	viewport: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0',
 	icons: '/images/webp/logo.webp'
+}
+
+export const viewport: Viewport = {
+	width: 'device-width',
+	initialScale: 1.0,
+	maximumScale: 1.0,
+	userScalable: false,
+	viewportFit: 'cover'
 }
 
 export default function RootLayout({
@@ -20,7 +27,7 @@ export default function RootLayout({
 	return (
 		<html lang="es">
 			<body className={`${roboto.className} scroll-smooth`}>{children}</body>
-			<Toaster position="top-right" />
+			<Toaster position="top-right" richColors />
 		</html>
 	)
 }

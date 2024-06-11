@@ -1,11 +1,13 @@
 'use client'
-import React from 'react'
+import React, { useTransition } from 'react'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { sendMessage } from '@/lib/contact'
 
 const ContactForm = () => {
+	const [isPending, startTransition] = useTransition()
 	const {
 		register,
 		handleSubmit,
@@ -14,13 +16,19 @@ const ContactForm = () => {
 	} = useForm()
 
 	const onSuccess = () => {
-		toast.success('Mensaje enviado correctamente')
+		toast.success('¡Mensaje enviado! 🎉 Pronto nos pondremos en contacto.')
 		reset()
 	}
 
 	const onSubmit = (data: any) => {
-		console.log(data)
-		onSuccess()
+		startTransition(async () => {
+			const result = await sendMessage(data)
+			if (result) {
+				onSuccess()
+			} else {
+				toast.error('¡Ups! Algo salió mal. Por favor, inténtalo más tarde. 🙏')
+			}
+		})
 	}
 
 	return (
@@ -71,7 +79,7 @@ const ContactForm = () => {
 					type="submit"
 					className="w-full border font-thin min-w-max font-roboto bg-primary text-secondary border-primary px-4 py-2 h-[44px] rounded-xl hover:bg-primary/90 hover:shadow-sm hover:shadow-black transition-all"
 				>
-					Enviar mensaje
+					{isPending ? 'Enviando...' : 'Enviar'}
 				</button>
 			</div>
 		</form>

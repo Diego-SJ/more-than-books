@@ -1,6 +1,5 @@
 import { cache } from 'react'
 import { fetchAPI } from './strapi'
-import dayjs from 'dayjs'
 import { Event } from '@/types/event'
 
 export function transformEventsArray(apiResponse: any, type?: string): Event[] {

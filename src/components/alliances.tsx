@@ -1,6 +1,5 @@
-import { ArrowRight, Handshake } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
 
 const Alliances = () => {
@@ -11,17 +10,43 @@ const Alliances = () => {
 			</div>
 			<div className="container mx-auto px-4 relative z-[1]">
 				<div className="text-center mb-12">
-					<p className="w-fit px-6 py-1 bg-primary/10 text-primary rounded-full mx-auto mb-2 text-sm font-roboto font-thin">
+					<p
+						data-aos="fade-up"
+						data-aos-duration="600"
+						data-aos-delay="0"
+						data-aos-offset="200"
+						className="w-fit px-6 py-1 bg-primary/10 text-primary rounded-full mx-auto mb-2 text-sm font-roboto font-thin"
+					>
 						Alianzas
 					</p>
-					<h2 className="text-3xl font-roboto font-semibold">Nuestras Alianzas con Editoriales</h2>
-					<p className="text-lg font-roboto font-thin text-foreground/60 mt-2">
+					<h2
+						data-aos="fade-up"
+						data-aos-duration="600"
+						data-aos-delay="100"
+						data-aos-offset="100"
+						className="text-3xl font-roboto font-semibold"
+					>
+						Nuestras Alianzas con Editoriales
+					</h2>
+					<p
+						data-aos="fade-up"
+						data-aos-duration="600"
+						data-aos-delay="100"
+						data-aos-offset="200"
+						className="text-lg font-roboto font-thin text-foreground/60 mt-2"
+					>
 						Trabajamos con editoriales reconocidas para ofrecerte los mejores materiales educativos
 					</p>
 				</div>
 
 				<div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2  gap-8 max-w-[1000px] mx-auto">
-					<div className="bg-white border border-slate-200/40 rounded-3xl shadow-sm hover:shadow-xl text-center flex gap-6 overflow-hidden transition-all justify-between">
+					<div
+						data-aos="fade-down-right"
+						data-aos-duration="600"
+						data-aos-delay="0"
+						data-aos-offset="100"
+						className="bg-white border border-slate-200/40 rounded-3xl shadow-sm hover:shadow-xl text-center flex gap-6 overflow-hidden transition-all justify-between"
+					>
 						<div className="flex items-center my-auto justify-center h-full w-full max-w-36 rounded-3xl bg-white shadow-sm shadow-slate-500/50 mx-auto p-2">
 							<Image
 								src="/images/alliances/express-p.webp"
@@ -53,7 +78,13 @@ const Alliances = () => {
 						</div>
 					</div>
 
-					<div className="bg-white border border-slate-200/40 rounded-3xl shadow-sm hover:shadow-xl text-center flex gap-6 overflow-hidden transition-all justify-between">
+					<div
+						data-aos="fade-down-left"
+						data-aos-duration="600"
+						data-aos-delay="100"
+						data-aos-offset="100"
+						className="bg-white border border-slate-200/40 rounded-3xl shadow-sm hover:shadow-xl text-center flex gap-6 overflow-hidden transition-all justify-between"
+					>
 						<div className="flex items-center my-auto justify-center h-full w-full max-w-36 rounded-3xl bg-white shadow-sm shadow-slate-500/50 mx-auto p-2">
 							<Image
 								src="/images/alliances/compass.webp"
@@ -85,7 +116,13 @@ const Alliances = () => {
 						</div>
 					</div>
 
-					<div className="bg-white border border-slate-200/40 rounded-3xl shadow-sm hover:shadow-xl text-center flex gap-6 overflow-hidden transition-all justify-between">
+					<div
+						data-aos="fade-right"
+						data-aos-duration="600"
+						data-aos-delay="300"
+						data-aos-offset="100"
+						className="bg-white border border-slate-200/40 rounded-3xl shadow-sm hover:shadow-xl text-center flex gap-6 overflow-hidden transition-all justify-between"
+					>
 						<div className="flex items-center my-auto justify-center h-full w-full max-w-36 rounded-3xl bg-white shadow-sm shadow-slate-500/50 mx-auto p-2">
 							<Image
 								src="/images/alliances/vhl.webp"
@@ -117,7 +154,13 @@ const Alliances = () => {
 						</div>
 					</div>
 
-					<div className="bg-white border border-slate-200/40 rounded-3xl shadow-sm hover:shadow-xl text-center flex gap-6 overflow-hidden transition-all justify-between">
+					<div
+						data-aos="fade-left"
+						data-aos-duration="600"
+						data-aos-delay="400"
+						data-aos-offset="100"
+						className="bg-white border border-slate-200/40 rounded-3xl shadow-sm hover:shadow-xl text-center flex gap-6 overflow-hidden transition-all justify-between"
+					>
 						<div className="flex items-center my-auto justify-center h-full w-full max-w-36 rounded-3xl bg-white shadow-sm shadow-slate-500/50 mx-auto p-2">
 							<Image
 								src="/images/alliances/nbag.webp"
@@ -149,7 +192,13 @@ const Alliances = () => {
 						</div>
 					</div>
 
-					<div className="bg-white border border-slate-200/40 rounded-3xl shadow-sm hover:shadow-xl text-center flex gap-6 overflow-hidden transition-all justify-between">
+					<div
+						data-aos="fade-up-right"
+						data-aos-duration="600"
+						data-aos-delay="500"
+						data-aos-offset="100"
+						className="bg-white border border-slate-200/40 rounded-3xl shadow-sm hover:shadow-xl text-center flex gap-6 overflow-hidden transition-all justify-between"
+					>
 						<div className="flex items-center my-auto justify-center h-full w-full max-w-36 rounded-3xl bg-white shadow-sm shadow-slate-500/50 mx-auto p-2">
 							<Image
 								src="/images/alliances/mm-publications.webp"

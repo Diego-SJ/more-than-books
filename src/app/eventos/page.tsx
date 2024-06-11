@@ -19,8 +19,9 @@ import { Event } from '@/types/event'
 import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
-
-const imageUrl = 'https://source.unsplash.com/random'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+import EmptyState from '@/components/empty-state'
 
 const EventsPage = () => {
 	const [posts, setBlogPosts] = useState<Event[]>([])
@@ -28,6 +29,10 @@ const EventsPage = () => {
 	const [categories, setCategories] = useState<string[]>([])
 	const [filters, setFilters] = useState({ category: 'todos', search: '' })
 	const onMounted = useRef(false)
+
+	useEffect(() => {
+		AOS.init()
+	}, [])
 
 	useEffect(() => {
 		const getArticles = async () => {
@@ -63,21 +68,25 @@ const EventsPage = () => {
 		<>
 			<Navbar currentPath="events" />
 			<main className="container pt-[65px] sm:pt-20 px-0 sm:px-6">
-				<div
-					className="w-full m-h-[300px] sm:rounded-3xl  sm:h-96 p-6 relative flex flex-col"
-					style={{
-						background: `linear-gradient(to top, hsl(var(--primary)), hsl(var(--primary))), url('${imageUrl}')`,
-						backgroundRepeat: 'no-repeat',
-						backgroundSize: 'cover',
-						backgroundPosition: 'center'
-					}}
-				>
+				<div className="w-full m-h-[300px] sm:rounded-3xl  sm:h-96 p-6 relative flex flex-col bg-primary">
 					<div className="mt-10 sm:mt-auto mb-10 flex flex-col sm:flex-row">
 						<div className="w-full flex flex-col justify-center">
-							<h1 className="text-white text-5xl sm:text-5xl mb-4 font-roboto font-semibold">
+							<h1
+								data-aos="fade-up"
+								data-aos-duration="500"
+								data-aos-delay="100"
+								data-aos-offset="150"
+								className="text-white text-5xl sm:text-5xl mb-4 font-roboto font-semibold"
+							>
 								Eventos Destacados
 							</h1>
-							<p className="text-white text-xl md:text-2xl font-roboto font-thin">
+							<p
+								data-aos="fade-up"
+								data-aos-duration="500"
+								data-aos-delay="200"
+								data-aos-offset="150"
+								className="text-white text-xl md:text-2xl font-roboto font-thin"
+							>
 								Forma parte de nuestra comunidad asistiendo A nuestros próximos eventos y
 								conferencias para mejorar tus habilidades y conocimientos.
 							</p>
@@ -89,10 +98,20 @@ const EventsPage = () => {
 								width={500}
 								height={300}
 								className="w-auto h-60 object-contain moving-4"
+								data-aos="zoom-in-right"
+								data-aos-duration="500"
+								data-aos-delay="0"
+								data-aos-offset="150"
 							/>
 						</div>
 					</div>
-					<div className="py-3 sm:px-2 relative w-full flex gap-4 flex-col sm:flex-row">
+					<div
+						data-aos="fade-up"
+						data-aos-duration="500"
+						data-aos-delay="300"
+						data-aos-offset="150"
+						className="py-3 sm:px-2 relative w-full flex gap-4 flex-col sm:flex-row"
+					>
 						<Input
 							placeholder="Buscar eventos"
 							type="text"
@@ -121,24 +140,35 @@ const EventsPage = () => {
 					</div>
 				</div>
 
-				<div className="flex mt-10 mx-auto max-w-[1200px] px-6 sm:px-0">
-					<h3 className="text-3xl font-bold">Próximos Eventos</h3>
-				</div>
-
 				{posts?.length ? (
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-8 mx-auto max-w-[1200px] px-6 sm:px-0">
-						{(posts || [])?.map((event) => (
-							<EventCard key={event?.slug} {...event} />
-						))}
-					</div>
-				) : (
 					<>
-						<div className="w-full flex justify-center items-center py-20">
-							<h3 className="text-xl font-roboto font-thin text-slate-600">
-								No se encontraron eventos próximos
+						<div className="flex mt-10 mx-auto max-w-[1200px] px-6 sm:px-0">
+							<h3
+								data-aos="fade-up"
+								data-aos-duration="500"
+								data-aos-delay="0"
+								data-aos-offset="150"
+								className="text-3xl font-bold"
+							>
+								Próximos Eventos
 							</h3>
 						</div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-8 mx-auto max-w-[1200px] px-6 sm:px-0">
+							{(posts || [])?.map((event, index) => (
+								<div
+									data-aos="fade-up"
+									data-aos-duration="300"
+									data-aos-delay={index * 50}
+									data-aos-offset="150"
+									className="w-full"
+								>
+									<EventCard key={event?.slug} {...event} />
+								</div>
+							))}
+						</div>
 					</>
+				) : (
+					<EmptyState />
 				)}
 
 				{/* <div className="flex mt-10 mx-auto max-w-[1200px] px-6 sm:px-0">

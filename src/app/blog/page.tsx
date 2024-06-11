@@ -20,6 +20,9 @@ import { toast } from 'sonner'
 import { getPosts } from '@/lib/posts'
 import BlogCard from '@/components/blog-card'
 import { includes, mapCategories } from '@/lib/utils'
+import Aos from 'aos'
+import 'aos/dist/aos.css'
+import EmptyState from '@/components/empty-state'
 
 const BlogPage = () => {
 	const [posts, setBlogPosts] = useState<BlogPost[]>([])
@@ -27,6 +30,10 @@ const BlogPage = () => {
 	const [categories, setCategories] = useState<string[]>([])
 	const [filters, setFilters] = useState({ category: 'todos', search: '' })
 	const onMounted = useRef(false)
+
+	useEffect(() => {
+		Aos.init()
+	}, [])
 
 	useEffect(() => {
 		const getArticles = async () => {
@@ -59,7 +66,12 @@ const BlogPage = () => {
 	return (
 		<>
 			<Navbar currentPath="blog" />
-			<header className="mb-11 sm:mb-10 md:mb-8 container rounded-2xl max-w-[95%] xl:max-w-[1400px] flex justify-center items-center py-8 bg-primary mt-20 overflow-hidden relative">
+			<header
+				data-aos="zoom-out-up"
+				data-aos-delay="0"
+				data-aos-duration="300"
+				className="mb-11 sm:mb-10 md:mb-8 container rounded-2xl max-w-[95%] xl:max-w-[1400px] flex justify-center items-center py-8 bg-primary mt-20 overflow-hidden relative"
+			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 1440 320"
@@ -93,7 +105,12 @@ const BlogPage = () => {
 				<span className="moving w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] bg-primary/5 z-0 absolute rounded-full right-[5%] -top-[45%] animate-pulse sm:block"></span>
 				<span className="moving-2 w-[200px] sm:w-[200px] h-[200px] sm:h-[200px] bg-primary/5 z-0 absolute rounded-full left-[10%] top-[50%] animate-pulse sm:block"></span>
 				<span className="moving w-[100px] sm:w-[100px] h-[100px] sm:h-[100px] bg-primary/5 z-0 absolute rounded-full right-[40%] top-[100%] animate-pulse sm:block"></span>
-				<div className="flex flex-col items-start w-full justify-center">
+				<div
+					data-aos="zoom-out-up"
+					data-aos-delay="100"
+					data-aos-duration="300"
+					className="flex flex-col items-start w-full justify-center"
+				>
 					<h1 className="text-3xl sm:text-5xl sm:text-start font-roboto font-bold mb-4 w-full text-center text-foreground">
 						Explora y aprende
 					</h1>
@@ -109,14 +126,31 @@ const BlogPage = () => {
 						width={500}
 						height={300}
 						className="w-auto h-auto object-contain drop-shadow-3xl"
+						data-aos="zoom-out-up"
+						data-aos-delay="200"
+						data-aos-duration="300"
 					/>
 				</div>
 			</header>
 			<main className="container flex flex-col my-10">
 				{/* filters */}
 				<div className="flex flex-col lg:flex-row sm:justify-between gap-4 sm:items-center mb-10">
-					<h5 className="text-xl sm:text-3xl font-roboto font-semibold">Todos los posts</h5>
-					<div className="flex flex-col sm:flex-row gap-4">
+					<h5
+						data-aos="fade-up"
+						data-aos-duration="500"
+						data-aos-delay="0"
+						data-aos-offset="150"
+						className="text-xl sm:text-3xl font-roboto font-semibold"
+					>
+						Todos los posts
+					</h5>
+					<div
+						data-aos="fade-up"
+						data-aos-duration="500"
+						data-aos-delay="0"
+						data-aos-offset="150"
+						className="flex flex-col sm:flex-row gap-4"
+					>
 						<Select onValueChange={(category) => setFilters((prev) => ({ ...prev, category }))}>
 							<SelectTrigger className="w-full sm:min-w-40">
 								<SelectValue placeholder="Cateogía" />
@@ -148,27 +182,29 @@ const BlogPage = () => {
 				{/* posts */}
 				{posts?.length ? (
 					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-8">
-						{(posts || [])?.map((post) => (
-							<BlogCard
-								key={post.id}
-								href={post?.slug}
-								title={post?.title}
-								description={post?.description}
-								date={post.created_at}
-								imageSrc={post?.imageUrl}
-								author={post?.author}
-								category={post?.categories}
-							/>
+						{(posts || [])?.map((post, index) => (
+							<div
+								data-aos="fade-up"
+								data-aos-duration="300"
+								data-aos-delay={index * 50}
+								data-aos-offset="150"
+								className="w-full"
+							>
+								<BlogCard
+									key={post.id}
+									href={post?.slug}
+									title={post?.title}
+									description={post?.description}
+									date={post.created_at}
+									imageSrc={post?.imageUrl}
+									author={post?.author}
+									category={post?.categories}
+								/>
+							</div>
 						))}
 					</div>
 				) : (
-					<>
-						<div className="w-full flex justify-center items-center py-20">
-							<h3 className="text-xl font-roboto font-thin text-slate-600">
-								No se encontraron posts
-							</h3>
-						</div>
-					</>
+					<EmptyState />
 				)}
 			</main>
 			<NewsLatter />

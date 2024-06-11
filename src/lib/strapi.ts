@@ -41,3 +41,22 @@ export async function fetchAPI(path: string) {
 	const data = await response.json()
 	return data
 }
+
+export async function postApi(path: string, data: any) {
+	const requestUrl = `${STRAPI_API_URL}${path}`
+	const response = await fetch(requestUrl, {
+		method: 'POST',
+		headers: {
+			Authorization: `Bearer ${BEARER_TOKEN}`,
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)
+	})
+
+	if (!response.ok) {
+		throw new Error('Error fetching data:', response.statusText as any)
+	}
+
+	const responseData = await response.json()
+	return responseData
+}

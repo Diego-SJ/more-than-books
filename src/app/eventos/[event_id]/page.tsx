@@ -1,5 +1,5 @@
 'use client'
-import EventCard from '@/components/event-card'
+
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import { Button } from '@/components/ui/button'
@@ -17,6 +17,10 @@ import dayjs from 'dayjs'
 import { copyToClipboard } from '@/lib/utils'
 import 'dayjs/locale/es'
 dayjs.locale('es')
+import Aos from 'aos'
+import 'aos/dist/aos.css'
+import { SkeletonContainer } from '@/components/skeleton-container'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const EventsPage = ({ params: { event_id } }: any) => {
 	const [post, setBlogPost] = useState<Event>({} as Event)
@@ -24,6 +28,10 @@ const EventsPage = ({ params: { event_id } }: any) => {
 	const onMounted = useRef(false)
 
 	const components = useMDXComponents()
+
+	useEffect(() => {
+		Aos.init()
+	}, [])
 
 	useEffect(() => {
 		const getArticles = async () => {
@@ -63,7 +71,7 @@ const EventsPage = ({ params: { event_id } }: any) => {
 
 	return (
 		<>
-			<Navbar theme="dark" />
+			<Navbar theme="dark" currentPath="events" />
 			<header
 				className="relative pt-[65px] sm:pt-20 px-0 min-h-[200px] sm:px-6 md:min-h-80 z-0"
 				style={{
@@ -73,35 +81,54 @@ const EventsPage = ({ params: { event_id } }: any) => {
 					backgroundPosition: '100% auto'
 				}}
 			></header>
-			<div className="relative flex flex-col sm:flex-row bg-white text-secondary-foreground w-full mx-auto max-w-[90%] md:max-w-[900px] rounded-2xl shadow-2xl -mt-20 z-[0]">
+			<div
+				data-aos="zoom-out-up"
+				data-aos-delay="0"
+				data-aos-duration="300"
+				className="relative flex flex-col sm:flex-row bg-white text-secondary-foreground w-full mx-auto max-w-[90%] md:max-w-[900px] rounded-2xl shadow-2xl -mt-20 z-[0]"
+			>
 				<div className="relative sm:w-full border-b-[3px] sm:border-b-transparent sm:border-r-[3px] border-dashed border-black/10 px-6 pt-6 pb-10 before:content-[''] before:w-10 before:h-10 before:bg-white before:rounded-full before:absolute before:left-1/2 sm:before:left-[100%] sm:before:top-1/2 before:-translate-x-1/2 sm:before:-translate-x-1/2 sm:before:-translate-y-1/2 before:-bottom-5 sm:before:bottom-[initial] before:shadow-inner-lg">
 					<h2 className="text-xl mb-3 font-roboto font-semibold md:text-3xl">
-						{post?.title || '- - -'}
+						{post?.title || <Skeleton className="h-6 w-full" />}
 					</h2>
 
 					<div className="flex items-start gap-2 mb-3">
-						<Clock className="text-primary mt-1" size={18} />
-						<div className="flex flex-col">
-							<p className="text-base sm:text-lg font-didact text-secondary-foreground/50">
-								{post?.date ? dayjs(post?.date).format('dddd d [de] MMMM [del] YYYY') : '- - -'}
-							</p>
-							<p className="text-base sm:text-lg font-didact">
-								{post?.date ? dayjs(post?.date).format('HH:mm a') : '- - -'}
-							</p>
-						</div>
+						{post?.date && post?.title ? (
+							<>
+								<Clock className="text-primary mt-1" size={18} />
+								<div className="flex flex-col">
+									<p className="text-base sm:text-lg font-didact text-secondary-foreground/50">
+										{dayjs(post?.date).format('dddd d [de] MMMM [del] YYYY')}
+									</p>
+									<p className="text-base sm:text-lg font-didact">
+										{dayjs(post?.date).format('HH:mm a')}
+									</p>
+								</div>
+							</>
+						) : (
+							<div className="my-6 space-y-1 flex">
+								<Skeleton className="h-6 w-20" />
+							</div>
+						)}
 					</div>
 
 					<div className="flex gap-2 items-center">
-						<MapPin className="text-primary mt-0" size={19} />
-						<div className="flex flex-col">
-							<a
-								href={post?.location || ''}
-								target="_blank"
-								className="text-base sm:text-lg font-didact text-primary hover:underline"
-							>
-								Ver ubicación en Google Maps
-							</a>
-						</div>
+						{post?.location ? (
+							<>
+								<MapPin className="text-primary mt-0" size={19} />
+								<div className="flex flex-col">
+									<a
+										href={post?.location || ''}
+										target="_blank"
+										className="text-base sm:text-lg font-didact text-primary hover:underline"
+									>
+										Ver ubicación en Google Maps
+									</a>
+								</div>
+							</>
+						) : (
+							<Skeleton className="h-6 w-full" />
+						)}
 					</div>
 				</div>
 
@@ -149,21 +176,33 @@ const EventsPage = ({ params: { event_id } }: any) => {
 					</div>
 				</div>
 			</div>
-			<main className="container relative mt-10 gap-6 sm:mt-20 flex flex-col sm:flex-row max-w-[900px] mb-20">
-				<div className="w-full">{blogContent}</div>
-				<div className="border border-slate-500/50 rounded-xl px-4 py-4 w-full h-min">
-					<div className="flex gap-3">
-						<span className="bg-slate-200 h-12 w-12 rounded-full grid place-content-center">
-							<Crown className="text-slate-600" />
-						</span>
-						<div className="flex flex-col items-start">
-							<h5 className="text-sm font-roboto font-thin text-slate-500">Organizador</h5>
-							<h3 className="text-lg font-roboto font-semibold">{post?.author || '- - -'}</h3>
+
+			<main
+				data-aos="zoom-out-up"
+				data-aos-delay="100"
+				data-aos-duration="300"
+				className="container relative mt-10 gap-6 sm:mt-20 flex flex-col sm:flex-row max-w-[900px] mb-20"
+			>
+				{!!post?.content ? (
+					<>
+						<div className="w-full">{blogContent}</div>
+						<div className="border border-slate-500/50 rounded-xl px-4 py-4 w-full h-min">
+							<div className="flex gap-3">
+								<span className="bg-slate-200 h-12 w-12 rounded-full grid place-content-center">
+									<Crown className="text-slate-600" />
+								</span>
+								<div className="flex flex-col items-start">
+									<h5 className="text-sm font-roboto font-thin text-slate-500">Organizador</h5>
+									<h3 className="text-lg font-roboto font-semibold">{post?.author || '- - -'}</h3>
+								</div>
+							</div>
 						</div>
-					</div>
-				</div>
+					</>
+				) : (
+					<SkeletonContainer />
+				)}
 			</main>
-			<section className="container w-full flex flex-col justify-center max-w-[900px]">
+			{/* <section className="container w-full flex flex-col justify-center max-w-[900px]">
 				<h3 className="text-base text-foreground mb-4 font-roboto font-semibold md:text-xl">
 					Más eventos
 				</h3>
@@ -172,7 +211,7 @@ const EventsPage = ({ params: { event_id } }: any) => {
 					<EventCard />
 					<EventCard />
 				</div>
-			</section>
+			</section> */}
 			<Footer />
 		</>
 	)
