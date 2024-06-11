@@ -1,4 +1,4 @@
-import BlogCard from '@/components/blog-card'
+'use client'
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import NewsLatter from '@/components/newlatter'
@@ -13,9 +13,49 @@ import {
 	SelectValue
 } from '@/components/ui/select'
 import Image from 'next/image'
-import React from 'react'
+import React, { useRef } from 'react'
+import { useState, useEffect } from 'react'
+import { BlogPost } from '@/types/post'
+import { toast } from 'sonner'
+import { getPosts } from '@/lib/posts'
+import BlogCard from '@/components/blog-card'
+import { includes, mapCategories } from '@/lib/utils'
 
 const BlogPage = () => {
+	const [posts, setBlogPosts] = useState<BlogPost[]>([])
+	const [postsAux, setBlogPostsAux] = useState<BlogPost[]>([])
+	const [categories, setCategories] = useState<string[]>([])
+	const [filters, setFilters] = useState({ category: 'todos', search: '' })
+	const onMounted = useRef(false)
+
+	useEffect(() => {
+		const getArticles = async () => {
+			const data = await getPosts()
+			if (!data) {
+				toast.error('Error al cargar los posts')
+				return
+			}
+			setCategories(mapCategories(data))
+			setBlogPosts(data)
+			setBlogPostsAux(data)
+		}
+
+		if (!onMounted.current) {
+			onMounted.current = true
+			getArticles()
+		}
+	}, [onMounted])
+
+	useEffect(() => {
+		const filteredPosts = postsAux?.filter((post) => {
+			const categoryMatch = filters.category === 'todos' || post.categories === filters.category
+			const searchMatch =
+				includes(post.title, filters.search) || includes(post.description, filters.search)
+			return categoryMatch && searchMatch
+		})
+		setBlogPosts(filteredPosts)
+	}, [filters.category, filters.search])
+
 	return (
 		<>
 			<Navbar currentPath="blog" />
@@ -77,7 +117,7 @@ const BlogPage = () => {
 				<div className="flex flex-col lg:flex-row sm:justify-between gap-4 sm:items-center mb-10">
 					<h5 className="text-xl sm:text-3xl font-roboto font-semibold">Todos los posts</h5>
 					<div className="flex flex-col sm:flex-row gap-4">
-						<Select>
+						<Select onValueChange={(category) => setFilters((prev) => ({ ...prev, category }))}>
 							<SelectTrigger className="w-full sm:min-w-40">
 								<SelectValue placeholder="Cateogía" />
 							</SelectTrigger>
@@ -85,11 +125,11 @@ const BlogPage = () => {
 								<SelectGroup>
 									<SelectLabel>Selecciona una categoría</SelectLabel>
 									<SelectItem value="todos">Todos</SelectItem>
-									<SelectItem value="tecnología">Tecnología</SelectItem>
-									<SelectItem value="diseño">Diseño</SelectItem>
-									<SelectItem value="marketing">Marketing</SelectItem>
-									<SelectItem value="programación">Programación</SelectItem>
-									<SelectItem value="negocios">Negocios</SelectItem>
+									{categories?.map((category) => (
+										<SelectItem key={category} value={category}>
+											{category}
+										</SelectItem>
+									))}
 								</SelectGroup>
 							</SelectContent>
 						</Select>
@@ -100,16 +140,36 @@ const BlogPage = () => {
 							name="search"
 							id="search"
 							className="w-full sm:min-w-96"
+							onChange={({ target }) => setFilters((prev) => ({ ...prev, search: target?.value }))}
 						/>
 					</div>
 				</div>
 
 				{/* posts */}
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-8">
-					{Array.from({ length: 7 }).map((_, i) => (
-						<BlogCard key={i} href={`blog-${i}`} />
-					))}
-				</div>
+				{posts?.length ? (
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-8">
+						{(posts || [])?.map((post) => (
+							<BlogCard
+								key={post.id}
+								href={post?.slug}
+								title={post?.title}
+								description={post?.description}
+								date={post.created_at}
+								imageSrc={post?.imageUrl}
+								author={post?.author}
+								category={post?.categories}
+							/>
+						))}
+					</div>
+				) : (
+					<>
+						<div className="w-full flex justify-center items-center py-20">
+							<h3 className="text-xl font-roboto font-thin text-slate-600">
+								No se encontraron posts
+							</h3>
+						</div>
+					</>
+				)}
 			</main>
 			<NewsLatter />
 			<Footer mt={20} />

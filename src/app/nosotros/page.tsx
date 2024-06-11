@@ -51,11 +51,11 @@ const AboutUsPage = () => {
 						<div className="flex flex-col items-center">
 							<div className="rounded-full relative bg-slate-300">
 								<Image
-									src="/images/avatars/founder-1.png"
+									src="/images/avatars/founder-1.webp"
 									alt="founder-1"
 									width={500}
 									height={300}
-									className="w-52 h-52 md:w-72 md:h-72 object-cover drop-shadow-sm z-[0] bounce-1 rounded-full"
+									className="w-52 h-52 md:w-72 md:h-72 object-cover drop-shadow-sm z-[0] bounce-1 rounded-full grayscale"
 								/>
 							</div>
 							<h3 className="text-xl font-semibold font-roboto mt-4">Gabino Bandala</h3>
@@ -64,11 +64,11 @@ const AboutUsPage = () => {
 						<div className="flex flex-col items-center">
 							<div className="rounded-full relative bg-slate-300">
 								<Image
-									src="/images/avatars/founder-2.jpg"
+									src="/images/avatars/founder-2.webp"
 									alt="founder-1"
 									width={500}
 									height={300}
-									className="w-52 h-52 md:w-72 md:h-72 object-cover drop-shadow-sm z-[0] bounce-1 rounded-full"
+									className="w-52 h-52 md:w-72 md:h-72 object-cover drop-shadow-sm z-[0] bounce-1 rounded-full grayscale"
 								/>
 							</div>
 							<h3 className="text-xl font-semibold font-roboto mt-4">Cynthia García</h3>

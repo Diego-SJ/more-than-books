@@ -40,7 +40,7 @@ export default function Navbar({ theme = 'light', currentPath = 'home' }: Navbar
 		<nav
 			className={`p-4 fixed top-0 w-full z-[2] ${
 				theme === 'light' ? `text-foreground` : scrolled ? 'text-foreground' : 'text-white'
-			}  ${scrolled ? 'bg-white border-b border-slate-300' : 'transparent'} transition-all`}
+			}  ${scrolled ? 'bg-white/30 backdrop-blur-lg shadow-lg' : 'transparent'} transition-all`}
 		>
 			<div className="container mx-auto flex justify-between items-center">
 				<Link href={'/'} className=" text-2xl font-bold text-inherit">
@@ -99,7 +99,9 @@ export default function Navbar({ theme = 'light', currentPath = 'home' }: Navbar
 				<div className="md:hidden">
 					<button
 						onClick={() => setIsOpen(true)}
-						className={`${theme === 'light' ? 'text-foreground' : 'text-white'}`}
+						className={`${
+							theme === 'light' ? 'text-foreground' : scrolled ? 'text-foreground' : 'text-white'
+						}`}
 					>
 						<Menu />
 					</button>

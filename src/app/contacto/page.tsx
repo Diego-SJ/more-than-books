@@ -11,7 +11,7 @@ export default function ContactFormPage() {
 			<div className="mt-10 sm:mt-0 py-16 px-0 overflow-hidden sm:px-2 lg:px-8 lg:py-24">
 				<div className="relative max-w-xl mx-auto">
 					<svg
-						className="absolute left-full transform translate-x-1/2"
+						className="absolute left-full transform translate-x-1/2 z-0"
 						width="404"
 						height="404"
 						fill="none"
@@ -68,12 +68,9 @@ export default function ContactFormPage() {
 						</defs>
 						<rect width="404" height="404" fill="url(#85737c0e-0916-41d7-917f-596dc7edfa27)" />
 					</svg>
-					<div className="flex flex-col mt-4 container text-center">
+					<div className="flex flex-col mt-4 container text-center z-0">
 						<h1 className="text-5xl font-bold text-foreground font-roboto mb-4">Contacto</h1>
-						<div className="w-full relative">
-							<div className="absolute inset-0 bounce-1 flex items-center justify-center -top-0">
-								<div className="bg-pink-200/50 rounded-full w-2/4 h-64 blur-3xl opacity-30"></div>
-							</div>
+						<div className="w-full relative z-10">
 							<p className="mt-4 text-lg leading-7 text-foreground/70 font-thin font-roboto mb-10">
 								Nos encantaría saber de ti. Llena el formulario y te responderemos lo antes posible.
 							</p>

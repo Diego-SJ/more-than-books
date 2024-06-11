@@ -1,13 +1,18 @@
 // components/EventCard.js
 'use client'
+import dayjs from 'dayjs'
 import { BookA } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { markdownToPlainText } from '@/lib/utils'
+import 'dayjs/locale/es'
+dayjs.locale('es')
 
 type EventCardProps = {
 	imageSrc?: string
 	title?: string
 	description?: string
+	content?: string
 	href?: string
 	author?: string
 	date?: string
@@ -36,9 +41,9 @@ export default function BlogCard({
 		>
 			<div className="relative overflow-hidden h-40 max-h-40">
 				<Image
-					src={imageSrc || 'https://source.unsplash.com/random/720x400'}
+					src={imageSrc || ''}
 					alt="Event Image"
-					className="w-full h-48 object-cover transition-all group-hover:scale-110"
+					className="w-full h-48 object-cover transition-all group-hover:scale-110 bg-slate-200"
 					width={500}
 					height={300}
 				/>
@@ -50,8 +55,7 @@ export default function BlogCard({
 						{title || 'A vintage video game in the industry of UI'}
 					</div>
 					<div className="mt-1 text-slate-400 sm:text-base font-didact">
-						{description ||
-							'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptate reiciendis minus dolorem earum quas facilis.'}
+						{markdownToPlainText(description || '') || '- - -'}
 					</div>
 				</div>
 				<div className="flex gap-4">
@@ -62,7 +66,9 @@ export default function BlogCard({
 						<div className="text-slate-700 uppercase text-xs font-bold font-roboto">
 							{author || 'More than books'}
 						</div>
-						<div className="text-slate-400 text-sm font-didact">{date || 'Jun 27, 2024'}</div>
+						<div className="text-slate-400 text-sm font-didact">
+							{dayjs(date).format('D MMM, YYYY') || '- - -'}
+						</div>
 					</div>
 				</div>
 			</div>

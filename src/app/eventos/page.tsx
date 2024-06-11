@@ -13,12 +13,52 @@ import {
 	SelectTrigger,
 	SelectValue
 } from '@/components/ui/select'
+import { getEvents } from '@/lib/events'
+import { includes, mapCategories } from '@/lib/utils'
+import { Event } from '@/types/event'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
 
 const imageUrl = 'https://source.unsplash.com/random'
 
 const EventsPage = () => {
+	const [posts, setBlogPosts] = useState<Event[]>([])
+	const [postsAux, setBlogPostsAux] = useState<Event[]>([])
+	const [categories, setCategories] = useState<string[]>([])
+	const [filters, setFilters] = useState({ category: 'todos', search: '' })
+	const onMounted = useRef(false)
+
+	useEffect(() => {
+		const getArticles = async () => {
+			const data = await getEvents()
+			if (!data) {
+				toast.error('Error al cargar los posts')
+				return
+			}
+
+			console.log(data)
+			setCategories(mapCategories(data as Event[]))
+			setBlogPosts(data as Event[])
+			setBlogPostsAux(data as Event[])
+		}
+
+		if (!onMounted.current) {
+			onMounted.current = true
+			getArticles()
+		}
+	}, [onMounted])
+
+	useEffect(() => {
+		const filteredPosts = postsAux?.filter((post) => {
+			const categoryMatch = filters.category === 'todos' || post.category === filters.category
+			const searchMatch =
+				includes(post.title, filters.search) || includes(post.content, filters.search)
+			return categoryMatch && searchMatch
+		})
+		setBlogPosts(filteredPosts)
+	}, [filters.category, filters.search])
+
 	return (
 		<>
 			<Navbar currentPath="events" />
@@ -53,24 +93,14 @@ const EventsPage = () => {
 						</div>
 					</div>
 					<div className="py-3 sm:px-2 relative w-full flex gap-4 flex-col sm:flex-row">
-						<Input placeholder="Buscar eventos" type="text" name="search" id="search" />
+						<Input
+							placeholder="Buscar eventos"
+							type="text"
+							name="search"
+							id="search"
+							onChange={({ target }) => setFilters((prev) => ({ ...prev, search: target?.value }))}
+						/>
 						<div className="flex flex-row gap-4">
-							<Select>
-								<SelectTrigger className="w-full sm:w-[180px]">
-									<SelectValue placeholder="Tipo de evento" />
-								</SelectTrigger>
-								<SelectContent>
-									<SelectGroup>
-										<SelectLabel>Selecciona un tipo de evento</SelectLabel>
-										<SelectItem value="todos">Todos</SelectItem>
-										<SelectItem value="conferencia">Conferencia</SelectItem>
-										<SelectItem value="taller">Taller</SelectItem>
-										<SelectItem value="feria">Feria</SelectItem>
-										<SelectItem value="curso">Curso</SelectItem>
-									</SelectGroup>
-								</SelectContent>
-							</Select>
-
 							<Select>
 								<SelectTrigger className="w-full sm:w-[180px]">
 									<SelectValue placeholder="Categoría" />
@@ -79,10 +109,11 @@ const EventsPage = () => {
 									<SelectGroup>
 										<SelectLabel>Selecciona una categoría</SelectLabel>
 										<SelectItem value="todos">Todos</SelectItem>
-										<SelectItem value="conferencia">Conferencia</SelectItem>
-										<SelectItem value="taller">Taller</SelectItem>
-										<SelectItem value="feria">Feria</SelectItem>
-										<SelectItem value="curso">Curso</SelectItem>
+										{categories?.map((category) => (
+											<SelectItem key={category} value={category}>
+												{category}
+											</SelectItem>
+										))}
 									</SelectGroup>
 								</SelectContent>
 							</Select>
@@ -93,29 +124,36 @@ const EventsPage = () => {
 				<div className="flex mt-10 mx-auto max-w-[1200px] px-6 sm:px-0">
 					<h3 className="text-3xl font-bold">Próximos Eventos</h3>
 				</div>
-				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-8 mx-auto max-w-[1200px] px-6 sm:px-0">
-					{Array.from({ length: 6 }).map((_, i) => (
-						<EventCard
-							key={i}
-							href={`evento-${i}`}
-							imageSrc="https://source.unsplash.com/random/720x400"
-							description="lorem impsum dskjf wefwe f wef w fw ef we f wef we f wef we fw ef wef"
-						/>
-					))}
-				</div>
 
-				<div className="flex mt-10 mx-auto max-w-[1200px] px-6 sm:px-0">
+				{posts?.length ? (
+					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-8 mx-auto max-w-[1200px] px-6 sm:px-0">
+						{(posts || [])?.map((event) => (
+							<EventCard key={event?.slug} {...event} />
+						))}
+					</div>
+				) : (
+					<>
+						<div className="w-full flex justify-center items-center py-20">
+							<h3 className="text-xl font-roboto font-thin text-slate-600">
+								No se encontraron eventos próximos
+							</h3>
+						</div>
+					</>
+				)}
+
+				{/* <div className="flex mt-10 mx-auto max-w-[1200px] px-6 sm:px-0">
 					<h3 className="text-3xl font-bold">Eventos pasados</h3>
 				</div>
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-8 mx-auto max-w-[1200px] px-6 sm:px-0">
 					{Array.from({ length: 6 }).map((_, i) => (
 						<EventCard
 							key={i}
+							slug={`evento-${i}`}
 							imageSrc="https://source.unsplash.com/random/720x400"
-							description="lorem impsum dskjf wefwe f wef w fw ef we f wef we f wef we fw ef wef"
+							content="lorem impsum dskjf wefwe f wef w fw ef we f wef we f wef we fw ef wef"
 						/>
 					))}
-				</div>
+				</div> */}
 			</main>
 			<NewsLatter />
 			<Footer mt={20} />
