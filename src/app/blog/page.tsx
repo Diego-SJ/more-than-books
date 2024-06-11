@@ -109,7 +109,6 @@ const BlogPage = () => {
 					data-aos="zoom-out-up"
 					data-aos-delay="100"
 					data-aos-duration="300"
-					data-aos-offset="100"
 					className="flex flex-col items-start w-full justify-center"
 				>
 					<h1 className="text-3xl sm:text-5xl sm:text-start font-roboto font-bold mb-4 w-full text-center text-foreground">
@@ -130,7 +129,6 @@ const BlogPage = () => {
 						data-aos="zoom-out-up"
 						data-aos-delay="200"
 						data-aos-duration="300"
-						data-aos-offset="100"
 					/>
 				</div>
 			</header>

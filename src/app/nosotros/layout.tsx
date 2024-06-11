@@ -1,10 +1,7 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Didact_Gothic, Roboto } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import '@/app/globals.css'
 import { Toaster } from 'sonner'
-
-const inter = Inter({ subsets: ['latin'] })
-const didactGothic = Didact_Gothic({ subsets: ['latin'], weight: '400' })
 const roboto = Roboto({ subsets: ['latin'], weight: '400' })
 
 export const metadata: Metadata = {
@@ -29,9 +26,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="es">
-			<body
-				className={`${inter.className} ${didactGothic.className} ${roboto.className} scroll-smooth min-w-[100vw] max-w-[100vw] overflow-x-hidden`}
-			>
+			<body className={` ${roboto.className}`}>
 				{children}
 				<Toaster position="top-right" richColors />
 			</body>
