@@ -1,5 +1,5 @@
 'use client'
-import React, { useTransition } from 'react'
+import React, { useEffect, useTransition } from 'react'
 import { Input } from './ui/input'
 import { Textarea } from './ui/textarea'
 import { useForm } from 'react-hook-form'
@@ -32,7 +32,14 @@ const ContactForm = () => {
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className="grid gap-y-6 grid-cols-1">
+		<form
+			data-aos="fade-up"
+			data-aos-delay="300"
+			data-aos-duration="300"
+			data-aos-offset="100"
+			onSubmit={handleSubmit(onSubmit)}
+			className="grid gap-y-6 grid-cols-1"
+		>
 			<div className="flex flex-col items-start w-full">
 				<label htmlFor="name" className="mb-2 text-sm font-medium text-gray-700">
 					Nombre *

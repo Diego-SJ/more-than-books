@@ -93,7 +93,6 @@ export async function copyToClipboard(text: string): Promise<void> {
 			document.execCommand('copy')
 			document.body.removeChild(textArea)
 		}
-		console.log('Texto copiado al portapapeles')
 	} catch (error) {
 		console.error('Error al copiar al portapapeles: ', error)
 	}

@@ -42,7 +42,6 @@ const EventsPage = () => {
 				return
 			}
 
-			console.log(data)
 			setCategories(mapCategories(data as Event[]))
 			setBlogPosts(data as Event[])
 			setBlogPostsAux(data as Event[])
@@ -62,7 +61,7 @@ const EventsPage = () => {
 			return categoryMatch && searchMatch
 		})
 		setBlogPosts(filteredPosts)
-	}, [filters.category, filters.search])
+	}, [filters.category, filters.search, postsAux])
 
 	return (
 		<>

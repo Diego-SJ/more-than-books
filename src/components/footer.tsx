@@ -8,7 +8,7 @@ type FooterProps = {
 
 const Footer = ({ mt = 20 }: FooterProps) => {
 	return (
-		<footer className={`flex flex-col font-didact font-base mt-${mt}`}>
+		<footer className={`bg-white flex flex-col font-didact font-base mt-${mt} z-[0] relative`}>
 			<div className="flex justify-between border-y border-slate-200 py-4 px-10 flex-col gap-7 sm:flex-row">
 				<div className="block font-roboto">
 					<Image

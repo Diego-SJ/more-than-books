@@ -8,7 +8,7 @@ const EmptyState = () => {
 			data-aos-duration="500"
 			data-aos-delay="100"
 			data-aos-offset="150"
-			className="flex flex-col w-full mx-auto pb-28 pt-28 justify-center items-center"
+			className="flex flex-col w-full mx-auto pb-28 pt-28 justify-center items-center px-10"
 		>
 			<Image
 				src="/images/webp/empty.webp"

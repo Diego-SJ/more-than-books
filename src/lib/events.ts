@@ -39,7 +39,6 @@ export const getEventBySlug = cache(async (slug: string): Promise<Event> => {
 
 		return transformEventsArray(item, 'unique')[0] || ({} as Event)
 	} catch (error) {
-		console.log({ error })
 		return {} as Event
 	}
 })
@@ -50,7 +49,6 @@ export const getEvents = cache(async (): Promise<Event[]> => {
 
 		return transformEventsArray(item)
 	} catch (error) {
-		console.log({ error })
 		return []
 	}
 })

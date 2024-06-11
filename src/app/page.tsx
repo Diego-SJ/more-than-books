@@ -21,23 +21,20 @@ export default function Home() {
 	return (
 		<>
 			<Navbar theme="dark" />
-			<header className="bg-primary w-full relative z-0 mb-20">
+			<header className="bg-primary w-full relative z-0 mb-20 ">
 				<span className="moving w-[600px] h-[600px] bg-white/5 z-0 absolute rounded-full right-[5%] -top-[25%] animate-pulse block"></span>
 				<span className="moving-2 w-[200px] h-[200px] bg-white/5 z-0 absolute rounded-full left-[10%] top-[50%] animate-pulse block"></span>
 				<span className="moving w-[100px] h-[100px] bg-white/5 z-0 absolute rounded-full right-[10%] top-[70%] animate-pulse block"></span>
-				<div
-					className="h-auto max-h-[20rem] w-[30rem] sm:h-[40rem] sm:max-h-[40rem] sm:w-auto absolute -bottom-[8rem] sm:-bottom-[15rem]  left-1/2 z-0 bounce-1 mx-auto"
-					style={{ transform: 'translateX(-50%) !important' }}
-				>
+				<div className="h-auto max-h-[20rem] w-[30rem] sm:h-[40rem] sm:max-h-[40rem] sm:w-auto absolute -bottom-[8rem] sm:-bottom-[15rem] left-[calc(50%-15rem)] sm:left-[calc(50%-20rem)]  z-0 bounce-1 mx-auto transform">
 					<Image
 						src="/images/webp/reading-idea.webp"
 						alt="Hero Image"
 						width={500}
 						height={500}
-						data-aos="zoom-out-up"
+						data-aos="fade-up"
 						data-aos-delay="50"
 						data-aos-duration="1000"
-						className="w-full h-full object-cover drop-shadow-3xl "
+						className="w-full h-full object-cover drop-shadow-3xl"
 					/>
 				</div>
 
@@ -93,7 +90,7 @@ export default function Home() {
 					>
 						<Link
 							href="#alianzas"
-							className="bg-white text-center font-thin font-roboto text-foreground px-4 py-3 w-48 rounded-xl hover:bg-slate-100 hover:shadow-3xl shadow-black cursor-pointer"
+							className="bg-white text-center font-thin font-roboto text-foreground px-4 pt-3 pb-2 w-48 rounded-xl hover:bg-slate-100 hover:shadow-3xl shadow-black cursor-pointer"
 						>
 							Nuestras alianzas
 						</Link>
@@ -106,7 +103,7 @@ export default function Home() {
 					</div>
 				</div>
 			</header>
-			<div className="py-20 mb-20">
+			<div className="pt-48 sm:pt-20 sm:pb-20 mb-20">
 				<div className="container mx-auto px-4">
 					<div className="text-center mb-12">
 						<p

@@ -29,7 +29,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="es">
-			<body className={`${inter.className} ${didactGothic.className} ${roboto.className}`}>
+			<body
+				className={`${inter.className} ${didactGothic.className} ${roboto.className} scroll-smooth min-w-[100vw] max-w-[100vw] overflow-x-hidden`}
+			>
 				{children}
 				<Toaster position="top-right" richColors />
 			</body>

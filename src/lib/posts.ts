@@ -35,7 +35,6 @@ export const getPostBySlug = cache(async (slug: string): Promise<BlogPost> => {
 
 		return transformPost(item, 'unique')[0]
 	} catch (error) {
-		console.log({ error })
 		return {} as BlogPost
 	}
 })
@@ -46,7 +45,6 @@ export const getPosts = cache(async (): Promise<BlogPost[]> => {
 
 		return transformPost(item)
 	} catch (error) {
-		console.log({ error })
 		return []
 	}
 })

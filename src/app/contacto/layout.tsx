@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="es">
-			<body className={`${inter.className} ${didactGothic.className} ${roboto.className}`}>
+			<body className={`${inter.className} ${didactGothic.className} ${roboto.className} relative`}>
 				{children}
 			</body>
 			<Toaster position="top-right" richColors />

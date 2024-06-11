@@ -23,7 +23,7 @@ export default function EventCard({ imageSrc, price, date, title, content, slug 
 	}
 
 	const copyUrl = () => {
-		copyToClipboard(window.location.href)
+		copyToClipboard(window.location.host + `/eventos/${slug}`)
 		toast.success('URL copiada al portapapeles')
 	}
 

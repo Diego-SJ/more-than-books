@@ -5,6 +5,8 @@ import { Transition } from '@headlessui/react'
 import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 type NavbarProps = {
 	theme?: 'light' | 'dark'
@@ -117,7 +119,7 @@ export default function Navbar({ theme = 'light', currentPath = 'home' }: Navbar
 				leaveFrom="translate-x-0"
 				leaveTo="translate-x-full"
 			>
-				<div className="flex flex-col items-center justify-center min-h-screen space-y-6 fixed inset-0 bg-white z-[100] pb-20">
+				<div className="flex flex-col items-center justify-center min-h-screen space-y-6 fixed inset-0 bg-white z-[10000] pb-20">
 					<span className="moving w-[200px] h-[200px]  bg-primary/10 z-0 absolute rounded-full right-[0%] top-[-0%] animate-pulse sm:block"></span>
 					<span className="moving-2 w-[150px] h-[150px] bg-primary/10 z-0 absolute rounded-full left-[-10%] top-[50%] animate-pulse sm:block"></span>
 					<span className="moving w-[80px] h-[80px] bg-primary/10 z-0 absolute rounded-full right-[10%] bottom-[20%] animate-pulse sm:block"></span>
@@ -127,41 +129,68 @@ export default function Navbar({ theme = 'light', currentPath = 'home' }: Navbar
 					>
 						<X className="text-foreground" />
 					</button>
-					<Link href={'/'} className="text-foreground text-2xl" onClick={() => setIsOpen(false)}>
+					<Link
+						href={'/'}
+						onClick={() => setIsOpen(false)}
+						className="text-foreground text-2xl font-roboto"
+						data-aos="zoom-out-up"
+						data-aos-duration="600"
+						data-aos-offset="200"
+					>
 						Inicio
 					</Link>
 					<Link
 						href={'/eventos'}
-						className="text-foreground text-2xl"
 						onClick={() => setIsOpen(false)}
+						className="text-foreground text-2xl font-roboto"
+						data-aos="zoom-out-up"
+						data-aos-delay="100"
+						data-aos-duration="600"
+						data-aos-offset="200"
 					>
 						Eventos
 					</Link>
 					<Link
 						href={'/#alianzas'}
-						className="text-foreground text-2xl"
 						onClick={() => setIsOpen(false)}
+						className="text-foreground text-2xl font-roboto"
+						data-aos="zoom-out-up"
+						data-aos-delay="200"
+						data-aos-duration="600"
+						data-aos-offset="200"
 					>
 						Alianzas
 					</Link>
 					<Link
 						href={'/blog'}
-						className="text-foreground text-2xl"
 						onClick={() => setIsOpen(false)}
+						className="text-foreground text-2xl font-roboto"
+						data-aos="zoom-out-up"
+						data-aos-delay="300"
+						data-aos-duration="600"
+						data-aos-offset="200"
 					>
 						Blog
 					</Link>
 					<Link
 						href={'/nosotros'}
-						className="text-foreground text-2xl"
 						onClick={() => setIsOpen(false)}
+						className="text-foreground text-2xl font-roboto"
+						data-aos="zoom-out-up"
+						data-aos-delay="400"
+						data-aos-duration="600"
+						data-aos-offset="200"
 					>
 						Nosotros
 					</Link>
 					<Link
 						href={'/contacto'}
-						className="text-foreground text-2xl"
 						onClick={() => setIsOpen(false)}
+						className="text-foreground text-2xl font-roboto"
+						data-aos="zoom-out-up"
+						data-aos-delay="500"
+						data-aos-duration="600"
+						data-aos-offset="200"
 					>
 						Contactanos
 					</Link>

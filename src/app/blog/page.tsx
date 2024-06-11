@@ -67,7 +67,7 @@ const BlogPage = () => {
 		<>
 			<Navbar currentPath="blog" />
 			<header
-				data-aos="zoom-out-up"
+				data-aos="fade-up"
 				data-aos-delay="0"
 				data-aos-duration="300"
 				className="mb-11 sm:mb-10 md:mb-8 container rounded-2xl max-w-[95%] xl:max-w-[1400px] flex justify-center items-center py-8 bg-primary mt-20 overflow-hidden relative"
@@ -109,6 +109,7 @@ const BlogPage = () => {
 					data-aos="zoom-out-up"
 					data-aos-delay="100"
 					data-aos-duration="300"
+					data-aos-offset="100"
 					className="flex flex-col items-start w-full justify-center"
 				>
 					<h1 className="text-3xl sm:text-5xl sm:text-start font-roboto font-bold mb-4 w-full text-center text-foreground">
@@ -129,6 +130,7 @@ const BlogPage = () => {
 						data-aos="zoom-out-up"
 						data-aos-delay="200"
 						data-aos-duration="300"
+						data-aos-offset="100"
 					/>
 				</div>
 			</header>

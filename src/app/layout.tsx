@@ -26,7 +26,11 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="es">
-			<body className={`${roboto.className} scroll-smooth`}>{children}</body>
+			<body
+				className={`${roboto.className} scroll-smooth min-w-[100vw] max-w-[100vw] overflow-x-hidden`}
+			>
+				{children}
+			</body>
 			<Toaster position="top-right" richColors />
 		</html>
 	)
