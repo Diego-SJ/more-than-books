@@ -70,7 +70,7 @@ const BlogPage = () => {
 				data-aos="fade-up"
 				data-aos-delay="0"
 				data-aos-duration="300"
-				className="mb-11 sm:mb-10 md:mb-8 container rounded-2xl max-w-[95%] xl:max-w-[95%] 2xl:max-w-[1400px] flex justify-center items-center py-8 bg-primary mt-20 overflow-hidden relative"
+				className="mb-11 max-h-40 sm:mb-10 md:mb-8 container rounded-2xl max-w-[95%] xl:max-w-[95%] 2xl:max-w-[1400px] flex justify-center items-center py-8 bg-primary mt-20 overflow-hidden relative"
 			>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +88,7 @@ const BlogPage = () => {
 					alt="bulb"
 					width={500}
 					height={300}
-					className="hidden sm:block w-auto h-auto object-contain drop-shadow-3xl z-[0] bounce-1"
+					className="hidden sm:block w-auto h-auto object-contain drop-shadow-3xl z-[0] bounce-1 max-h-28"
 				/>
 				<h1 className="text-5xl font-roboto font-bold w-full text-center text-primary-foreground z-[0] min-w-[50%]">
 					Blog
@@ -98,7 +98,7 @@ const BlogPage = () => {
 					alt="pencil"
 					width={500}
 					height={300}
-					className="hidden sm:block w-auto h-auto object-contain drop-shadow-3xl z-[0] bounce-2"
+					className="hidden sm:block w-auto h-auto object-contain drop-shadow-3xl z-[0] bounce-2 max-h-28"
 				/>
 			</header>
 			<header className="container  flex flex-col sm:flex-row relative">
@@ -109,6 +109,7 @@ const BlogPage = () => {
 					data-aos="fade-up"
 					data-aos-delay="100"
 					data-aos-duration="300"
+					data-aos-offset="-1000"
 					className="flex flex-col items-start w-full justify-center"
 				>
 					<h1 className="text-3xl sm:text-5xl sm:text-start font-roboto font-bold mb-4 w-full text-center text-foreground">
@@ -129,6 +130,7 @@ const BlogPage = () => {
 						data-aos="fade-up"
 						data-aos-delay="200"
 						data-aos-duration="300"
+						data-aos-offset="-1000"
 					/>
 				</div>
 			</header>
