@@ -14,7 +14,7 @@ import { toast } from 'sonner'
 import { Event } from '@/types/event'
 import { getEventBySlug } from '@/lib/events'
 import dayjs from 'dayjs'
-import { copyToClipboard } from '@/lib/utils'
+import { copyToClipboard, createGoogleCalendarLink } from '@/lib/utils'
 import 'dayjs/locale/es'
 dayjs.locale('es')
 import Aos from 'aos'
@@ -64,8 +64,8 @@ const EventsPage = ({ params: { event_id } }: any) => {
 		}
 	}, [onMounted, event_id, components])
 
-	const copyUrl = () => {
-		copyToClipboard(window.location.href)
+	const copyUrl = async () => {
+		await copyToClipboard(window.location.href)
 		toast.success('Copiado al portapapeles')
 	}
 
@@ -138,12 +138,14 @@ const EventsPage = ({ params: { event_id } }: any) => {
 					</h3>
 
 					<div className="flex flex-col items-start gap-2 w-full">
-						<div className="flex flex-col items-center mb-3 gap-3 w-full md:flex-row">
-							<p className="hidden md:inline-flex m-0 text-center">
-								Da click para agregar el evento en tu calendario
-							</p>
-							<Button className="w-full max-w-52 mx-auto">Agregar al calendario</Button>
+						<div className="flex justify-center items-center mb-3 gap-3 w-full md:flex-row">
+							<a href={createGoogleCalendarLink(post)} target="_blank" rel="noreferrer noopener">
+								<Button className="w-full max-w-52 mx-auto font-roboto font-extralight">
+									Agregar al calendario
+								</Button>
+							</a>
 						</div>
+						<p className="font-roboto text-center w-full font-thin text-base">Comparte en</p>
 						<div className="flex gap-4 justify-center w-full">
 							<a
 								href={`https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`}

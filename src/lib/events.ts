@@ -22,7 +22,7 @@ export function transformEventsArray(apiResponse: any, type?: string): Event[] {
 			title: Nombre,
 			date: Fecha,
 			location: Ubicacion,
-			content: type === 'unique' ? Contenido : Contenido?.substring(0, 80) + '...',
+			content: type === 'unique' ? Contenido : Contenido?.substring(0, 100) + '...',
 			price: price || 0,
 			category: categories || 'Sin categoría',
 			slug: slug,

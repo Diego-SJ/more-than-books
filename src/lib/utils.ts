@@ -97,3 +97,25 @@ export async function copyToClipboard(text: string): Promise<void> {
 		console.error('Error al copiar al portapapeles: ', error)
 	}
 }
+
+export const createGoogleCalendarLink = (event: Event): string => {
+	const { title, date, location, content } = event
+	if (!date) return '#'
+
+	const startDate = new Date(date)
+	const endDate = new Date(date)
+	endDate.setHours(23, 59, 59, 999) // Final del día
+
+	const startDateISO = startDate.toISOString().replace(/-|:|\.\d\d\d/g, '')
+	const endDateISO = endDate.toISOString().replace(/-|:|\.\d\d\d/g, '')
+
+	const eventDetails = encodeURIComponent(`${content}`)
+
+	const googleCalendarLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+		title || 'Evento'
+	)}&dates=${startDateISO}/${endDateISO}&details=${
+		eventDetails || ''
+	}&location=${encodeURIComponent(location || 'Virtual')}`
+
+	return googleCalendarLink
+}
