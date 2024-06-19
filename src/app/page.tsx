@@ -62,7 +62,7 @@ export default function Home() {
 						data-aos="zoom-out-up"
 						data-aos-delay="70"
 						data-aos-duration="1400"
-						data-aos-offset="200"
+						data-aos-offset="-200"
 						className="hidden md:block z-[0] bounce-2 absolute bottom-[15%] right-[10%]"
 					>
 						<Image

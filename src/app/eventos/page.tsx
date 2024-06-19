@@ -13,7 +13,7 @@ import {
 	SelectTrigger,
 	SelectValue
 } from '@/components/ui/select'
-import { getEvents } from '@/lib/events'
+import { filterIncomingEvents, filterPrevoiusEvents, getEvents } from '@/lib/events'
 import { includes, mapCategories } from '@/lib/utils'
 import { Event } from '@/types/event'
 import Image from 'next/image'
@@ -24,7 +24,8 @@ import 'aos/dist/aos.css'
 import EmptyState from '@/components/empty-state'
 
 const EventsPage = () => {
-	const [posts, setBlogPosts] = useState<Event[]>([])
+	const [incomingEvents, setIncomingEvents] = useState<Event[]>([])
+	const [previuosEvents, setPreviousEvents] = useState<Event[]>([])
 	const [postsAux, setBlogPostsAux] = useState<Event[]>([])
 	const [categories, setCategories] = useState<string[]>([])
 	const [filters, setFilters] = useState({ category: 'todos', search: '' })
@@ -43,7 +44,8 @@ const EventsPage = () => {
 			}
 
 			setCategories(mapCategories(data as Event[]))
-			setBlogPosts(data as Event[])
+			setPreviousEvents(filterPrevoiusEvents(data))
+			setIncomingEvents(filterIncomingEvents(data))
 			setBlogPostsAux(data as Event[])
 		}
 
@@ -60,13 +62,14 @@ const EventsPage = () => {
 				includes(post.title, filters.search) || includes(post.content, filters.search)
 			return categoryMatch && searchMatch
 		})
-		setBlogPosts(filteredPosts)
+		setPreviousEvents(filterPrevoiusEvents(filteredPosts))
+		setIncomingEvents(filterIncomingEvents(filteredPosts))
 	}, [filters.category, filters.search, postsAux])
 
 	return (
 		<>
 			<Navbar currentPath="events" />
-			<main className="container pt-[65px] sm:pt-20 px-0 sm:px-6">
+			<main className="container pt-[65px] sm:pt-20 px-0 sm:px-6 mb-40">
 				<div className="w-full m-h-[300px] sm:rounded-3xl  sm:h-96 p-6 relative flex flex-col bg-primary">
 					<div className="mt-10 sm:mt-auto mb-10 flex flex-col sm:flex-row">
 						<div className="w-full flex flex-col justify-center">
@@ -119,7 +122,7 @@ const EventsPage = () => {
 							onChange={({ target }) => setFilters((prev) => ({ ...prev, search: target?.value }))}
 						/>
 						<div className="flex flex-row gap-4">
-							<Select>
+							<Select onValueChange={(category) => setFilters((prev) => ({ ...prev, category }))}>
 								<SelectTrigger className="w-full sm:w-[180px]">
 									<SelectValue placeholder="Categoría" />
 								</SelectTrigger>
@@ -139,7 +142,7 @@ const EventsPage = () => {
 					</div>
 				</div>
 
-				{posts?.length ? (
+				{postsAux?.length ? (
 					<>
 						<div className="flex mt-10 mx-auto max-w-[1200px] px-6 sm:px-0">
 							<h3
@@ -153,18 +156,56 @@ const EventsPage = () => {
 							</h3>
 						</div>
 						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-8 mx-auto max-w-[1200px] px-6 sm:px-0">
-							{(posts || [])?.map((event, index) => (
-								<div
-									key={event?.slug}
-									data-aos="fade-up"
-									data-aos-duration="300"
-									data-aos-delay={index * 50}
-									data-aos-offset="150"
-									className="w-full"
-								>
-									<EventCard {...event} />
-								</div>
-							))}
+							{!!incomingEvents?.length ? (
+								<>
+									{(incomingEvents || [])?.map((event, index) => (
+										<div
+											key={event?.slug}
+											data-aos="fade-up"
+											data-aos-duration="300"
+											data-aos-delay={index * 50}
+											data-aos-offset="150"
+											className="w-full"
+										>
+											<EventCard {...event} />
+										</div>
+									))}
+								</>
+							) : (
+								<p className="font-roboto font-extralight mb-10">No hay eventos próximos</p>
+							)}
+						</div>
+
+						<div className="flex mt-10 mx-auto max-w-[1200px] px-6 sm:px-0">
+							<h3
+								data-aos="fade-up"
+								data-aos-duration="500"
+								data-aos-delay="0"
+								data-aos-offset="150"
+								className="text-3xl font-bold"
+							>
+								Eventos pasados
+							</h3>
+						</div>
+						<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-8 mx-auto max-w-[1200px] px-6 sm:px-0">
+							{!!previuosEvents?.length ? (
+								<>
+									{(previuosEvents || [])?.map((event, index) => (
+										<div
+											key={event?.slug}
+											data-aos="fade-up"
+											data-aos-duration="300"
+											data-aos-delay={index * 50}
+											data-aos-offset="150"
+											className="w-full"
+										>
+											<EventCard {...event} />
+										</div>
+									))}
+								</>
+							) : (
+								<p className="font-roboto font-extralight mb-10">No hay eventos próximos</p>
+							)}
 						</div>
 					</>
 				) : (

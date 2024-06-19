@@ -75,7 +75,7 @@ const EventsPage = ({ params: { event_id } }: any) => {
 			<header
 				className="relative pt-[65px] sm:pt-20 px-0 min-h-[200px] sm:px-6 md:min-h-80 z-0"
 				style={{
-					background: `linear-gradient(to bottom, hsl(var(--primary) / 100%), hsl(var(--primary) / 50%), hsl(var(--primary) / 30%) ), url('${post?.imageSrc}')`,
+					background: `url('/images/svg/pattern-bg.svg'), linear-gradient(to bottom, hsl(var(--primary) / 100%), hsl(var(--primary) / 100%) )`,
 					backgroundRepeat: 'no-repeat',
 					backgroundSize: 'contain',
 					backgroundPosition: '100% auto'
@@ -95,12 +95,12 @@ const EventsPage = ({ params: { event_id } }: any) => {
 					<div className="flex items-start gap-2 mb-3">
 						{post?.date && post?.title ? (
 							<>
-								<Clock className="text-primary mt-1" size={18} />
+								<Clock className="text-primary mt-2" size={18} />
 								<div className="flex flex-col">
-									<p className="text-base sm:text-lg font-didact text-secondary-foreground/50">
+									<p className="text-base sm:text-lg font-didact text-secondary-foreground/70">
 										{dayjs(post?.date).format('dddd D [de] MMMM [del] YYYY')}
 									</p>
-									<p className="text-base sm:text-lg font-didact">
+									<p className="text-base sm:text-lg font-didact text-secondary-foreground/50">
 										{dayjs(post?.date).format('HH:mm a')}
 									</p>
 								</div>
@@ -112,7 +112,7 @@ const EventsPage = ({ params: { event_id } }: any) => {
 						)}
 					</div>
 
-					<div className="flex gap-2 items-center">
+					<div className="flex gap-2 items-center  mb-3">
 						{post?.location ? (
 							<>
 								<MapPin className="text-primary mt-0" size={19} />
@@ -120,11 +120,23 @@ const EventsPage = ({ params: { event_id } }: any) => {
 									<a
 										href={post?.location || ''}
 										target="_blank"
-										className="text-base sm:text-lg font-didact text-primary hover:underline"
+										className="text-base sm:text-lg font-didact text-secondary-foreground/70 hover:text-primary underline"
 									>
 										Ver ubicación en Google Maps
 									</a>
 								</div>
+							</>
+						) : (
+							<Skeleton className="h-6 w-full" />
+						)}
+					</div>
+					<div className="flex gap-2 items-center">
+						{post?.author ? (
+							<>
+								<Crown className="text-primary mt-0" size={19} />
+								<p className="text-base sm:text-lg font-didact text-secondary-foreground/70">
+									{post?.author || '- - -'}
+								</p>
 							</>
 						) : (
 							<Skeleton className="h-6 w-full" />
@@ -205,24 +217,7 @@ const EventsPage = ({ params: { event_id } }: any) => {
 				data-aos-duration="300"
 				className="container relative mt-10 gap-6 sm:mt-20 flex flex-col sm:flex-row max-w-[900px] mb-20"
 			>
-				{!!post?.content ? (
-					<>
-						<div className="w-full">{blogContent}</div>
-						<div className="border border-slate-500/50 rounded-xl px-4 py-4 w-full h-min">
-							<div className="flex gap-3">
-								<span className="bg-slate-200 h-12 w-12 rounded-full grid place-content-center">
-									<Crown className="text-slate-600" />
-								</span>
-								<div className="flex flex-col items-start">
-									<h5 className="text-sm font-roboto font-thin text-slate-500">Organizador</h5>
-									<h3 className="text-lg font-roboto font-semibold">{post?.author || '- - -'}</h3>
-								</div>
-							</div>
-						</div>
-					</>
-				) : (
-					<SkeletonContainer />
-				)}
+				{!!post?.content ? <div className="w-full">{blogContent}</div> : <SkeletonContainer />}
 			</main>
 			{/* <section className="container w-full flex flex-col justify-center max-w-[900px]">
 				<h3 className="text-base text-foreground mb-4 font-roboto font-semibold md:text-xl">

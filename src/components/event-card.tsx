@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 // import { useState } from 'react'
 import 'dayjs/locale/es'
+import { markdownToPlainText } from '@/lib/utils'
 dayjs.locale('es')
 
 type EventCardProps = Event
@@ -71,7 +72,7 @@ export default function EventCard({ imageSrc, price, date, title, content, slug 
 						{title || 'Mi evento'}
 					</div>
 					<div className="mt-1 text-gray-600 text-sm font-roboto font-extralight">
-						{content || '- - -'}
+						{markdownToPlainText(content || '- - -')}
 					</div>
 				</div>
 			</div>

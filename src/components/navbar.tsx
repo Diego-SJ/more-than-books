@@ -52,7 +52,7 @@ export default function Navbar({ theme = 'light', currentPath = 'home' }: Navbar
 						width={100}
 						height={100}
 						priority
-						className={`h-10 ${scrolled || theme === 'light' ? '' : 'filter-white'}`}
+						className={`h-10 w-[80px] ${scrolled || theme === 'light' ? '' : 'filter-white'}`}
 					/>
 				</Link>
 				<div className="hidden md:flex gap-5">

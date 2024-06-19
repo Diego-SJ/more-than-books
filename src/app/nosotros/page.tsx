@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { useEffect } from 'react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import VideoPlayer from '@/components/video-player'
 
 const AboutUsPage = () => {
 	useEffect(() => {
@@ -483,6 +484,14 @@ const AboutUsPage = () => {
 						</div>
 					</section>
 				</main>
+				<div className="flex justify-center items-center mb-40">
+					<VideoPlayer
+						src="/videos/test.mp4"
+						poster="/videos/poster.png"
+						width="70%"
+						height="auto"
+					/>
+				</div>
 				<NewsLatter />
 				<Footer mt={20} />
 			</div>

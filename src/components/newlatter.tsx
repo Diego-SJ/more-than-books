@@ -32,7 +32,7 @@ export default function NewsLatter() {
 			data-aos="fade-up"
 			data-aos-duration="600"
 			data-aos-delay="0"
-			data-aos-offset="200"
+			data-aos-offset="-150"
 			className="container mx-auto my-10"
 		>
 			<div className="w-full  py-16 px-4 text-center rounded-3xl bg-primary relative overflow-hidden">

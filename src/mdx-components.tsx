@@ -34,7 +34,7 @@ export function useMDXComponents(): MDXComponents {
 				rel="blog post"
 				{...(props as ImageProps)}
 				alt="blog post"
-				className="mx-auto"
+				className="mx-auto w-[80%] h-auto rounded-md my-6"
 			/>
 		),
 

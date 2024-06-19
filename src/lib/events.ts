@@ -52,3 +52,13 @@ export const getEvents = cache(async (): Promise<Event[]> => {
 		return []
 	}
 })
+
+export const filterPrevoiusEvents = (events: Event[]): Event[] => {
+	const today = new Date()
+	return events.filter((event) => new Date(event.date || '') < today)
+}
+
+export const filterIncomingEvents = (events: Event[]): Event[] => {
+	const today = new Date()
+	return events.filter((event) => new Date(event.date || '') >= today)
+}

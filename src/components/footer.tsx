@@ -19,7 +19,7 @@ const Footer = ({ mt = 20 }: FooterProps) => {
 						width={100}
 						priority
 						height={100}
-						className={`h-10 `}
+						className={`h-10 w-[80px]`}
 					/>
 
 					<p className="text-foreground/60 text-sm my-3">Siguenos en nuestras redes sociales</p>
