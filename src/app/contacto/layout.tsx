@@ -10,7 +10,23 @@ const roboto = Roboto({ subsets: ['latin'], weight: '400' })
 export const metadata: Metadata = {
 	title: 'Contacto',
 	description: '¿Tienes alguna duda o comentario? Contáctanos y te responderemos lo antes posible.',
-	icons: '/images/webp/logo.webp'
+	icons: '/images/webp/logo.webp',
+	openGraph: {
+		type: 'website',
+		locale: 'es_ES',
+		url: 'https://morethanbooks.vercel.app/',
+		title: 'Contacto',
+		description:
+			'¿Tienes alguna duda o comentario? Contáctanos y te responderemos lo antes posible.',
+		images: [
+			{
+				url: '/images/webp/logo.webp',
+				width: 1200,
+				height: 630,
+				alt: 'Contacto'
+			}
+		]
+	}
 }
 
 export const viewport: Viewport = {

@@ -8,7 +8,23 @@ export const metadata: Metadata = {
 	title: 'Acerca de More than books',
 	description:
 		'Acerca de More than books es una sección donde podrás encontrar información sobre la librería.',
-	icons: '/images/webp/logo.webp'
+	icons: '/images/webp/logo.webp',
+	openGraph: {
+		type: 'website',
+		locale: 'es_ES',
+		url: 'https://morethanbooks.vercel.app/',
+		title: 'Acerca de More than books',
+		description:
+			'Acerca de More than books es una sección donde podrás encontrar información sobre la librería.',
+		images: [
+			{
+				url: '/images/webp/logo.webp',
+				width: 1200,
+				height: 630,
+				alt: 'Acerca de More than books'
+			}
+		]
+	}
 }
 
 export const viewport: Viewport = {

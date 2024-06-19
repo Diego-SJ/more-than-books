@@ -11,7 +11,23 @@ export const metadata: Metadata = {
 	title: 'Eventos de More than books',
 	description:
 		'Eventos de More than books es una sección donde podrás encontrar los eventos más recientes de la librería.',
-	icons: '/images/webp/logo.webp'
+	icons: '/images/webp/logo.webp',
+	openGraph: {
+		type: 'website',
+		locale: 'es_ES',
+		url: 'https://morethanbooks.vercel.app/',
+		title: 'Eventos de More than books',
+		description:
+			'Eventos de More than books es una sección donde podrás encontrar los eventos más recientes de la librería.',
+		images: [
+			{
+				url: '/images/webp/logo.webp',
+				width: 1200,
+				height: 630,
+				alt: 'Eventos de More than books'
+			}
+		]
+	}
 }
 
 export const viewport: Viewport = {

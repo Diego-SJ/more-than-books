@@ -11,7 +11,23 @@ export const metadata: Metadata = {
 	title: 'Blog de More than books',
 	description:
 		'Blog de More than books es una sección donde podrás encontrar noticias y artículos interesantes.',
-	icons: '/images/webp/logo.webp'
+	icons: '/images/webp/logo.webp',
+	openGraph: {
+		type: 'website',
+		locale: 'es_ES',
+		url: 'https://morethanbooks.vercel.app/',
+		title: 'Blog de More than books',
+		description:
+			'Blog de More than books es una sección donde podrás encontrar noticias y artículos interesantes.',
+		images: [
+			{
+				url: '/images/webp/logo.webp',
+				width: 1200,
+				height: 630,
+				alt: 'Blog de More than books'
+			}
+		]
+	}
 }
 
 export const viewport: Viewport = {

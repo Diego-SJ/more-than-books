@@ -10,7 +10,23 @@ export const metadata: Metadata = {
 	title: 'Aviso de privacidad',
 	description:
 		'En esta sección podrás encontrar información sobre el aviso de privacidad de More than books.',
-	icons: '/images/webp/logo.webp'
+	icons: '/images/webp/logo.webp',
+	openGraph: {
+		type: 'website',
+		locale: 'es_ES',
+		url: 'https://morethanbooks.vercel.app/',
+		title: 'Aviso de privacidad',
+		description:
+			'En esta sección podrás encontrar información sobre el aviso de privacidad de More than books.',
+		images: [
+			{
+				url: '/images/webp/logo.webp',
+				width: 1200,
+				height: 630,
+				alt: 'Aviso de privacidad'
+			}
+		]
+	}
 }
 
 export const viewport: Viewport = {
