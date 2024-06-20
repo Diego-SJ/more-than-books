@@ -17,9 +17,12 @@ export async function generateMetadata({
 
 	return {
 		title: product.title,
+		description: markdownToPlainText(product.content || ''),
+		keywords: product.category,
 		openGraph: {
 			title: product.title,
 			description: markdownToPlainText(product.content || ''),
+			tags: product.category,
 			images: [
 				{
 					url: product.imageSrc as string,

@@ -17,6 +17,8 @@ export async function generateMetadata({
 
 	return {
 		title: product.title,
+		description: markdownToPlainText(product.description || ''),
+		keywords: product.categories,
 		openGraph: {
 			title: product.title,
 			description: markdownToPlainText(product.description || ''),
