@@ -13,6 +13,8 @@ export const contentType = 'image/png'
 export default async function Image({ params }: { params: { blog_id: string } }) {
 	const post = await getEventBySlug(params.blog_id)
 
+	console.log(post)
+
 	return new ImageResponse(
 		(
 			<div
@@ -26,7 +28,7 @@ export default async function Image({ params }: { params: { blog_id: string } })
 					justifyContent: 'center'
 				}}
 			>
-				{post.title}
+				{post.title} ergerher
 			</div>
 		),
 		{

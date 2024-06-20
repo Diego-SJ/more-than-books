@@ -9,7 +9,7 @@ const roboto = Roboto({ subsets: ['latin'], weight: '400' })
 export const metadata: Metadata = {
 	title: 'Aviso de privacidad',
 	description:
-		'En esta sección podrás encontrar información sobre el aviso de privacidad de More than books.',
+		'Lee nuestro aviso de privacidad para entender cómo protegemos tu información personal.',
 	icons: '/images/webp/logo.webp',
 	openGraph: {
 		type: 'website',
@@ -17,10 +17,10 @@ export const metadata: Metadata = {
 		url: 'https://morethanbooks.vercel.app/',
 		title: 'Aviso de privacidad',
 		description:
-			'En esta sección podrás encontrar información sobre el aviso de privacidad de More than books.',
+			'Lee nuestro aviso de privacidad para entender cómo protegemos tu información personal.',
 		images: [
 			{
-				url: '/images/webp/logo.webp',
+				url: 'https://gylkgwpiwqqigjxbvehs.supabase.co/storage/v1/object/public/supabase/open-graph/reading-idea.webp',
 				width: 1200,
 				height: 630,
 				alt: 'Aviso de privacidad'

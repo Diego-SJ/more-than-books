@@ -9,18 +9,19 @@ const roboto = Roboto({ subsets: ['latin'], weight: '400' })
 
 export const metadata: Metadata = {
 	title: 'Contacto',
-	description: '¿Tienes alguna duda o comentario? Contáctanos y te responderemos lo antes posible.',
+	description:
+		'Contáctanos para consultas, soporte o información sobre nuestros servicios educativos.',
 	icons: '/images/webp/logo.webp',
 	openGraph: {
 		type: 'website',
 		locale: 'es_ES',
 		url: 'https://morethanbooks.vercel.app/',
-		title: 'Contacto',
+		title: '¡Contactanos!',
 		description:
-			'¿Tienes alguna duda o comentario? Contáctanos y te responderemos lo antes posible.',
+			'Contáctanos para consultas, soporte o información sobre nuestros servicios educativos.',
 		images: [
 			{
-				url: '/images/webp/logo.webp',
+				url: 'https://gylkgwpiwqqigjxbvehs.supabase.co/storage/v1/object/public/supabase/open-graph/news.webp',
 				width: 1200,
 				height: 630,
 				alt: 'Contacto'

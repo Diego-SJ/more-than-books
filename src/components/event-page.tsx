@@ -189,9 +189,9 @@ const EventsPage = ({ event_id }: { event_id: string }) => {
 									<polygon fill="currentColor" points="41,6 9.929,42 6.215,42 37.287,6" />
 									<polygon
 										fill="transparent"
-										fill-rule="evenodd"
+										fillRule="evenodd"
 										points="31.143,41 7.82,7 16.777,7 40.1,41"
-										clip-rule="evenodd"
+										clipRule="evenodd"
 									/>
 									<path
 										fill="currentColor"

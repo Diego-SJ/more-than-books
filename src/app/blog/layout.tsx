@@ -16,12 +16,12 @@ export const metadata: Metadata = {
 		type: 'website',
 		locale: 'es_ES',
 		url: 'https://morethanbooks.vercel.app/',
-		title: 'Blog de More than books',
+		title: 'Blog',
 		description:
-			'Blog de More than books es una sección donde podrás encontrar noticias y artículos interesantes.',
+			'Descubre artículos interesantes y estrategias de aprendizaje. Encuentra tutoriales prácticos y análisis detallados en el blog de More than Books.',
 		images: [
 			{
-				url: '/images/webp/logo.webp',
+				url: 'https://gylkgwpiwqqigjxbvehs.supabase.co/storage/v1/object/public/supabase/open-graph/online-education.webp',
 				width: 1200,
 				height: 630,
 				alt: 'Blog de More than books'

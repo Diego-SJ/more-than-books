@@ -16,12 +16,11 @@ export const metadata: Metadata = {
 		type: 'website',
 		locale: 'es_ES',
 		url: 'https://morethanbooks.vercel.app/',
-		title: 'Eventos de More than books',
-		description:
-			'Eventos de More than books es una sección donde podrás encontrar los eventos más recientes de la librería.',
+		title: 'Eventos',
+		description: 'Descubre cuales son los eventos pasados y próximos de More Than Books.',
 		images: [
 			{
-				url: '/images/webp/logo.webp',
+				url: 'https://gylkgwpiwqqigjxbvehs.supabase.co/storage/v1/object/public/supabase/open-graph/events.webp',
 				width: 1200,
 				height: 630,
 				alt: 'Eventos de More than books'

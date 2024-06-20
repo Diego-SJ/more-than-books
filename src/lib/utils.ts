@@ -48,7 +48,7 @@ export function markdownToPlainText(markdown: string): string {
 	// Retirar cualquier línea vacía restante
 	plainText = plainText.replace(/\n{2,}/g, '\n\n')
 
-	return plainText.trim()
+	return plainText?.trim()?.substring(0, 120) + '...'
 }
 
 export const mapCategories = (blogs: BlogPost[] | Event[]): string[] => {

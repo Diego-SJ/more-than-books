@@ -15,10 +15,10 @@ export const metadata: Metadata = {
 		url: 'https://morethanbooks.vercel.app/',
 		title: 'Acerca de More than books',
 		description:
-			'Acerca de More than books es una sección donde podrás encontrar información sobre la librería.',
+			'Conoce la historia, los founders, nuestra misión y visión y mucho más acerca de More than Books.',
 		images: [
 			{
-				url: '/images/webp/logo.webp',
+				url: 'https://gylkgwpiwqqigjxbvehs.supabase.co/storage/v1/object/public/supabase/open-graph/logo.webp',
 				width: 1200,
 				height: 630,
 				alt: 'Acerca de More than books'
