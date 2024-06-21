@@ -1,10 +1,8 @@
 import type { Viewport } from 'next'
-import { Inter, Didact_Gothic, Roboto } from 'next/font/google'
+import { Roboto } from 'next/font/google'
 import '@/app/globals.css'
 import { Toaster } from 'sonner'
 
-const inter = Inter({ subsets: ['latin'] })
-const didactGothic = Didact_Gothic({ subsets: ['latin'], weight: '400' })
 const roboto = Roboto({ subsets: ['latin'], weight: '400' })
 
 export const viewport: Viewport = {
@@ -22,7 +20,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="es">
-			<body className={`${inter.className} ${didactGothic.className} ${roboto.className} relative`}>
+			<body className={`${roboto.className} relative`}>
 				{children}
 				<Toaster position="top-right" richColors />
 			</body>

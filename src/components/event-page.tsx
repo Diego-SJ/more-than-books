@@ -87,7 +87,7 @@ const EventsPage = ({ event_id }: { event_id: string }) => {
 				className="relative flex flex-col sm:flex-row bg-white text-secondary-foreground w-full mx-auto max-w-[90%] md:max-w-[900px] rounded-2xl shadow-2xl -mt-20 z-[0]"
 			>
 				<div className="relative sm:w-full border-b-[3px] sm:border-b-transparent sm:border-r-[3px] border-dashed border-black/10 px-6 pt-6 pb-10 before:content-[''] before:w-10 before:h-10 before:bg-white before:rounded-full before:absolute before:left-1/2 sm:before:left-[100%] sm:before:top-1/2 before:-translate-x-1/2 sm:before:-translate-x-1/2 sm:before:-translate-y-1/2 before:-bottom-5 sm:before:bottom-[initial] before:shadow-inner-lg">
-					<h2 className="text-xl mb-3 font-roboto font-semibold md:text-3xl">
+					<h2 className="text-3xl mb-3 font-roboto font-semibold">
 						{post?.title || <Skeleton className="h-6 w-full" />}
 					</h2>
 
@@ -121,7 +121,7 @@ const EventsPage = ({ event_id }: { event_id: string }) => {
 										target="_blank"
 										className="text-base sm:text-lg font-didact text-secondary-foreground/70 hover:text-primary underline"
 									>
-										Ver ubicación en Google Maps
+										Ver ubicación
 									</a>
 								</div>
 							</>
@@ -143,8 +143,8 @@ const EventsPage = ({ event_id }: { event_id: string }) => {
 					</div>
 				</div>
 
-				<div className=" px-6 py-6 sm:w-full">
-					<h3 className="text-lg text-foreground mb-3 font-roboto font-semibold md:text-2xl md:text-center">
+				<div className=" px-6 py-6 sm:w-full flex flex-col justify-center">
+					<h3 className="text-lg text-foreground mb-3 font-roboto font-semibold md:text-2xl text-center">
 						Unete
 					</h3>
 
