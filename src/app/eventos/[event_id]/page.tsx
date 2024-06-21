@@ -35,6 +35,7 @@ export async function generateMetadata({
 		openGraph: {
 			title: product.title,
 			description: markdownToPlainText(product.content || ''),
+			url: `https://morethanbooks.mx/eventos/${id}`,
 			images: [
 				{
 					url: product.imageSrc as string,

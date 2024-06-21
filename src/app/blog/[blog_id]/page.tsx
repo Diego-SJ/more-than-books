@@ -1,7 +1,7 @@
-import BlogDetailPage from '@/components/blog-page'
 import { getPostBySlug } from '@/lib/posts'
 import { markdownToPlainText } from '@/lib/utils'
 import { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 import React from 'react'
 
 export async function generateMetadata({
@@ -11,6 +11,19 @@ export async function generateMetadata({
 }): Promise<Metadata> {
 	// read route params
 	const id = params.blog_id
+
+	if (!id) {
+		return {
+			title: 'Evento no encontrado',
+			description: 'Evento no encontrado',
+			keywords: 'Evento no encontrado',
+			openGraph: {
+				title: 'Evento no encontrado',
+				description: 'Evento no encontrado',
+				tags: 'Evento no encontrado'
+			}
+		}
+	}
 
 	// fetch data
 	const product = await getPostBySlug(id)
@@ -22,6 +35,7 @@ export async function generateMetadata({
 		openGraph: {
 			title: product.title,
 			description: markdownToPlainText(product.description || ''),
+			url: `https://morethanbooks.mx/blog/${id}`,
 			images: [
 				{
 					url: product.imageUrl as string,
@@ -34,8 +48,12 @@ export async function generateMetadata({
 	}
 }
 
+const Blogpage = dynamic(() => import('../../../components/blog-page'), {
+	ssr: false
+})
+
 const BlogDetail = ({ params: { blog_id } }: any) => {
-	return <BlogDetailPage blog_id={blog_id} />
+	return <Blogpage blog_id={blog_id} />
 }
 
 export default BlogDetail

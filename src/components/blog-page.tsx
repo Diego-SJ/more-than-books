@@ -187,20 +187,19 @@ const BlogDetailPage = ({ blog_id }: { blog_id: string }) => {
 				data-aos="zoom-out-up"
 				data-aos-delay="200"
 				data-aos-duration="300"
-				className="relative overflow-hidden flex flex-col sm:flex-row bg-white text-secondary-foreground w-full mx-auto max-w-[95%] lg:max-w-[900px] rounded-2xl shadow-2xl -mt-20"
+				className="min-h-[30rem] max-h-[30rem]  relative overflow-hidden flex flex-col sm:flex-row bg-white text-secondary-foreground w-full mx-auto max-w-[95%] lg:max-w-[900px] rounded-2xl shadow-2xl -mt-20"
 			>
 				{post?.imageUrl ? (
 					<Image
 						src={post?.imageUrl || ''}
 						alt="Blog Image"
-						layout="responsive"
 						width={720}
 						height={400}
 						priority
-						className="h-96"
+						className="min-h-[30rem] max-h-[30rem] object-cover w-full"
 					/>
 				) : (
-					<Skeleton className="h-96 w-full" />
+					<Skeleton className="h-full w-full" />
 				)}
 			</div>
 			<main className="container relative mt-10 gap-6 sm:mt-20 flex flex-col sm:flex-row max-w-[900px] mb-20">
