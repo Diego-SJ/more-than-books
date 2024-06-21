@@ -211,7 +211,6 @@ const EventsPage = () => {
 				) : (
 					<EmptyState />
 				)}
-
 				{/* <div className="flex mt-10 mx-auto max-w-[1200px] px-6 sm:px-0">
 					<h3 className="text-3xl font-bold">Eventos pasados</h3>
 				</div>

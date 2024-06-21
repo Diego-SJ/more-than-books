@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 .playground-colors {
-	background: hsl(153, 99%, 33%);
+	background: #0d57f8;
 }
 
 @layer base {
