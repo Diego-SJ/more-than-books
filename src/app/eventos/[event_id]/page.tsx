@@ -35,6 +35,14 @@ export async function generateMetadata({
 		openGraph: {
 			title: product.title,
 			description: markdownToPlainText(product.content || ''),
+			images: [
+				{
+					url: product.imageSrc as string,
+					width: 1200,
+					height: 600,
+					alt: product.title
+				}
+			],
 			tags: product.category
 		}
 	}
