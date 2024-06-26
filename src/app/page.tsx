@@ -25,7 +25,7 @@ export default function Home() {
 	return (
 		<>
 			<Navbar theme="dark" />
-			<div className={`scroll-smooth min-w-[100vw] max-w-[100vw] mx-auto overflow-x-hidden`}>
+			<div className={`scroll-smooth min-w-[100vw] max-w-[100vw]  mx-auto overflow-x-hidden`}>
 				<header className="bg-primary w-full relative z-0 mb-20 ">
 					<span className="moving w-[600px] h-[600px] bg-white/5 z-0 absolute rounded-full right-[5%] -top-[25%] animate-pulse block"></span>
 					<span className="moving-2 w-[200px] h-[200px] bg-white/5 z-0 absolute rounded-full left-[10%] top-[50%] animate-pulse block"></span>
@@ -47,14 +47,14 @@ export default function Home() {
 						data-aos="zoom-out-up"
 						data-aos-delay="60"
 						data-aos-duration="1200"
-						className="hidden md:block z-[0] bounce-1 absolute top-[50%] left-[10%]"
+						className="hidden md:block z-[0] bounce-1 absolute top-[45%] left-[0%] lg:top-[50%] lg:left-[10%]"
 					>
 						<Image
 							src="/images/webp/news.webp"
 							alt="voice"
 							width={500}
 							height={300}
-							className=" w-auto  h-auto object-contain drop-shadow-3xl "
+							className=" w-80  h-80 object-contain drop-shadow-3xl "
 						/>
 					</div>
 
@@ -63,17 +63,17 @@ export default function Home() {
 						data-aos-delay="70"
 						data-aos-duration="1400"
 						data-aos-offset="-200"
-						className="hidden md:block z-[0] bounce-2 absolute bottom-[15%] right-[10%]"
+						className="hidden md:block z-[0] bounce-2 absolute bottom-[25%] right-[0%] lg:bottom-[15%] lg:right-[10%]"
 					>
 						<Image
 							src="/images/webp/pencil.webp"
 							alt="pencil"
 							width={500}
 							height={300}
-							className="w-auto h-auto object-contain drop-shadow-3xl "
+							className="w-52 h-52 object-contain drop-shadow-3xl "
 						/>
 					</div>
-					<div className="z-[2] text-white container flex flex-col items-center justify-start pt-28 sm:pt-36 min-h-[50rem] md:min-h-screen w-full pb-0 sm:pb-52 relative">
+					<div className="z-[2] text-white container flex flex-col items-center justify-start pt-28 sm:pt-36 min-h-[50rem] md:min-h-screen 2xl:justify-center 2xl:min-h-[1000px] w-full pb-0 sm:pb-52 relative">
 						<h1
 							data-aos="fade-up"
 							data-aos-duration="600"
