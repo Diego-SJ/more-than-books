@@ -486,8 +486,8 @@ const AboutUsPage = () => {
 				</main>
 				<div className="flex justify-center items-center mb-40">
 					<VideoPlayer
-						src="/videos/test.mp4"
-						poster="/videos/poster.png"
+						src="/videos/morethanbooks.mp4"
+						poster="/videos/poster.webp"
 						width="70%"
 						height="auto"
 					/>
