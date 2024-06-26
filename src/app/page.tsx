@@ -73,7 +73,7 @@ export default function Home() {
 							className="w-52 h-52 object-contain drop-shadow-3xl "
 						/>
 					</div>
-					<div className="z-[2] text-white container flex flex-col items-center justify-start pt-28 sm:pt-36 min-h-[50rem] md:min-h-screen 2xl:justify-center 2xl:min-h-[1000px] w-full pb-0 sm:pb-52 relative">
+					<div className="z-[2] text-white container flex flex-col items-center justify-start pt-28 sm:pt-36 min-h-[50rem] md:min-h-screen md:pt-56 w-full xl:pb-96 xl:min-h-[auto] pb-0 sm:pb-52 relative">
 						<h1
 							data-aos="fade-up"
 							data-aos-duration="600"
