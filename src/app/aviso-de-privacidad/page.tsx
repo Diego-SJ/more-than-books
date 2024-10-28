@@ -2,6 +2,8 @@ import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import React from 'react'
 
+export const runtime = 'edge'
+
 const PrivacyNoticePage = () => {
 	return (
 		<>

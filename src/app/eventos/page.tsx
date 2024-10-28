@@ -23,6 +23,8 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import EmptyState from '@/components/empty-state'
 
+export const runtime = 'edge'
+
 const EventsPage = () => {
 	const [incomingEvents, setIncomingEvents] = useState<Event[]>([])
 	const [previuosEvents, setPreviousEvents] = useState<Event[]>([])

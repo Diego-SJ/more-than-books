@@ -24,6 +24,8 @@ import Aos from 'aos'
 import 'aos/dist/aos.css'
 import EmptyState from '@/components/empty-state'
 
+export const runtime = 'edge'
+
 const BlogPage = () => {
 	const [posts, setBlogPosts] = useState<BlogPost[]>([])
 	const [postsAux, setBlogPostsAux] = useState<BlogPost[]>([])

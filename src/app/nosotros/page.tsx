@@ -9,6 +9,8 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import VideoPlayer from '@/components/video-player'
 
+export const runtime = 'edge'
+
 const AboutUsPage = () => {
 	useEffect(() => {
 		AOS.init()

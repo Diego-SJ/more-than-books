@@ -4,6 +4,8 @@ import { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import React from 'react'
 
+export const runtime = 'edge'
+
 export async function generateMetadata({
 	params
 }: {

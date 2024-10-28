@@ -7,6 +7,8 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { useEffect } from 'react'
 
+export const runtime = 'edge'
+
 // components/ContactForm.js
 export default function ContactFormPage() {
 	useEffect(() => {
