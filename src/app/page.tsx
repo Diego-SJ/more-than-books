@@ -13,8 +13,6 @@ import { useEffect, useRef } from 'react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 
-export const runtime = 'edge'
-
 export default function Home() {
 	const mounted = useRef(false)
 	useEffect(() => {
