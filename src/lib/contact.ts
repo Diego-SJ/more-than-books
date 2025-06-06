@@ -1,16 +1,15 @@
 import { cache } from 'react'
-import { postApi } from './strapi'
+import { strapi } from './strapi'
 
 type Message = {
 	name: string
-
 	email: string
 	message: string
 }
 
 export const sendMessage = cache(async (data: Message): Promise<boolean> => {
 	try {
-		await postApi(`/api/messages`, {
+		await strapi.post(`/api/contacts-form-more-than-books`, {
 			data: data
 		})
 
@@ -22,7 +21,7 @@ export const sendMessage = cache(async (data: Message): Promise<boolean> => {
 
 export const subscribeEmail = cache(async (data: { email: string }): Promise<boolean> => {
 	try {
-		await postApi(`/api/subscriptions`, { data })
+		await strapi.post(`/api/subscriotion-to-newslatter-mtbs`, { data })
 
 		return true
 	} catch (error) {

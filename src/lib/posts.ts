@@ -1,5 +1,5 @@
 import { cache } from 'react'
-import { fetchAPI, strapi } from './strapi'
+import { strapi } from './strapi'
 import { BlogPost } from '@/types/post'
 
 const STRAPI_API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL

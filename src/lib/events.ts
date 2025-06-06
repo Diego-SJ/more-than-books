@@ -1,5 +1,5 @@
 import { cache } from 'react'
-import { fetchAPI, strapi } from './strapi'
+import { strapi } from './strapi'
 import { Event } from '@/types/event'
 import dayjs, { Dayjs } from 'dayjs'
 
