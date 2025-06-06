@@ -1,39 +1,60 @@
 import { cache } from 'react'
-import { fetchAPI } from './strapi'
+import { fetchAPI, strapi } from './strapi'
 import { BlogPost } from '@/types/post'
 
-export function transformPost(apiResponse: any, type?: string): BlogPost[] {
-	return apiResponse?.data?.map((item: any) => {
-		const { id, attributes } = item
-		const { name, content, slug, createdAt, categoria, Autor, image } = attributes
+const STRAPI_API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL
 
-		// Extraer nombres de categorías
-		const categories = categoria?.data?.attributes?.Nombre
-
-		// Definir el autor (puedes modificar esto según los datos reales del autor)
-		const author = Autor?.data?.[0]?.attributes?.Nombre || 'More Than Books'
-
-		// Devolver los datos transformados
-		const imageUrl = image?.data?.attributes?.url
+export function transformPost(apiResponse: any): BlogPost[] {
+	return apiResponse?.data?.data?.map((item: any) => {
+		const { id, createdAt, Titulo, slug, Autor, Descripcion, cover, Categoria } = item
 
 		return {
 			id: id,
-			title: name,
-			description: type === 'unique' ? content : content?.substring(0, 160) + '...',
-			categories: categories || 'Sin categoría',
+			author: Autor?.Nombre || Autor?.Email || 'More Than Books',
+			title: Titulo,
 			slug: slug,
+			description: Descripcion,
+			categories: Categoria?.Nombre || 'Sin categoría',
 			created_at: createdAt,
-			author: author,
-			imageUrl: imageUrl
+			imageUrl: `${STRAPI_API_URL}${cover?.formats?.small?.url}` || null
 		}
 	})
 }
 
 export const getPostBySlug = cache(async (slug: string): Promise<BlogPost> => {
 	try {
-		const item = await fetchAPI(`/api/blogs?filters[slug][$eq]=${slug}&populate=*`)
+		const { data } = await strapi.get(`/api/articles?filters[slug][$eq]=${slug}`, {
+			params: {
+				fields: ['id', 'Titulo', 'slug', 'Descripcion', 'createdAt', 'Contenido'],
+				populate: {
+					Autor: {
+						fields: ['Nombre', 'Email']
+					},
+					Categoria: {
+						fields: ['Nombre']
+					},
+					cover: {
+						fields: ['formats']
+					}
+				}
+			}
+		})
 
-		return transformPost(item, 'unique')[0]
+		return data?.data?.map((item: any) => {
+			const { id, createdAt, Titulo, slug, Autor, Descripcion, cover, Categoria } = item
+
+			return {
+				id: id,
+				author: Autor?.Nombre || Autor?.Email || 'More Than Books',
+				title: Titulo,
+				slug: slug,
+				description: Descripcion,
+				content: item?.Contenido || '',
+				categories: Categoria?.Nombre || 'Sin categoría',
+				created_at: createdAt,
+				imageUrl: `${STRAPI_API_URL}${cover?.formats?.large?.url}` || null
+			} as BlogPost
+		})[0]
 	} catch (error) {
 		return {} as BlogPost
 	}
@@ -41,9 +62,24 @@ export const getPostBySlug = cache(async (slug: string): Promise<BlogPost> => {
 
 export const getPosts = cache(async (): Promise<BlogPost[]> => {
 	try {
-		const item = await fetchAPI(`/api/blogs?&populate=*`)
+		const item = await strapi.get(`/api/articles`, {
+			params: {
+				fields: ['id', 'Titulo', 'slug', 'Descripcion', 'createdAt'],
+				populate: {
+					Autor: {
+						fields: ['Nombre', 'Email']
+					},
+					Categoria: {
+						fields: ['Nombre']
+					},
+					cover: {
+						fields: ['formats']
+					}
+				}
+			}
+		})
 
-		return transformPost(item)
+		return transformPost(item) as BlogPost[]
 	} catch (error) {
 		return []
 	}

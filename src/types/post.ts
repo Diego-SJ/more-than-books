@@ -7,4 +7,5 @@ export type BlogPost = {
 	created_at: string
 	author: string
 	imageUrl?: string
+	content?: string
 }

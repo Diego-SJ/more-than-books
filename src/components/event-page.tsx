@@ -2,12 +2,7 @@
 import Footer from '@/components/footer'
 import Navbar from '@/components/navbar'
 import { Button } from '@/components/ui/button'
-import { useMDXComponents } from '@/mdx-components'
-import rehypeHighlight from 'rehype-highlight'
-import rehypeSlug from 'rehype-slug'
-import remarkGfm from 'remark-gfm'
-import { Clock, Crown, Facebook, Link, MapPin } from 'lucide-react'
-import { compileMDX } from 'next-mdx-remote/rsc'
+import { Clock, Crown, DollarSign, Facebook, Link, MapPin, Ticket } from 'lucide-react'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import { Event } from '@/types/event'
@@ -20,13 +15,11 @@ import Aos from 'aos'
 import 'aos/dist/aos.css'
 import { SkeletonContainer } from '@/components/skeleton-container'
 import { Skeleton } from '@/components/ui/skeleton'
+import MarkdownContent from './ui/markdown-content'
 
 const EventsPage = ({ event_id }: { event_id: string }) => {
-	const [post, setBlogPost] = useState<Event>({} as Event)
-	const [blogContent, setBlogContent] = useState(<div></div>)
+	const [post, setPost] = useState<Event>({} as Event)
 	const onMounted = useRef(false)
-
-	const components = useMDXComponents()
 
 	useEffect(() => {
 		Aos.init()
@@ -40,28 +33,14 @@ const EventsPage = ({ event_id }: { event_id: string }) => {
 				return
 			}
 
-			const { content } = await compileMDX({
-				source: data?.content as any,
-				options: {
-					mdxOptions: {
-						rehypePlugins: [rehypeHighlight, rehypeSlug],
-						remarkPlugins: [remarkGfm]
-					},
-					parseFrontmatter: true
-				},
-				components
-			})
-
-			setBlogContent(content)
-
-			setBlogPost(data)
+			setPost(data)
 		}
 
 		if (!onMounted.current) {
 			onMounted.current = true
 			getArticles()
 		}
-	}, [onMounted, event_id, components])
+	}, [onMounted, event_id])
 
 	const copyUrl = async () => {
 		await copyToClipboard(window.location.href)
@@ -86,7 +65,7 @@ const EventsPage = ({ event_id }: { event_id: string }) => {
 				data-aos-duration="300"
 				className="relative flex flex-col sm:flex-row bg-white text-secondary-foreground w-full mx-auto max-w-[90%] md:max-w-[900px] rounded-2xl shadow-2xl -mt-20 z-[0]"
 			>
-				<div className="relative sm:w-full border-b-[3px] sm:border-b-transparent sm:border-r-[3px] border-dashed border-black/10 px-6 pt-6 pb-10 before:content-[''] before:w-10 before:h-10 before:bg-white before:rounded-full before:absolute before:left-1/2 sm:before:left-[100%] sm:before:top-1/2 before:-translate-x-1/2 sm:before:-translate-x-1/2 sm:before:-translate-y-1/2 before:-bottom-5 sm:before:bottom-[initial] before:shadow-inner-lg">
+				<div className="relative sm:w-full border-b-[3px] sm:border-b-transparent sm:border-r-[3px] border-dashed border-black/10 px-6 pt-6 pb-8 before:content-[''] before:w-10 before:h-10 before:bg-white before:rounded-full before:absolute before:left-1/2 sm:before:left-[100%] sm:before:top-1/2 before:-translate-x-1/2 sm:before:-translate-x-1/2 sm:before:-translate-y-1/2 before:-bottom-5 sm:before:bottom-[initial] before:shadow-inner-lg">
 					<h2 className="text-3xl mb-3 font-roboto font-semibold">
 						{post?.title || <Skeleton className="h-6 w-full" />}
 					</h2>
@@ -94,14 +73,16 @@ const EventsPage = ({ event_id }: { event_id: string }) => {
 					<div className="flex items-start gap-2 mb-3">
 						{post?.date && post?.title ? (
 							<>
-								<Clock className="text-primary mt-2" size={18} />
+								<Clock className="text-primary mt-2 min-w-5" size={18} />
 								<div className="flex flex-col">
 									<p className="text-base sm:text-lg font-didact text-secondary-foreground/70">
 										{dayjs(post?.date).format('dddd D [de] MMMM [del] YYYY')}
 									</p>
-									<p className="text-base sm:text-lg font-didact text-secondary-foreground/50">
-										{dayjs(post?.date).format('HH:mm a')}
-									</p>
+									{post?.time && (
+										<p className="text-base sm:text-lg font-didact text-secondary-foreground/50">
+											{dayjs(post?.date + ' ' + post?.time).format('hh:mm a')}
+										</p>
+									)}
 								</div>
 							</>
 						) : (
@@ -112,34 +93,58 @@ const EventsPage = ({ event_id }: { event_id: string }) => {
 					</div>
 
 					<div className="flex gap-2 items-center  mb-3">
-						{post?.location ? (
+						{post?.address ? (
 							<>
-								<MapPin className="text-primary mt-0" size={19} />
+								<MapPin className="text-primary mt-0 min-w-5" size={19} />
 								<div className="flex flex-col">
-									<a
-										href={post?.location || ''}
-										target="_blank"
-										className="text-base sm:text-lg font-didact text-secondary-foreground/70 hover:text-primary underline"
-									>
-										Ver ubicación
-									</a>
+									{post?.location ? (
+										<a
+											href={post?.location || ''}
+											target="_blank"
+											className="text-base sm:text-lg font-didact text-secondary-foreground/70 hover:text-primary underline"
+										>
+											{post?.address}
+										</a>
+									) : (
+										<span className="text-base sm:text-lg font-didact text-secondary-foreground/70">
+											{post?.address}
+										</span>
+									)}
 								</div>
 							</>
-						) : (
-							<Skeleton className="h-6 w-full" />
-						)}
+						) : null}
 					</div>
-					<div className="flex gap-2 items-center">
+					<div className="flex justify-between items-center">
 						{post?.author ? (
-							<>
-								<Crown className="text-primary mt-0" size={19} />
+							<div className="flex items-center gap-2">
+								<Crown className="text-primary mt-0 min-w-5" size={19} />
 								<p className="text-base sm:text-lg font-didact text-secondary-foreground/70">
 									{post?.author || '- - -'}
 								</p>
-							</>
+							</div>
 						) : (
 							<Skeleton className="h-6 w-full" />
 						)}
+
+						{post?.event_type ? (
+							<div className="flex items-center gap-2">
+								<Ticket className="text-primary mt-0 min-w-5" size={19} />
+								<p className="text-base sm:text-lg font-didact text-secondary-foreground/70">
+									{post?.event_type || '- - -'}
+								</p>
+							</div>
+						) : (
+							<Skeleton className="h-6 w-full" />
+						)}
+
+						{post?.price && post?.price > 0 ? (
+							<div className="flex items-center gap-2">
+								<DollarSign className="text-primary mt-0 min-w-5" size={19} />
+								<p className="text-base sm:text-lg font-didact text-secondary-foreground/70">
+									{post?.price}
+								</p>
+							</div>
+						) : null}
 					</div>
 				</div>
 
@@ -214,9 +219,9 @@ const EventsPage = ({ event_id }: { event_id: string }) => {
 				data-aos="zoom-out-up"
 				data-aos-delay="100"
 				data-aos-duration="300"
-				className="container relative mt-10 gap-6 sm:mt-20 flex flex-col sm:flex-row max-w-[900px] mb-20"
+				className="container relative mt-10 gap-6 sm:mt-20 flex flex-col max-w-[900px] mb-20"
 			>
-				{!!post?.content ? <div className="w-full">{blogContent}</div> : <SkeletonContainer />}
+				{!!post?.content ? <MarkdownContent markdown={post.content} /> : <SkeletonContainer />}
 			</main>
 			{/* <section className="container w-full flex flex-col justify-center max-w-[900px]">
 				<h3 className="text-base text-foreground mb-4 font-roboto font-semibold md:text-xl">

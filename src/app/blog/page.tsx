@@ -13,26 +13,31 @@ import {
 	SelectValue
 } from '@/components/ui/select'
 import Image from 'next/image'
-import React, { useRef } from 'react'
+
 import { useState, useEffect } from 'react'
 import { BlogPost } from '@/types/post'
 import { toast } from 'sonner'
 import { getPosts } from '@/lib/posts'
 import BlogCard from '@/components/blog-card'
 import { includes, mapCategories } from '@/lib/utils'
-import Aos from 'aos'
-import 'aos/dist/aos.css'
 import EmptyState from '@/components/empty-state'
+import 'aos/dist/aos.css'
 
 const BlogPage = () => {
 	const [posts, setBlogPosts] = useState<BlogPost[]>([])
 	const [postsAux, setBlogPostsAux] = useState<BlogPost[]>([])
 	const [categories, setCategories] = useState<string[]>([])
 	const [filters, setFilters] = useState({ category: 'todos', search: '' })
-	const onMounted = useRef(false)
 
 	useEffect(() => {
-		Aos.init()
+		const initAOS = async () => {
+			const AOS = (await import('aos')).default
+			AOS.init({
+				once: true,
+				duration: 800
+			})
+		}
+		initAOS()
 	}, [])
 
 	useEffect(() => {
@@ -47,21 +52,18 @@ const BlogPage = () => {
 			setBlogPostsAux(data)
 		}
 
-		if (!onMounted.current) {
-			onMounted.current = true
-			getArticles()
-		}
-	}, [onMounted])
+		getArticles()
+	}, [])
 
 	useEffect(() => {
 		const filteredPosts = postsAux?.filter((post) => {
-			const categoryMatch = filters.category === 'todos' || post.categories === filters.category
+			const categoryMatch = filters?.category === 'todos' || post?.categories === filters?.category
 			const searchMatch =
-				includes(post.title, filters.search) || includes(post.description, filters.search)
+				includes(post?.title, filters?.search) || includes(post?.description, filters?.search)
 			return categoryMatch && searchMatch
 		})
 		setBlogPosts(filteredPosts)
-	}, [filters.category, filters.search, postsAux])
+	}, [filters?.category, filters?.search, postsAux])
 
 	return (
 		<>

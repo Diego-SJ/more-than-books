@@ -1,33 +1,31 @@
 import { cache } from 'react'
-import { fetchAPI } from './strapi'
+import { fetchAPI, strapi } from './strapi'
 import { Event } from '@/types/event'
+import dayjs, { Dayjs } from 'dayjs'
+
+const STRAPI_API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL
 
 export function transformEventsArray(apiResponse: any, type?: string): Event[] {
 	return apiResponse?.data?.map((item: any) => {
-		const { id, attributes } = item
-		const { Nombre, Fecha, price, Ubicacion, slug, Contenido, categoria, autore, image } =
-			attributes
-
-		// Extraer nombres de categorías
-		const categories = categoria?.data?.attributes?.Nombre
-
-		// Definir el autor (puedes modificar esto según los datos reales del autor)
-		const author = autore?.data?.attributes?.Nombre || 'More Than Books'
-
-		// Devolver los datos transformados
-		const imageUrl = image?.data?.attributes?.url
-
 		let event: Event = {
-			id,
-			title: Nombre,
-			date: Fecha,
-			location: Ubicacion,
-			content: type === 'unique' ? Contenido : Contenido?.substring(0, 100) + '...',
-			price: price || 0,
-			category: categories || 'Sin categoría',
-			slug: slug,
-			author: author,
-			imageSrc: imageUrl
+			id: item?.id,
+			slug: item?.slug,
+			title: item?.name,
+			date: item?.event_data || null,
+			time: item?.event_time || null,
+			location: item?.maps_url,
+			address: item?.address,
+			event_type: item?.event_type,
+			content:
+				type === 'unique'
+					? item?.content
+					: !!item?.content
+					? item?.content?.substring(0, 100) + '...'
+					: '',
+			price: item?.price || 0,
+			category: item?.category?.Nombre || 'Sin categoría',
+			author: item?.author?.Nombre || item?.author?.Email || 'More Than Books',
+			imageSrc: `${STRAPI_API_URL}${item?.cover?.formats?.small?.url}`
 		}
 		return event
 	})
@@ -35,9 +33,38 @@ export function transformEventsArray(apiResponse: any, type?: string): Event[] {
 
 export const getEventBySlug = cache(async (slug: string): Promise<Event> => {
 	try {
-		const item = await fetchAPI(`/api/eventos?filters[slug][$eq]=${slug}&populate=*`)
+		const { data } = await strapi.get(
+			`/api/owioweig0243g94u3hg3u94hgs?filters[slug][$eq]=${slug}`,
+			{
+				params: {
+					fields: [
+						'id',
+						'name',
+						'slug',
+						'content',
+						'event_data',
+						'event_time',
+						'maps_url',
+						'address',
+						'event_type',
+						'price'
+					],
+					populate: {
+						author: {
+							fields: ['Nombre', 'Email']
+						},
+						category: {
+							fields: ['Nombre']
+						},
+						cover: {
+							fields: ['formats']
+						}
+					}
+				}
+			}
+		)
 
-		return transformEventsArray(item, 'unique')[0] || ({} as Event)
+		return transformEventsArray(data, 'unique')[0] || ({} as Event)
 	} catch (error) {
 		return {} as Event
 	}
@@ -45,20 +72,60 @@ export const getEventBySlug = cache(async (slug: string): Promise<Event> => {
 
 export const getEvents = cache(async (): Promise<Event[]> => {
 	try {
-		const item = await fetchAPI(`/api/eventos?&populate=*`)
+		const { data } = await strapi.get(`/api/owioweig0243g94u3hg3u94hgs`, {
+			params: {
+				fields: [
+					'id',
+					'name',
+					'slug',
+					'content',
+					'event_data',
+					'event_time',
+					'maps_url',
+					'address',
+					'event_type',
+					'price'
+				],
+				populate: {
+					author: {
+						fields: ['Nombre', 'Email']
+					},
+					category: {
+						fields: ['Nombre']
+					},
+					cover: {
+						fields: ['formats']
+					}
+				}
+			}
+		})
 
-		return transformEventsArray(item)
+		return transformEventsArray(data) as Event[]
 	} catch (error) {
 		return []
 	}
 })
 
+const transformEventDate = (event: Event): Dayjs => {
+	return event.date && event.time
+		? dayjs(event.date + ' ' + event.time)
+		: event.date
+		? dayjs(event.date)
+		: dayjs()
+}
+
 export const filterPrevoiusEvents = (events: Event[]): Event[] => {
-	const today = new Date()
-	return events.filter((event) => new Date(event.date || '') < today)
+	const today = dayjs()
+	return events.filter((event) => {
+		const eventDateTime = transformEventDate(event)
+		return eventDateTime < today
+	})
 }
 
 export const filterIncomingEvents = (events: Event[]): Event[] => {
-	const today = new Date()
-	return events.filter((event) => new Date(event.date || '') >= today)
+	const today = dayjs()
+	return events.filter((event) => {
+		const eventDateTime = transformEventDate(event)
+		return eventDateTime >= today
+	})
 }

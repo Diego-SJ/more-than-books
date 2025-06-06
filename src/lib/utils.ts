@@ -1,6 +1,7 @@
 import { Event } from '@/types/event'
 import { BlogPost } from '@/types/post'
 import { type ClassValue, clsx } from 'clsx'
+import dayjs from 'dayjs'
 import { twMerge } from 'tailwind-merge'
 
 export function cn(...inputs: ClassValue[]) {
@@ -102,9 +103,8 @@ export const createGoogleCalendarLink = (event: Event): string => {
 	const { title, date, location, content } = event
 	if (!date) return '#'
 
-	const startDate = new Date(date)
-	const endDate = new Date(date)
-	endDate.setHours(23, 59, 59, 999) // Final del día
+	const startDate = dayjs(date + ' ' + event?.time || '')
+	const endDate = dayjs(date + ' ' + event?.time || '').add(1, 'hour')
 
 	const startDateISO = startDate.toISOString().replace(/-|:|\.\d\d\d/g, '')
 	const endDateISO = endDate.toISOString().replace(/-|:|\.\d\d\d/g, '')

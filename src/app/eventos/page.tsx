@@ -17,7 +17,7 @@ import { filterIncomingEvents, filterPrevoiusEvents, getEvents } from '@/lib/eve
 import { includes, mapCategories } from '@/lib/utils'
 import { Event } from '@/types/event'
 import Image from 'next/image'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
@@ -29,7 +29,6 @@ const EventsPage = () => {
 	const [postsAux, setBlogPostsAux] = useState<Event[]>([])
 	const [categories, setCategories] = useState<string[]>([])
 	const [filters, setFilters] = useState({ category: 'todos', search: '' })
-	const onMounted = useRef(false)
 
 	useEffect(() => {
 		AOS.init()
@@ -38,22 +37,23 @@ const EventsPage = () => {
 	useEffect(() => {
 		const getArticles = async () => {
 			const data = await getEvents()
+
 			if (!data) {
 				toast.error('Error al cargar los posts')
 				return
 			}
+			const categories = mapCategories(data as Event[])
+			const previousEvents = filterPrevoiusEvents(data)
+			const incomingEvents = filterIncomingEvents(data)
 
-			setCategories(mapCategories(data as Event[]))
-			setPreviousEvents(filterPrevoiusEvents(data))
-			setIncomingEvents(filterIncomingEvents(data))
+			setCategories(categories)
+			setPreviousEvents(previousEvents)
+			setIncomingEvents(incomingEvents)
 			setBlogPostsAux(data as Event[])
 		}
 
-		if (!onMounted.current) {
-			onMounted.current = true
-			getArticles()
-		}
-	}, [onMounted])
+		getArticles()
+	}, [])
 
 	useEffect(() => {
 		const filteredPosts = postsAux?.filter((post) => {
@@ -142,15 +142,15 @@ const EventsPage = () => {
 					</div>
 				</div>
 
-				{postsAux?.length ? (
+				{!!postsAux?.length ? (
 					<>
 						<div className="flex mt-10 mx-auto max-w-[1200px] px-6 sm:px-0">
 							<h3
-								data-aos="fade-up"
-								data-aos-duration="500"
-								data-aos-delay="0"
-								data-aos-offset="150"
-								className="text-3xl font-bold"
+							// data-aos="fade-up"
+							// data-aos-duration="500"
+							// data-aos-delay="0"
+							// data-aos-offset="150"
+							// className="text-3xl font-bold"
 							>
 								Próximos Eventos
 							</h3>

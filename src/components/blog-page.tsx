@@ -9,11 +9,6 @@ import Image from 'next/image'
 import React, { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
-import { compileMDX } from 'next-mdx-remote/rsc'
-import rehypeHighlight from 'rehype-highlight'
-import rehypeSlug from 'rehype-slug'
-import remarkGfm from 'remark-gfm'
-import { useMDXComponents } from '@/mdx-components'
 import { copyToClipboard } from '@/lib/utils'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
@@ -22,6 +17,7 @@ import Aos from 'aos'
 import 'aos/dist/aos.css'
 import { Skeleton } from '@/components/ui/skeleton'
 import { SkeletonContainer } from '@/components/skeleton-container'
+import MarkdownContent from './ui/markdown-content'
 
 const XIcon = ({ className = '' }) => (
 	<svg
@@ -48,10 +44,8 @@ const XIcon = ({ className = '' }) => (
 
 const BlogDetailPage = ({ blog_id }: { blog_id: string }) => {
 	const [post, setBlogPost] = useState<BlogPost>({} as BlogPost)
-	const [blogContent, setBlogContent] = useState(<div></div>)
+	const [blogContent, setBlogContent] = useState('')
 	const onMounted = useRef(false)
-
-	const components = useMDXComponents()
 
 	useEffect(() => {
 		Aos.init()
@@ -65,19 +59,7 @@ const BlogDetailPage = ({ blog_id }: { blog_id: string }) => {
 				return
 			}
 
-			const { content } = await compileMDX({
-				source: data?.description,
-				options: {
-					mdxOptions: {
-						rehypePlugins: [rehypeHighlight, rehypeSlug],
-						remarkPlugins: [remarkGfm]
-					},
-					parseFrontmatter: true
-				},
-				components
-			})
-
-			setBlogContent(content)
+			setBlogContent(data?.content || '# Ups! No se pudo cargar el contenido del post')
 
 			setBlogPost(data)
 		}
@@ -86,7 +68,7 @@ const BlogDetailPage = ({ blog_id }: { blog_id: string }) => {
 			onMounted.current = true
 			getArticles()
 		}
-	}, [onMounted, blog_id, components])
+	}, [onMounted, blog_id])
 
 	const copyUrl = () => {
 		copyToClipboard(window.location.href)
@@ -254,7 +236,9 @@ const BlogDetailPage = ({ blog_id }: { blog_id: string }) => {
 							</div>
 						</div>
 
-						<div className="w-full">{blogContent}</div>
+						<div className="w-full">
+							<MarkdownContent markdown={blogContent} />
+						</div>
 					</>
 				) : (
 					<SkeletonContainer />
