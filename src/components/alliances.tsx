@@ -9,7 +9,7 @@ const Alliances = () => {
 			<div className="absolute inset-0 bounce-1 flex items-center justify-center -top-[40rem] md:-top-20 z-0">
 				<div className="bg-primary/30 rounded-full w-3/4 h-64 blur-3xl opacity-30"></div>
 			</div>
-			<div className="container mx-auto px-4 relative z-[1]">
+			<div className="container mx-auto px-4 relative z-[1] max-w-[1000px]">
 				<div className="text-center mb-12">
 					<p
 						data-aos="fade-up"
@@ -27,7 +27,7 @@ const Alliances = () => {
 						data-aos-offset="100"
 						className="text-3xl font-roboto font-semibold"
 					>
-						Nuestras Alianzas con Editoriales
+						Nuestras Alianzas
 					</h2>
 					<p
 						data-aos="fade-up"
@@ -36,11 +36,23 @@ const Alliances = () => {
 						data-aos-offset="200"
 						className="text-lg font-roboto font-thin text-foreground/60 mt-2"
 					>
-						Trabajamos con editoriales reconocidas para ofrecerte los mejores materiales educativos
+						More Than Books es el distribuidor exclusivo de Express Publishing, editorial
+						internacional reconocida por sus programas académicos innovadores y efectivos para la
+						enseñanza del inglés.
+					</p>
+					<p
+						data-aos="fade-up"
+						data-aos-duration="600"
+						data-aos-delay="100"
+						data-aos-offset="200"
+						className="text-lg font-roboto font-thin text-foreground/60 mt-2"
+					>
+						Ponemos a tu alcance materiales originales, actualizados y alineados con estándares
+						globales, con el respaldo y la experiencia que tu institución necesita.
 					</p>
 				</div>
 
-				<div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2  gap-8 max-w-[1000px] mx-auto">
+				<div className="flex justify-center max-w-[600px] mx-auto">
 					<div
 						data-aos="fade-down-right"
 						data-aos-duration="600"
@@ -79,7 +91,7 @@ const Alliances = () => {
 						</div>
 					</div>
 
-					<div
+					{/* <div
 						data-aos="fade-down-left"
 						data-aos-duration="600"
 						data-aos-delay="100"
@@ -229,7 +241,7 @@ const Alliances = () => {
 								/>
 							</a>
 						</div>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</section>

@@ -65,6 +65,11 @@ const Footer = ({ mt = 20 }: FooterProps) => {
 						</Link>
 					</li>
 					<li>
+						<Link href="/foro" className="hover:underline">
+							Foro
+						</Link>
+					</li>
+					<li>
 						<Link href="/nosotros" className="hover:underline">
 							Nosotros
 						</Link>

@@ -236,7 +236,7 @@ const AboutUsPage = () => {
 							>
 								More Than Books es una empresa que busca proporcionar ELT de alta calidad libros de
 								texto, recursos didácticos y cursos de desarrollo profesional para la comunidad ELT.
-								Por lo tanto, nuestro empresa cuenta con la distribución de Express Editorial en
+								Por lo tanto, nuestro empresa cuenta con la distribución de Express Publishing en
 								México.
 							</p>
 						</div>
@@ -325,9 +325,9 @@ const AboutUsPage = () => {
 								data-aos-duration="500"
 								className="text-base sm:text-lg text-justify md:text-start md:text-xl md:max-w-2xl font-roboto font-thin text-foreground/60 w-full mb-2"
 							>
-								Nuestra visión es convertirnos en una presencia líder en México, Centro y
-								Sudamérica. Nuestro objetivo es ir más allá de las fronteras para llegar a todos los
-								lugares donde la enseñanza del inglés es crucial.
+								Nuestra visión es convertirnos en una presencia líder en México. Nuestro objetivo es
+								ir más allá de las fronteras para llegar a todos los lugares donde la enseñanza del
+								inglés es crucial.
 							</p>
 							<p
 								data-aos="fade-up-right"

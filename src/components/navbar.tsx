@@ -9,7 +9,7 @@ import 'aos/dist/aos.css'
 
 type NavbarProps = {
 	theme?: 'light' | 'dark'
-	currentPath?: 'home' | 'events' | 'blog' | 'about' | 'contact' | 'alliances'
+	currentPath?: 'home' | 'events' | 'blog' | 'about' | 'contact' | 'alliances' | 'forum'
 }
 
 const isActive = (currentPath: string, path: string) => {
@@ -75,6 +75,12 @@ export default function Navbar({ theme = 'light', currentPath = 'home' }: Navbar
 						className={`hover:underline relative ${isActive(currentPath, 'blog')}`}
 					>
 						Blog
+					</Link>
+					<Link
+						href={'/foro'}
+						className={`hover:underline relative ${isActive(currentPath, 'forum')}`}
+					>
+						Foro
 					</Link>
 					<Link
 						href={'/nosotros'}
@@ -170,6 +176,17 @@ export default function Navbar({ theme = 'light', currentPath = 'home' }: Navbar
 						data-aos-offset="200"
 					>
 						Blog
+					</Link>
+					<Link
+						href={'/foro'}
+						onClick={() => setIsOpen(false)}
+						className="text-foreground text-2xl font-roboto"
+						data-aos="zoom-out-up"
+						data-aos-delay="350"
+						data-aos-duration="600"
+						data-aos-offset="200"
+					>
+						Foro
 					</Link>
 					<Link
 						href={'/nosotros'}

@@ -1,6 +1,4 @@
 import { MDXComponents } from 'mdx/types'
-import Image, { ImageProps } from 'next/image'
-// other imports...
 
 export function useMDXComponents(): MDXComponents {
 	return {
@@ -27,16 +25,18 @@ export function useMDXComponents(): MDXComponents {
 		h5: (props: any) => <h5 className="font-roboto text-base font-bold mt-4 mb-2" {...props} />,
 		h6: (props: any) => <h6 className="font-roboto text-sm font-bold mt-4 mb-2" {...props} />,
 		p: (props: any) => <p className="font-roboto text-base font-normal my-4" {...props} />,
-		img: (props: any) => (
-			<Image
-				width={500}
-				height={500}
-				rel="blog post"
-				{...(props as ImageProps)}
-				alt="blog post"
-				className="mx-auto w-[80%] h-auto rounded-md my-6"
-			/>
-		),
+		img: (props: any) => {
+			const src = props.src
+			if (!src) return null
+			return (
+				// eslint-disable-next-line @next/next/no-img-element
+				<img
+					src={src}
+					alt={props.alt || ''}
+					className="mx-auto w-[80%] h-auto rounded-md my-6"
+				/>
+			)
+		},
 
 		code: (props: any) => (
 			<code
