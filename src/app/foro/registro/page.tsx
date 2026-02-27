@@ -3,10 +3,10 @@
 import Link from 'next/link'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
-import LoginForm from '@/components/forum/login-form'
+import SignupForm from '@/components/forum/signup-form'
 import { ArrowLeft } from 'lucide-react'
 
-export default function LoginPage() {
+export default function RegistroPage() {
 	return (
 		<>
 			<Navbar currentPath="forum" />
@@ -18,11 +18,11 @@ export default function LoginPage() {
 					<ArrowLeft size={16} />
 					Volver al foro
 				</Link>
-				<h1 className="text-2xl font-roboto font-bold text-foreground mb-4">Iniciar sesión</h1>
+				<h1 className="text-2xl font-roboto font-bold text-foreground mb-4">Crear cuenta</h1>
 				<p className="text-slate-500 font-roboto mb-8">
-					Ingresa tu correo electrónico y contraseña para acceder al foro.
+					Completa los siguientes datos para registrarte en el foro.
 				</p>
-				<LoginForm />
+				<SignupForm />
 			</main>
 			<Footer mt={20} />
 		</>

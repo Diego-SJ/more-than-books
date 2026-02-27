@@ -46,18 +46,14 @@ export default function ForoPage() {
 
 		// Hashtag filter
 		if (activeHashtag) {
-			result = result.filter((q) =>
-				q.hashtags?.some((h) => h.name === activeHashtag)
-			)
+			result = result.filter((q) => q.hashtags?.some((h) => h.name === activeHashtag))
 		}
 
 		// Search filter
 		if (search) {
 			const s = search.toLowerCase()
 			result = result.filter(
-				(q) =>
-					q.title.toLowerCase().includes(s) ||
-					q.body.toLowerCase().includes(s)
+				(q) => q.title.toLowerCase().includes(s) || q.body.toLowerCase().includes(s)
 			)
 		}
 
@@ -120,7 +116,10 @@ export default function ForoPage() {
 
 						{/* Search */}
 						<div className="relative mb-4">
-							<Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+							<Search
+								size={16}
+								className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+							/>
 							<Input
 								placeholder="Buscar preguntas..."
 								value={search}
@@ -187,7 +186,6 @@ export default function ForoPage() {
 					</div>
 				</div>
 			</main>
-			<NewsLatter />
 			<Footer mt={20} />
 		</>
 	)

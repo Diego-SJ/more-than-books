@@ -3,9 +3,12 @@ import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
+const ALLOWED_REDIRECTS = ['/foro']
+
 export async function GET(request: NextRequest) {
 	const requestUrl = new URL(request.url)
 	const code = requestUrl.searchParams.get('code')
+	const next = requestUrl.searchParams.get('next')
 
 	if (code) {
 		const supabase = createRouteHandlerClient(
@@ -18,5 +21,7 @@ export async function GET(request: NextRequest) {
 		await supabase.auth.exchangeCodeForSession(code)
 	}
 
-	return NextResponse.redirect(new URL('/foro', request.url))
+	const redirectTo = next && ALLOWED_REDIRECTS.includes(next) ? next : '/foro'
+
+	return NextResponse.redirect(new URL(redirectTo, request.url))
 }

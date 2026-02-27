@@ -10,7 +10,12 @@ type AuthContextType = {
 	profile: Profile | null
 	isTeacher: boolean
 	loading: boolean
-	signInWithMagicLink: (email: string) => Promise<{ error: string | null }>
+	signIn: (email: string, password: string) => Promise<{ error: string | null }>
+	signUp: (
+		email: string,
+		password: string,
+		displayName: string
+	) => Promise<{ error: string | null }>
 	signOut: () => Promise<void>
 }
 
@@ -19,7 +24,8 @@ const AuthContext = createContext<AuthContextType>({
 	profile: null,
 	isTeacher: false,
 	loading: true,
-	signInWithMagicLink: async () => ({ error: null }),
+	signIn: async () => ({ error: null }),
+	signUp: async () => ({ error: null }),
 	signOut: async () => {}
 })
 
@@ -30,11 +36,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const supabase = createClient()
 
 	const fetchProfile = async (userId: string) => {
-		const { data } = await supabase
-			.from('profiles')
-			.select('*')
-			.eq('id', userId)
-			.single()
+		const { data } = await supabase.from('profiles').select('*').eq('id', userId).single()
 		setProfile(data)
 	}
 
@@ -69,14 +71,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		return () => subscription.unsubscribe()
 	}, [supabase.auth])
 
-	const signInWithMagicLink = async (email: string) => {
-		const { error } = await supabase.auth.signInWithOtp({
+	const signIn = async (email: string, password: string) => {
+		const { error } = await supabase.auth.signInWithPassword({ email, password })
+		return { error: error?.message ?? null }
+	}
+
+	const signUp = async (email: string, password: string, displayName: string) => {
+		const { data, error } = await supabase.auth.signUp({
 			email,
+			password,
+
 			options: {
-				emailRedirectTo: `${window.location.origin}/foro/auth/callback`
+				data: { display_name: displayName }
 			}
 		})
-		return { error: error?.message ?? null }
+		if (error) return { error: error.message }
+
+		// Fallback: insert profile in case trigger didn't fire
+		if (data.user) {
+			await supabase.from('profiles').upsert(
+				{
+					id: data.user.id,
+					display_name: displayName,
+					email
+				},
+				{ onConflict: 'id' }
+			)
+		}
+
+		// Auto-login after signup
+		const { error: signInError } = await supabase.auth.signInWithPassword({ email, password })
+		if (signInError) return { error: signInError.message }
+
+		return { error: null }
 	}
 
 	const signOut = async () => {
@@ -88,7 +115,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const isTeacher = profile?.role === 'teacher'
 
 	return (
-		<AuthContext.Provider value={{ user, profile, isTeacher, loading, signInWithMagicLink, signOut }}>
+		<AuthContext.Provider value={{ user, profile, isTeacher, loading, signIn, signUp, signOut }}>
 			{children}
 		</AuthContext.Provider>
 	)

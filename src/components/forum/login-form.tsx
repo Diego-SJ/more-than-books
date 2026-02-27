@@ -1,18 +1,20 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useTransition } from 'react'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useAuth } from './auth-provider'
 
-type FormData = { email: string }
+type FormData = { email: string; password: string }
 
 export default function LoginForm() {
 	const [isPending, startTransition] = useTransition()
-	const [sent, setSent] = useState(false)
-	const { signInWithMagicLink } = useAuth()
+	const { signIn } = useAuth()
+	const router = useRouter()
 	const {
 		register,
 		handleSubmit,
@@ -21,32 +23,19 @@ export default function LoginForm() {
 
 	const onSubmit = (data: FormData) => {
 		startTransition(async () => {
-			const { error } = await signInWithMagicLink(data.email)
+			const { error } = await signIn(data.email, data.password)
 			if (error) {
-				toast.error('Error al enviar el enlace. Inténtalo de nuevo.')
+				toast.error('Correo o contraseña incorrectos.')
 			} else {
-				setSent(true)
+				router.push('/foro')
 			}
 		})
-	}
-
-	if (sent) {
-		return (
-			<div className="text-center py-8">
-				<h2 className="text-2xl font-roboto font-bold text-foreground mb-4">
-					Revisa tu correo electrónico
-				</h2>
-				<p className="text-slate-500 font-roboto">
-					Te enviamos un enlace mágico para iniciar sesión. Revisa tu bandeja de entrada.
-				</p>
-			</div>
-		)
 	}
 
 	return (
 		<form
 			onSubmit={handleSubmit(onSubmit)}
-			className="grid gap-y-6 grid-cols-1 min-w-[300px] mx-auto"
+			className="grid gap-y-6 grid-cols-1 max-w-[600px] w-full mx-auto"
 		>
 			<div className="flex flex-col items-start w-full">
 				<label htmlFor="email" className="mb-2 text-sm font-medium text-gray-700">
@@ -63,9 +52,30 @@ export default function LoginForm() {
 					<span className="text-red-600 font-roboto font-thin text-sm mt-1">Campo obligatorio</span>
 				)}
 			</div>
+			<div className="flex flex-col items-start w-full">
+				<label htmlFor="password" className="mb-2 text-sm font-medium text-gray-700">
+					Contraseña
+				</label>
+				<Input
+					type="password"
+					autoComplete="current-password"
+					placeholder="Tu contraseña"
+					{...register('password', { required: true })}
+					className="w-full"
+				/>
+				{errors.password && (
+					<span className="text-red-600 font-roboto font-thin text-sm mt-1">Campo obligatorio</span>
+				)}
+			</div>
 			<Button type="submit" disabled={isPending} className="w-full">
-				{isPending ? 'Enviando...' : 'Enviar enlace mágico'}
+				{isPending ? 'Iniciando sesión...' : 'Iniciar sesión'}
 			</Button>
+			<p className="text-center text-sm text-slate-500 font-roboto">
+				¿No tienes cuenta?{' '}
+				<Link href="/foro/registro" className="text-primary hover:underline">
+					Regístrate
+				</Link>
+			</p>
 		</form>
 	)
 }
