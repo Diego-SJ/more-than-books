@@ -14,6 +14,7 @@ import {
 	createQuestion,
 	createAnswer,
 	deleteAnswer,
+	deleteQuestion,
 	toggleReaction,
 	updateProfile
 } from '@/lib/forum'
@@ -125,6 +126,7 @@ export function useCreateAnswer(questionId: string) {
 			createAnswer(vars.body, questionId, vars.authorId, vars.parentAnswerId),
 		onSuccess: () => {
 			qc.invalidateQueries({ queryKey: forumKeys.answers(questionId) })
+			qc.invalidateQueries({ queryKey: forumKeys.questions })
 		}
 	})
 }
@@ -135,6 +137,17 @@ export function useDeleteAnswer(questionId: string) {
 		mutationFn: (answerId: string) => deleteAnswer(answerId),
 		onSuccess: () => {
 			qc.invalidateQueries({ queryKey: forumKeys.answers(questionId) })
+			qc.invalidateQueries({ queryKey: forumKeys.questions })
+		}
+	})
+}
+
+export function useDeleteQuestion() {
+	const qc = useQueryClient()
+	return useMutation({
+		mutationFn: (questionId: string) => deleteQuestion(questionId),
+		onSuccess: () => {
+			qc.invalidateQueries({ queryKey: forumKeys.questions })
 		}
 	})
 }

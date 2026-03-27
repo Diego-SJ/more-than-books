@@ -61,6 +61,8 @@ export default function QuestionForm() {
 					if (question) {
 						toast.success('Pregunta creada')
 						router.push(`/foro/${question.id}`)
+					} else {
+						toast.error('Error al crear la pregunta. Inténtalo de nuevo.')
 					}
 				},
 				onError: () => toast.error('Error al crear la pregunta. Inténtalo de nuevo.')

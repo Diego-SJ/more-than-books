@@ -26,7 +26,7 @@ const TABS: { key: Tab; label: string }[] = [
 ]
 
 export default function ForoPage() {
-	const { user } = useAuth()
+	const { user, isAdmin } = useAuth()
 	const { data: hashtags = [] } = useHashtags()
 	const { data: questions = [] } = useQuestions()
 	const [activeTab, setActiveTab] = useState<Tab>('recientes')
@@ -83,7 +83,7 @@ export default function ForoPage() {
 					<h1 className="text-3xl font-roboto font-bold text-foreground">Foro</h1>
 					<div className="flex items-center gap-3">
 						<ForumUserMenu />
-						{user && (
+						{user && isAdmin && (
 							<Link href="/foro/nueva-pregunta">
 								<Button>
 									<Plus size={16} className="mr-1" /> Nueva pregunta

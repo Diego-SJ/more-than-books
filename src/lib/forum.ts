@@ -1,11 +1,10 @@
 import { createClient } from '@/lib/supabase'
 import type { Hashtag, Question, Answer, Reaction, TopContributor } from '@/types/forum'
 
-const supabase = createClient()
-
 // ── Read (public) ──────────────────────────────────────────
 
 export async function getHashtags(): Promise<Hashtag[]> {
+	const supabase = createClient()
 	const { data, error } = await supabase
 		.from('hashtags')
 		.select('*')
@@ -18,13 +17,15 @@ export async function getQuestions(
 	hashtag?: string,
 	search?: string
 ): Promise<Question[]> {
+	const supabase = createClient()
 	let query = supabase
 		.from('questions')
 		.select('*, profiles(*), question_hashtags(hashtags(*)), answers(count)')
 		.order('created_at', { ascending: false })
 
 	if (search) {
-		query = query.or(`title.ilike.%${search}%,body.ilike.%${search}%`)
+		const escaped = search.replace(/[%_\\,().]/g, (c) => `\\${c}`)
+		query = query.or(`title.ilike.%${escaped}%,body.ilike.%${escaped}%`)
 	}
 
 	const { data, error } = await query
@@ -44,6 +45,7 @@ export async function getQuestions(
 }
 
 export async function getQuestionById(id: string): Promise<Question | null> {
+	const supabase = createClient()
 	const { data, error } = await supabase
 		.from('questions')
 		.select('*, profiles(*), question_hashtags(hashtags(*))')
@@ -65,6 +67,7 @@ export async function getRelatedQuestions(
 ): Promise<Question[]> {
 	if (!hashtagNames.length) return []
 
+	const supabase = createClient()
 	const { data, error } = await supabase
 		.from('questions')
 		.select('*, profiles(*), question_hashtags(hashtags(*))')
@@ -85,6 +88,7 @@ export async function getRelatedQuestions(
 }
 
 export async function getAnswers(questionId: string): Promise<Answer[]> {
+	const supabase = createClient()
 	const { data, error } = await supabase
 		.from('answers')
 		.select('*, profiles(*)')
@@ -114,6 +118,7 @@ export async function getReactions(
 ): Promise<Record<string, { emoji: string; count: number; reacted: boolean }[]>> {
 	if (!answerIds.length) return {}
 
+	const supabase = createClient()
 	const { data, error } = await supabase
 		.from('reactions')
 		.select('*')
@@ -144,6 +149,7 @@ export async function getReactions(
 }
 
 export async function getTopContributors(limit = 10): Promise<TopContributor[]> {
+	const supabase = createClient()
 	const { data, error } = await supabase.rpc('get_top_contributors', { lim: limit })
 	if (error) throw error
 	return data ?? []
@@ -157,6 +163,7 @@ export async function createQuestion(
 	hashtagNames: string[],
 	authorId: string
 ): Promise<Question | null> {
+	const supabase = createClient()
 	const { data: question, error } = await supabase
 		.from('questions')
 		.insert({ title, body, author_id: authorId })
@@ -168,24 +175,27 @@ export async function createQuestion(
 
 	if (hashtagNames.length > 0) {
 		// Upsert hashtags (insert new ones, ignore existing)
-		const { data: upserted } = await supabase
+		const { error: upsertError } = await supabase
 			.from('hashtags')
 			.upsert(
 				hashtagNames.map((name) => ({ name })),
 				{ onConflict: 'name', ignoreDuplicates: true }
 			)
 			.select()
+		if (upsertError) throw upsertError
 
 		// Fetch all hashtags by name to get their IDs
-		const { data: allHashtags } = await supabase
+		const { data: allHashtags, error: fetchError } = await supabase
 			.from('hashtags')
 			.select('*')
 			.in('name', hashtagNames)
+		if (fetchError) throw fetchError
 
 		if (allHashtags?.length) {
-			await supabase
+			const { error: linkError } = await supabase
 				.from('question_hashtags')
 				.insert(allHashtags.map((h) => ({ question_id: question.id, hashtag_id: h.id })))
+			if (linkError) throw linkError
 		}
 	}
 
@@ -198,6 +208,7 @@ export async function createAnswer(
 	authorId: string,
 	parentAnswerId?: string
 ): Promise<Answer | null> {
+	const supabase = createClient()
 	const row: Record<string, string> = { body, question_id: questionId, author_id: authorId }
 	if (parentAnswerId) row.parent_answer_id = parentAnswerId
 
@@ -212,7 +223,14 @@ export async function createAnswer(
 }
 
 export async function deleteAnswer(answerId: string): Promise<boolean> {
+	const supabase = createClient()
 	const { error } = await supabase.from('answers').delete().eq('id', answerId)
+	return !error
+}
+
+export async function deleteQuestion(questionId: string): Promise<boolean> {
+	const supabase = createClient()
+	const { error } = await supabase.from('questions').delete().eq('id', questionId)
 	return !error
 }
 
@@ -221,6 +239,7 @@ export async function toggleReaction(
 	userId: string,
 	emoji: string
 ): Promise<boolean> {
+	const supabase = createClient()
 	const { data: existing } = await supabase
 		.from('reactions')
 		.select('id')
@@ -244,6 +263,7 @@ export async function updateProfile(
 	userId: string,
 	displayName: string
 ): Promise<boolean> {
+	const supabase = createClient()
 	const { error } = await supabase
 		.from('profiles')
 		.update({ display_name: displayName })
@@ -252,6 +272,7 @@ export async function updateProfile(
 }
 
 export async function getProfile(userId: string) {
+	const supabase = createClient()
 	const { data, error } = await supabase
 		.from('profiles')
 		.select('*')
@@ -262,6 +283,7 @@ export async function getProfile(userId: string) {
 }
 
 export async function getQuestionsByAuthor(authorId: string): Promise<Question[]> {
+	const supabase = createClient()
 	const { data, error } = await supabase
 		.from('questions')
 		.select('*, question_hashtags(hashtags(*))')

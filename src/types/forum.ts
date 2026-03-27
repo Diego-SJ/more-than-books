@@ -4,7 +4,7 @@ export type Profile = {
 	email: string
 	avatar_url: string | null
 	created_at: string
-	role: 'teacher' | 'user'
+	role: 'teacher' | 'user' | 'admin'
 }
 
 export type Hashtag = {

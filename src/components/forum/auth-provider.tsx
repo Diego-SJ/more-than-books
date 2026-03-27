@@ -9,6 +9,7 @@ type AuthContextType = {
 	user: User | null
 	profile: Profile | null
 	isTeacher: boolean
+	isAdmin: boolean
 	loading: boolean
 	signIn: (email: string, password: string) => Promise<{ error: string | null }>
 	signUp: (
@@ -23,6 +24,7 @@ const AuthContext = createContext<AuthContextType>({
 	user: null,
 	profile: null,
 	isTeacher: false,
+	isAdmin: false,
 	loading: true,
 	signIn: async () => ({ error: null }),
 	signUp: async () => ({ error: null }),
@@ -113,9 +115,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	}
 
 	const isTeacher = profile?.role === 'teacher'
+	const isAdmin = profile?.role === 'admin'
 
 	return (
-		<AuthContext.Provider value={{ user, profile, isTeacher, loading, signIn, signUp, signOut }}>
+		<AuthContext.Provider value={{ user, profile, isTeacher, isAdmin, loading, signIn, signUp, signOut }}>
 			{children}
 		</AuthContext.Provider>
 	)

@@ -25,9 +25,13 @@ The Strapi client uses Bearer token auth via `NEXT_PUBLIC_STRAPI_API_TOKEN`. API
 
 ### Data Flow — Supabase (Forum)
 
-Supabase client (`src/lib/supabase.ts`) → forum data functions (`src/lib/forum.ts`) → Client Components under `src/app/foro/`
+Supabase client (`src/lib/supabase.ts`) → forum data functions (`src/lib/forum.ts`) → React Query hooks (`src/lib/forum-queries.ts`) → Client Components under `src/app/foro/`
 
-The forum uses Supabase for both auth (magic link via `@supabase/auth-helpers-nextjs`) and data (Postgres tables: `questions`, `answers`, `reactions`, `profiles`, `forum_categories`). Auth session is refreshed via middleware (`src/middleware.ts`) on all `/foro/*` routes. Forum components live in `src/components/forum/`.
+The forum uses Supabase for both auth and data (Postgres tables: `questions`, `answers`, `reactions`, `profiles`, `hashtags`, `question_hashtags`). There are two Supabase clients: `createClient()` in `src/lib/supabase.ts` for client components, and `createServerClient()` in `src/lib/supabase-server.ts` for server components (uses cookies). Auth is password-based (`signInWithPassword`/`signUp`) managed by `AuthProvider` in `src/components/forum/auth-provider.tsx`. Auth session is refreshed via middleware (`src/middleware.ts`) on all `/foro/*` routes. The forum layout (`src/app/foro/layout.tsx`) wraps children with `QueryProvider` (outer) then `AuthProvider` (inner) — order matters.
+
+Forum data fetching uses TanStack React Query (stale time: 30s, 1 retry) with organized query keys (`forumKeys` in `forum-queries.ts`). Mutations auto-invalidate related queries on success. Answers support threading via `parent_answer_id` with `nestAnswers()` transforming flat arrays into trees.
+
+The forum rich text editor uses Tiptap (`src/components/forum/rich-text-editor.tsx`) with link and placeholder extensions, configured with `immediatelyRender: false` to prevent hydration mismatch. User profiles have a `role` field (`'teacher' | 'user'`) exposed as `isTeacher` in the auth context.
 
 ### Strapi Field Naming
 
@@ -44,7 +48,7 @@ Strapi fields use a mix of Spanish and English names. Blog post fields are mostl
 
 ### Routing
 
-Dynamic routes use slug-based params: `[blog_id]`, `[event_id]`, and `[question_id]`. Blog supports category filtering and search. Events split into upcoming/past using `dayjs` date comparisons (`filterIncomingEvents`/`filterPrevoiusEvents` in `src/lib/events.ts`). Forum routes under `/foro` include `/nueva-pregunta`, `/mi-panel`, `/iniciar-sesion`, and `[question_id]`.
+Dynamic routes use slug-based params: `[blog_id]`, `[event_id]`, and `[question_id]`. Blog supports category filtering and search. Events split into upcoming/past using `dayjs` date comparisons (`filterIncomingEvents`/`filterPrevoiusEvents` in `src/lib/events.ts`). Forum routes under `/foro` include `/nueva-pregunta`, `/mi-panel`, `/iniciar-sesion`, `/registro`, and `[question_id]`.
 
 ### Styling
 
@@ -57,9 +61,24 @@ Dynamic routes use slug-based params: `[blog_id]`, `[event_id]`, and `[question_
 
 Markdown content from Strapi is rendered using `next-mdx-remote` with remark-gfm, rehype-highlight, and rehype-slug plugins. Custom MDX components in `src/mdx-components.tsx` apply Tailwind classes and use `font-roboto` consistently.
 
+### Conventions
+
+- **Language**: All UI text is in Spanish. HTML locale is `es_ES`.
+- **Search**: Uses accent-insensitive matching via `normalizeText()` and `includes()` in `src/lib/utils.ts` — important when filtering Spanish content.
+- **Error handling**: Data-fetching functions return empty arrays/objects on error and log to console; they don't throw.
+- **Forms**: Use `react-hook-form` for input handling (login, signup, contact forms).
+
 ### Path Alias
 
 `@/*` maps to `./src/*` (configured in tsconfig.json).
+
+### Deployment
+
+The site targets Cloudflare Pages via `@cloudflare/next-on-pages` (`pnpm pages:build`). Image remote patterns are configured in `next.config.mjs` for `cms.mtbooks.com.mx` (Strapi), `api.dicebear.com` (avatars), and `source.unsplash.com`.
+
+### Local Supabase
+
+A local Supabase config exists at `supabase/config.toml` (PostgreSQL 17, REST on port 54321, Studio on 54323). No migrations are tracked in the repo.
 
 ## Environment Variables
 

@@ -20,7 +20,7 @@ export default function QuestionPage() {
 	const questionId = params.question_id as string
 	const { user } = useAuth()
 
-	const { data: question } = useQuestion(questionId)
+	const { data: question, isLoading: questionLoading } = useQuestion(questionId)
 	const { data: answers = [] } = useAnswers(questionId)
 	const answerIds = answers.map((a) => a.id)
 	const { data: reactions = {} } = useReactions(answerIds, user?.id)
@@ -41,7 +41,19 @@ export default function QuestionPage() {
 			<>
 				<Navbar currentPath="forum" />
 				<main className="container mx-auto pt-24 pb-10 px-4">
-					<p className="text-center text-slate-500 font-roboto">Cargando...</p>
+					{questionLoading ? (
+						<p className="text-center text-slate-500 font-roboto">Cargando...</p>
+					) : (
+						<div className="text-center py-20">
+							<p className="text-slate-500 font-roboto mb-4">Esta pregunta no existe o fue eliminada.</p>
+							<Link
+								href="/foro"
+								className="text-primary hover:underline font-roboto font-semibold"
+							>
+								Volver al foro
+							</Link>
+						</div>
+					)}
 				</main>
 				<Footer mt={20} />
 			</>

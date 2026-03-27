@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { useAuth } from './auth-provider'
 
 export default function ForumUserMenu() {
-	const { user, loading, signOut } = useAuth()
+	const { user, profile, isAdmin, loading, signOut } = useAuth()
 
 	if (loading) return null
 
@@ -21,8 +21,13 @@ export default function ForumUserMenu() {
 
 	return (
 		<div className="flex items-center gap-3">
+			{isAdmin && (
+				<span className="text-xs font-roboto font-bold uppercase tracking-wide bg-primary text-primary-foreground px-2 py-0.5 rounded">
+					Admin
+				</span>
+			)}
 			<Link href="/foro/mi-panel" className="text-sm font-roboto text-foreground hover:text-primary">
-				{user.email?.split('@')[0]}
+				{profile?.display_name ?? user.email?.split('@')[0]}
 			</Link>
 			<Button variant="ghost" size="sm" onClick={() => signOut()}>
 				Cerrar sesión

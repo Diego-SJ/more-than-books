@@ -4,6 +4,7 @@ import { useState } from 'react'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import { Trash2, MessageSquare } from 'lucide-react'
+import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import UserAvatar from './user-avatar'
 import ForumContent from './forum-content'
@@ -31,16 +32,18 @@ export default function AnswerCard({
 	questionId,
 	isReply = false
 }: AnswerCardProps) {
-	const { user } = useAuth()
+	const { user, isAdmin } = useAuth()
 	const deleteAnswerMutation = useDeleteAnswer(questionId)
 	const [showReplyForm, setShowReplyForm] = useState(false)
 
 	const canDelete =
-		user && (user.id === answer.author_id || user.id === questionAuthorId)
+		user && (isAdmin || user.id === answer.author_id || user.id === questionAuthorId)
 
 	const handleDelete = () => {
 		if (!window.confirm('¿Estás seguro de que deseas eliminar esta respuesta?')) return
-		deleteAnswerMutation.mutate(answer.id)
+		deleteAnswerMutation.mutate(answer.id, {
+			onError: () => toast.error('Error al eliminar la respuesta.')
+		})
 	}
 
 	const answerReactions = reactions[answer.id] ?? []

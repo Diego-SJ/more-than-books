@@ -11,16 +11,16 @@ import { ArrowLeft } from 'lucide-react'
 import 'aos/dist/aos.css'
 
 export default function NuevaPreguntaPage() {
-	const { user, loading } = useAuth()
+	const { user, isAdmin, loading } = useAuth()
 	const router = useRouter()
 
 	useEffect(() => {
-		if (!loading && !user) {
-			router.push('/foro/iniciar-sesion')
+		if (!loading && (!user || !isAdmin)) {
+			router.push('/foro')
 		}
-	}, [user, loading, router])
+	}, [user, isAdmin, loading, router])
 
-	if (loading || !user) return null
+	if (loading || !user || !isAdmin) return null
 
 	return (
 		<>
