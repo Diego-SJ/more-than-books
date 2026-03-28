@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { toast } from 'sonner'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { useUpdateProfile } from '@/lib/forum-queries'
+import { updateProfile } from '@/lib/forum'
 import { ArrowLeft } from 'lucide-react'
 import type { Profile, Question } from '@/types/forum'
 
@@ -17,21 +17,24 @@ type MiPanelClientProps = {
 
 export default function MiPanelClient({ profile, questions }: MiPanelClientProps) {
 	const router = useRouter()
-	const updateProfileMutation = useUpdateProfile(profile.id)
 	const [displayName, setDisplayName] = useState(profile.display_name)
+	const [isPending, setIsPending] = useState(false)
 
-	const handleUpdateProfile = () => {
-		updateProfileMutation.mutate(displayName, {
-			onSuccess: (success) => {
-				if (success) {
-					toast.success('Perfil actualizado')
-					router.refresh()
-				} else {
-					toast.error('Error al actualizar el perfil')
-				}
-			},
-			onError: () => toast.error('Error al actualizar el perfil')
-		})
+	const handleUpdateProfile = async () => {
+		setIsPending(true)
+		try {
+			const success = await updateProfile(profile.id, displayName)
+			if (success) {
+				toast.success('Perfil actualizado')
+				router.refresh()
+			} else {
+				toast.error('Error al actualizar el perfil')
+			}
+		} catch {
+			toast.error('Error al actualizar el perfil')
+		} finally {
+			setIsPending(false)
+		}
 	}
 
 	return (
@@ -65,10 +68,10 @@ export default function MiPanelClient({ profile, questions }: MiPanelClientProps
 					</div>
 					<Button
 						onClick={handleUpdateProfile}
-						disabled={updateProfileMutation.isPending}
+						disabled={isPending}
 						className="w-full sm:w-auto"
 					>
-						{updateProfileMutation.isPending ? 'Guardando...' : 'Guardar cambios'}
+						{isPending ? 'Guardando...' : 'Guardar cambios'}
 					</Button>
 				</div>
 			</section>

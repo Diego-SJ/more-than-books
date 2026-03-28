@@ -1,9 +1,10 @@
 'use client'
 
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { useAuth } from './auth-provider'
-import { useToggleReaction } from '@/lib/forum-queries'
+import { toggleReaction } from '@/lib/forum'
 import type { ReactionSummary } from '@/types/forum'
 
 const EMOJIS = ['👍', '❤️', '🎉', '💡']
@@ -17,14 +18,17 @@ type ReactionBarProps = {
 export default function ReactionBar({ answerId, reactions, questionId }: ReactionBarProps) {
 	const { user } = useAuth()
 	const router = useRouter()
-	const toggleReactionMutation = useToggleReaction(questionId)
+	const [isPending, setIsPending] = useState(false)
 
-	const handleReaction = (emoji: string) => {
-		if (!user) return
-		toggleReactionMutation.mutate(
-			{ answerId, userId: user.id, emoji },
-			{ onSuccess: () => router.refresh() }
-		)
+	const handleReaction = async (emoji: string) => {
+		if (!user || isPending) return
+		setIsPending(true)
+		try {
+			await toggleReaction(answerId, user.id, emoji)
+			router.refresh()
+		} finally {
+			setIsPending(false)
+		}
 	}
 
 	const getReaction = (emoji: string) =>
@@ -39,7 +43,7 @@ export default function ReactionBar({ answerId, reactions, questionId }: Reactio
 						key={emoji}
 						variant="ghost"
 						size="sm"
-						disabled={toggleReactionMutation.isPending || !user}
+						disabled={isPending || !user}
 						className={`text-sm px-2 ${r.reacted ? 'border border-primary bg-primary/5' : ''}`}
 						onClick={() => handleReaction(emoji)}
 					>

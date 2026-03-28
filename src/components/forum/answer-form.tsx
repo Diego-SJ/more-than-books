@@ -1,11 +1,12 @@
 'use client'
 
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm, Controller } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { useAuth } from './auth-provider'
-import { useCreateAnswer } from '@/lib/forum-queries'
+import { createAnswer } from '@/lib/forum'
 import RichTextEditor from './rich-text-editor'
 import Link from 'next/link'
 
@@ -18,7 +19,7 @@ type AnswerFormProps = {
 export default function AnswerForm({ questionId }: AnswerFormProps) {
 	const { user } = useAuth()
 	const router = useRouter()
-	const createAnswerMutation = useCreateAnswer(questionId)
+	const [isPending, setIsPending] = useState(false)
 	const {
 		handleSubmit,
 		control,
@@ -39,18 +40,18 @@ export default function AnswerForm({ questionId }: AnswerFormProps) {
 		)
 	}
 
-	const onSubmit = (data: FormData) => {
-		createAnswerMutation.mutate(
-			{ body: data.body, authorId: user.id },
-			{
-				onSuccess: () => {
-					toast.success('Respuesta publicada')
-					reset()
-					router.refresh()
-				},
-				onError: () => toast.error('Error al publicar la respuesta.')
-			}
-		)
+	const onSubmit = async (data: FormData) => {
+		setIsPending(true)
+		try {
+			await createAnswer(data.body, questionId, user.id)
+			toast.success('Respuesta publicada')
+			reset()
+			router.refresh()
+		} catch {
+			toast.error('Error al publicar la respuesta.')
+		} finally {
+			setIsPending(false)
+		}
 	}
 
 	return (
@@ -71,8 +72,8 @@ export default function AnswerForm({ questionId }: AnswerFormProps) {
 			{errors.body && (
 				<span className="text-red-600 font-roboto font-thin text-sm">Campo obligatorio</span>
 			)}
-			<Button type="submit" disabled={createAnswerMutation.isPending} className="w-full sm:w-auto">
-				{createAnswerMutation.isPending ? 'Publicando...' : 'Responder'}
+			<Button type="submit" disabled={isPending} className="w-full sm:w-auto">
+				{isPending ? 'Publicando...' : 'Responder'}
 			</Button>
 		</form>
 	)

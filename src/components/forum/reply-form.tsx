@@ -1,11 +1,12 @@
 'use client'
 
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm, Controller } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { useAuth } from './auth-provider'
-import { useCreateAnswer } from '@/lib/forum-queries'
+import { createAnswer } from '@/lib/forum'
 import RichTextEditor from './rich-text-editor'
 
 type FormData = { body: string }
@@ -19,7 +20,7 @@ type ReplyFormProps = {
 export default function ReplyForm({ questionId, parentAnswerId, onClose }: ReplyFormProps) {
 	const { user } = useAuth()
 	const router = useRouter()
-	const createAnswerMutation = useCreateAnswer(questionId)
+	const [isPending, setIsPending] = useState(false)
 	const {
 		handleSubmit,
 		control,
@@ -28,18 +29,18 @@ export default function ReplyForm({ questionId, parentAnswerId, onClose }: Reply
 
 	if (!user) return null
 
-	const onSubmit = (data: FormData) => {
-		createAnswerMutation.mutate(
-			{ body: data.body, authorId: user.id, parentAnswerId },
-			{
-				onSuccess: () => {
-					toast.success('Respuesta publicada')
-					onClose()
-					router.refresh()
-				},
-				onError: () => toast.error('Error al publicar la respuesta.')
-			}
-		)
+	const onSubmit = async (data: FormData) => {
+		setIsPending(true)
+		try {
+			await createAnswer(data.body, questionId, user.id, parentAnswerId)
+			toast.success('Respuesta publicada')
+			onClose()
+			router.refresh()
+		} catch {
+			toast.error('Error al publicar la respuesta.')
+		} finally {
+			setIsPending(false)
+		}
 	}
 
 	return (
@@ -60,8 +61,8 @@ export default function ReplyForm({ questionId, parentAnswerId, onClose }: Reply
 				<span className="text-red-600 font-roboto font-thin text-sm">Campo obligatorio</span>
 			)}
 			<div className="flex gap-2">
-				<Button type="submit" size="sm" disabled={createAnswerMutation.isPending}>
-					{createAnswerMutation.isPending ? 'Publicando...' : 'Responder'}
+				<Button type="submit" size="sm" disabled={isPending}>
+					{isPending ? 'Publicando...' : 'Responder'}
 				</Button>
 				<Button type="button" variant="ghost" size="sm" onClick={onClose}>
 					Cancelar

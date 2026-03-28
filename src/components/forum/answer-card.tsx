@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button'
 import UserAvatar from './user-avatar'
 import ForumContent from './forum-content'
 import { useAuth } from './auth-provider'
-import { useDeleteAnswer } from '@/lib/forum-queries'
+import { deleteAnswer } from '@/lib/forum'
 import ReactionBar from './reaction-bar'
 import ReplyForm from './reply-form'
 import type { Answer } from '@/types/forum'
@@ -35,25 +35,30 @@ export default function AnswerCard({
 }: AnswerCardProps) {
 	const { user, isAdmin } = useAuth()
 	const router = useRouter()
-	const deleteAnswerMutation = useDeleteAnswer(questionId)
+	const [isDeleting, setIsDeleting] = useState(false)
 	const [showReplyForm, setShowReplyForm] = useState(false)
 
 	const canDelete =
 		user && (isAdmin || user.id === answer.author_id || user.id === questionAuthorId)
 
-	const handleDelete = () => {
+	const handleDelete = async () => {
 		if (!window.confirm('¿Estás seguro de que deseas eliminar esta respuesta?')) return
-		deleteAnswerMutation.mutate(answer.id, {
-			onSuccess: () => router.refresh(),
-			onError: () => toast.error('Error al eliminar la respuesta.')
-		})
+		setIsDeleting(true)
+		try {
+			await deleteAnswer(answer.id)
+			router.refresh()
+		} catch {
+			toast.error('Error al eliminar la respuesta.')
+		} finally {
+			setIsDeleting(false)
+		}
 	}
 
 	const answerReactions = reactions[answer.id] ?? []
 
 	return (
 		<div>
-			<div className={`border border-slate-200 rounded-xl p-5 ${isReply ? '' : 'mb-4'}`}>
+			<div className={`border border-slate-200 rounded-xl p-4 ${isReply ? '' : 'mb-4'}`}>
 				<div className="flex items-center justify-between mb-3">
 					<div className="flex gap-3 items-center">
 						<UserAvatar name={answer.profiles?.display_name ?? 'Anónimo'} size={isReply ? 'sm' : 'md'} />
@@ -70,7 +75,7 @@ export default function AnswerCard({
 						<Button
 							variant="ghost"
 							size="sm"
-							disabled={deleteAnswerMutation.isPending}
+							disabled={isDeleting}
 							onClick={handleDelete}
 							className="text-red-500 hover:text-red-700 hover:bg-red-50"
 						>

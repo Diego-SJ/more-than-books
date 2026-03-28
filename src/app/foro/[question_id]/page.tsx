@@ -4,6 +4,7 @@ import Footer from '@/components/footer'
 import QuestionDetail from '@/components/forum/question-detail'
 import AnswerCard from '@/components/forum/answer-card'
 import AnswerForm from '@/components/forum/answer-form'
+import RealtimeAnswers from '@/components/forum/realtime-answers'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { nestAnswers } from '@/lib/forum'
 import { ArrowLeft } from 'lucide-react'
@@ -120,52 +121,60 @@ export default async function QuestionPage({ params }: { params: { question_id: 
 				</Link>
 
 				<div className="lg:grid lg:grid-cols-[1fr_300px] lg:gap-10">
-					<div>
-						<QuestionDetail question={question} answerCount={answers.length} />
+					<RealtimeAnswers questionId={questionId}>
+						<div>
+							<QuestionDetail question={question} answerCount={answers.length} />
 
-						<h2 className="text-lg font-roboto font-bold mb-4">
-							{answers.length} {answers.length === 1 ? 'respuesta' : 'respuestas'}
-						</h2>
+							<h2 className="text-lg font-roboto font-bold mb-4">
+								{answers.length} {answers.length === 1 ? 'respuesta' : 'respuestas'}
+							</h2>
 
-						{nested.map((answer) => (
-							<div key={answer.id}>
-								<AnswerCard
-									answer={answer}
-									questionAuthorId={question.author_id}
-									reactions={reactions}
-									questionId={questionId}
-								/>
+							{nested.map((answer) => (
+								<div key={answer.id}>
+									<AnswerCard
+										answer={answer}
+										questionAuthorId={question.author_id}
+										reactions={reactions}
+										questionId={questionId}
+									/>
+								</div>
+							))}
+
+							<div className="mt-8">
+								<AnswerForm questionId={questionId} />
 							</div>
-						))}
-
-						<div className="mt-8">
-							<AnswerForm questionId={questionId} />
 						</div>
-					</div>
+					</RealtimeAnswers>
 
 					<div className="hidden lg:block">
-						{relatedQuestions.length > 0 && (
-							<section>
-								<h2 className="text-lg font-roboto font-bold text-foreground mb-1">
-									Preguntas relacionadas
-								</h2>
+						<section>
+							<h2 className="text-lg font-roboto font-bold text-foreground mb-1">
+								Preguntas relacionadas
+							</h2>
+							{relatedQuestions.length > 0 ? (
+								<>
+									<p className="text-sm text-muted-foreground font-roboto mb-4">
+										Otras preguntas con temas similares.
+									</p>
+									<ul className="space-y-4">
+										{relatedQuestions.map((q) => (
+											<li key={q.id}>
+												<Link
+													href={`/foro/${q.id}`}
+													className="block text-sm font-roboto text-foreground hover:text-primary transition-colors"
+												>
+													{q.title}
+												</Link>
+											</li>
+										))}
+									</ul>
+								</>
+							) : (
 								<p className="text-sm text-muted-foreground font-roboto mb-4">
-									Otras preguntas con temas similares.
+									No hay preguntas relacionadas.
 								</p>
-								<ul className="space-y-4">
-									{relatedQuestions.map((q) => (
-										<li key={q.id}>
-											<Link
-												href={`/foro/${q.id}`}
-												className="block text-sm font-roboto text-foreground hover:text-primary transition-colors"
-											>
-												{q.title}
-											</Link>
-										</li>
-									))}
-								</ul>
-							</section>
-						)}
+							)}
+						</section>
 					</div>
 				</div>
 			</main>
