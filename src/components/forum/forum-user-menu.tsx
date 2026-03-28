@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { useAuth } from './auth-provider'
+import UserAvatar from './user-avatar'
 
 export default function ForumUserMenu() {
 	const { user, profile, isAdmin, loading, signOut } = useAuth()
@@ -19,6 +20,8 @@ export default function ForumUserMenu() {
 		)
 	}
 
+	const displayName = profile?.display_name ?? user.email?.split('@')[0] ?? 'Usuario'
+
 	return (
 		<div className="flex items-center gap-3">
 			{isAdmin && (
@@ -26,8 +29,12 @@ export default function ForumUserMenu() {
 					Admin
 				</span>
 			)}
-			<Link href="/foro/mi-panel" className="text-sm font-roboto text-foreground hover:text-primary">
-				{profile?.display_name ?? user.email?.split('@')[0]}
+			<Link
+				href="/foro/mi-panel"
+				className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+			>
+				<UserAvatar name={displayName} size="sm" />
+				<span className="text-sm font-roboto text-foreground">{displayName}</span>
 			</Link>
 			<Button variant="ghost" size="sm" onClick={() => signOut()}>
 				Cerrar sesión

@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { useForm, Controller } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
@@ -17,6 +18,7 @@ type ReplyFormProps = {
 
 export default function ReplyForm({ questionId, parentAnswerId, onClose }: ReplyFormProps) {
 	const { user } = useAuth()
+	const router = useRouter()
 	const createAnswerMutation = useCreateAnswer(questionId)
 	const {
 		handleSubmit,
@@ -33,6 +35,7 @@ export default function ReplyForm({ questionId, parentAnswerId, onClose }: Reply
 				onSuccess: () => {
 					toast.success('Respuesta publicada')
 					onClose()
+					router.refresh()
 				},
 				onError: () => toast.error('Error al publicar la respuesta.')
 			}

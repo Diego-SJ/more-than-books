@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import dayjs from 'dayjs'
 import 'dayjs/locale/es'
 import { Trash2, MessageSquare } from 'lucide-react'
@@ -33,6 +34,7 @@ export default function AnswerCard({
 	isReply = false
 }: AnswerCardProps) {
 	const { user, isAdmin } = useAuth()
+	const router = useRouter()
 	const deleteAnswerMutation = useDeleteAnswer(questionId)
 	const [showReplyForm, setShowReplyForm] = useState(false)
 
@@ -42,6 +44,7 @@ export default function AnswerCard({
 	const handleDelete = () => {
 		if (!window.confirm('¿Estás seguro de que deseas eliminar esta respuesta?')) return
 		deleteAnswerMutation.mutate(answer.id, {
+			onSuccess: () => router.refresh(),
 			onError: () => toast.error('Error al eliminar la respuesta.')
 		})
 	}

@@ -1,5 +1,6 @@
 'use client'
 
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { useAuth } from './auth-provider'
 import { useToggleReaction } from '@/lib/forum-queries'
@@ -15,11 +16,15 @@ type ReactionBarProps = {
 
 export default function ReactionBar({ answerId, reactions, questionId }: ReactionBarProps) {
 	const { user } = useAuth()
+	const router = useRouter()
 	const toggleReactionMutation = useToggleReaction(questionId)
 
 	const handleReaction = (emoji: string) => {
 		if (!user) return
-		toggleReactionMutation.mutate({ answerId, userId: user.id, emoji })
+		toggleReactionMutation.mutate(
+			{ answerId, userId: user.id, emoji },
+			{ onSuccess: () => router.refresh() }
+		)
 	}
 
 	const getReaction = (emoji: string) =>

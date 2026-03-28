@@ -1,16 +1,14 @@
-'use client'
-
 import Link from 'next/link'
 import { MessageCircle } from 'lucide-react'
 import UserAvatar from './user-avatar'
-import { useTopContributors, useQuestions } from '@/lib/forum-queries'
+import type { Question, TopContributor } from '@/types/forum'
 
-export default function ForumSidebar() {
-	const { data: contributors = [] } = useTopContributors()
-	const { data: questions = [] } = useQuestions()
+type ForumSidebarProps = {
+	contributors: TopContributor[]
+	unansweredQuestions: Question[]
+}
 
-	const unanswered = questions.filter((q) => (q.answer_count ?? 0) === 0).slice(0, 5)
-
+export default function ForumSidebar({ contributors, unansweredQuestions }: ForumSidebarProps) {
 	return (
 		<aside className="space-y-8">
 			{/* Top Contributors */}
@@ -52,7 +50,7 @@ export default function ForumSidebar() {
 			</section>
 
 			{/* Unanswered Questions */}
-			{unanswered.length > 0 && (
+			{unansweredQuestions.length > 0 && (
 				<section>
 					<h2 className="text-xl font-roboto font-bold text-foreground mb-1">
 						Sin responder
@@ -61,7 +59,7 @@ export default function ForumSidebar() {
 						Preguntas que aún no tienen respuestas. Sé el primero en participar.
 					</p>
 					<ul className="space-y-3">
-						{unanswered.map((q) => (
+						{unansweredQuestions.map((q) => (
 							<li key={q.id}>
 								<span className="text-xs text-muted-foreground font-roboto">
 									{q.profiles?.display_name ?? 'Anónimo'} preguntó

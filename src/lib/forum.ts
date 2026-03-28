@@ -5,18 +5,12 @@ import type { Hashtag, Question, Answer, Reaction, TopContributor } from '@/type
 
 export async function getHashtags(): Promise<Hashtag[]> {
 	const supabase = createClient()
-	const { data, error } = await supabase
-		.from('hashtags')
-		.select('*')
-		.order('name')
+	const { data, error } = await supabase.from('hashtags').select('*').order('name')
 	if (error) throw error
 	return data ?? []
 }
 
-export async function getQuestions(
-	hashtag?: string,
-	search?: string
-): Promise<Question[]> {
+export async function getQuestions(hashtag?: string, search?: string): Promise<Question[]> {
 	const supabase = createClient()
 	let query = supabase
 		.from('questions')
@@ -81,9 +75,7 @@ export async function getRelatedQuestions(
 			...q,
 			hashtags: (q.question_hashtags ?? []).map((qh: any) => qh.hashtags)
 		}))
-		.filter((q: any) =>
-			q.hashtags.some((h: Hashtag) => hashtagNames.includes(h.name))
-		)
+		.filter((q: any) => q.hashtags.some((h: Hashtag) => hashtagNames.includes(h.name)))
 		.slice(0, limit)
 }
 
@@ -119,10 +111,7 @@ export async function getReactions(
 	if (!answerIds.length) return {}
 
 	const supabase = createClient()
-	const { data, error } = await supabase
-		.from('reactions')
-		.select('*')
-		.in('answer_id', answerIds)
+	const { data, error } = await supabase.from('reactions').select('*').in('answer_id', answerIds)
 
 	if (error) throw error
 
@@ -259,10 +248,7 @@ export async function toggleReaction(
 	}
 }
 
-export async function updateProfile(
-	userId: string,
-	displayName: string
-): Promise<boolean> {
+export async function updateProfile(userId: string, displayName: string): Promise<boolean> {
 	const supabase = createClient()
 	const { error } = await supabase
 		.from('profiles')
@@ -273,11 +259,7 @@ export async function updateProfile(
 
 export async function getProfile(userId: string) {
 	const supabase = createClient()
-	const { data, error } = await supabase
-		.from('profiles')
-		.select('*')
-		.eq('id', userId)
-		.single()
+	const { data, error } = await supabase.from('profiles').select('*').eq('id', userId).single()
 	if (error) return null
 	return data
 }

@@ -1,4 +1,4 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
@@ -11,11 +11,25 @@ export async function GET(request: NextRequest) {
 	const next = requestUrl.searchParams.get('next')
 
 	if (code) {
-		const supabase = createRouteHandlerClient(
-			{ cookies },
+		const cookieStore = cookies()
+		const supabase = createServerClient(
+			process.env.NEXT_PUBLIC_SUPABASE_URL!,
+			process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY!,
 			{
-				supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL,
-				supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY,
+				cookies: {
+					getAll() {
+						return cookieStore.getAll()
+					},
+					setAll(cookiesToSet) {
+						try {
+							cookiesToSet.forEach(({ name, value, options }) =>
+								cookieStore.set(name, value, options)
+							)
+						} catch {
+							// ignore
+						}
+					}
+				}
 			}
 		)
 		await supabase.auth.exchangeCodeForSession(code)

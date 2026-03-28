@@ -26,8 +26,7 @@ export const forumKeys = {
 	questions: ['questions'] as const,
 	question: (id: string) => ['question', id] as const,
 	answers: (questionId: string) => ['answers', questionId] as const,
-	reactions: (answerIds: string[], userId?: string) =>
-		['reactions', ...answerIds, userId] as const,
+	reactions: (answerIds: string[], userId?: string) => ['reactions', ...answerIds, userId] as const,
 	profile: (userId: string) => ['profile', userId] as const,
 	questionsByAuthor: (authorId: string) => ['questions', 'author', authorId] as const,
 	topContributors: ['topContributors'] as const,
@@ -39,14 +38,20 @@ export const forumKeys = {
 export function useHashtags() {
 	return useQuery({
 		queryKey: forumKeys.hashtags,
-		queryFn: getHashtags
+		queryFn: getHashtags,
+		refetchOnWindowFocus: true,
+		refetchOnMount: true
 	})
 }
 
 export function useQuestions() {
 	return useQuery({
 		queryKey: forumKeys.questions,
-		queryFn: () => getQuestions()
+		queryFn: () => {
+			return getQuestions()
+		},
+		refetchOnWindowFocus: true,
+		refetchOnMount: true
 	})
 }
 
@@ -54,7 +59,9 @@ export function useQuestion(id: string) {
 	return useQuery({
 		queryKey: forumKeys.question(id),
 		queryFn: () => getQuestionById(id),
-		enabled: !!id
+		enabled: !!id,
+		refetchOnWindowFocus: true,
+		refetchOnMount: true
 	})
 }
 
@@ -62,7 +69,9 @@ export function useAnswers(questionId: string) {
 	return useQuery({
 		queryKey: forumKeys.answers(questionId),
 		queryFn: () => getAnswers(questionId),
-		enabled: !!questionId
+		enabled: !!questionId,
+		refetchOnWindowFocus: true,
+		refetchOnMount: true
 	})
 }
 
@@ -70,7 +79,9 @@ export function useReactions(answerIds: string[], userId?: string) {
 	return useQuery({
 		queryKey: forumKeys.reactions(answerIds, userId),
 		queryFn: () => getReactions(answerIds, userId),
-		enabled: answerIds.length > 0
+		enabled: answerIds.length > 0,
+		refetchOnWindowFocus: true,
+		refetchOnMount: true
 	})
 }
 
@@ -78,14 +89,18 @@ export function useProfile(userId: string | undefined) {
 	return useQuery({
 		queryKey: forumKeys.profile(userId!),
 		queryFn: () => getProfile(userId!),
-		enabled: !!userId
+		enabled: !!userId,
+		refetchOnWindowFocus: true,
+		refetchOnMount: true
 	})
 }
 
 export function useTopContributors() {
 	return useQuery({
 		queryKey: forumKeys.topContributors,
-		queryFn: () => getTopContributors()
+		queryFn: () => getTopContributors(),
+		refetchOnWindowFocus: true,
+		refetchOnMount: true
 	})
 }
 
@@ -93,7 +108,9 @@ export function useQuestionsByAuthor(authorId: string | undefined) {
 	return useQuery({
 		queryKey: forumKeys.questionsByAuthor(authorId!),
 		queryFn: () => getQuestionsByAuthor(authorId!),
-		enabled: !!authorId
+		enabled: !!authorId,
+		refetchOnWindowFocus: true,
+		refetchOnMount: true
 	})
 }
 
@@ -101,7 +118,9 @@ export function useRelatedQuestions(questionId: string, hashtagNames: string[]) 
 	return useQuery({
 		queryKey: forumKeys.relatedQuestions(questionId),
 		queryFn: () => getRelatedQuestions(questionId, hashtagNames),
-		enabled: hashtagNames.length > 0
+		enabled: hashtagNames.length > 0,
+		refetchOnWindowFocus: true,
+		refetchOnMount: true
 	})
 }
 
