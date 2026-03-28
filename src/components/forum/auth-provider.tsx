@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState, useCallback } from 'react'
 import type { User } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase'
 import type { Profile } from '@/types/forum'
@@ -35,31 +35,47 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 	const [user, setUser] = useState<User | null>(null)
 	const [profile, setProfile] = useState<Profile | null>(null)
 	const [loading, setLoading] = useState(true)
-	const supabase = createClient()
+	const [supabase] = useState(() => createClient())
 
-	const fetchProfile = async (userId: string) => {
-		const { data } = await supabase.from('profiles').select('*').eq('id', userId).single()
-		setProfile(data)
-	}
+	const fetchProfile = useCallback(
+		async (userId: string) => {
+			const { data } = await supabase.from('profiles').select('*').eq('id', userId).single()
+			setProfile(data)
+		},
+		[supabase]
+	)
 
 	useEffect(() => {
+		let mounted = true
+
 		const getUser = async () => {
-			const {
-				data: { session }
-			} = await supabase.auth.getSession()
-			const currentUser = session?.user ?? null
-			setUser(currentUser)
-			if (currentUser) {
-				await fetchProfile(currentUser.id)
+			try {
+				const {
+					data: { user: currentUser }
+				} = await supabase.auth.getUser()
+				if (!mounted) return
+				setUser(currentUser)
+				if (currentUser) {
+					await fetchProfile(currentUser.id)
+				}
+			} catch {
+				// Auth check failed — treat as no user
+			} finally {
+				if (mounted) setLoading(false)
 			}
-			setLoading(false)
 		}
 
 		getUser()
 
+		// Timeout fallback: if getUser hangs, force loading to false
+		const timeout = setTimeout(() => {
+			if (mounted) setLoading(false)
+		}, 5000)
+
 		const {
 			data: { subscription }
 		} = supabase.auth.onAuthStateChange(async (_event, session) => {
+			if (!mounted) return
 			const currentUser = session?.user ?? null
 			setUser(currentUser)
 			if (currentUser) {
@@ -70,8 +86,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 			setLoading(false)
 		})
 
-		return () => subscription.unsubscribe()
-	}, [supabase.auth])
+		return () => {
+			mounted = false
+			clearTimeout(timeout)
+			subscription.unsubscribe()
+		}
+	}, [supabase, fetchProfile])
 
 	const signIn = async (email: string, password: string) => {
 		const { error } = await supabase.auth.signInWithPassword({ email, password })
@@ -82,7 +102,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 		const { data, error } = await supabase.auth.signUp({
 			email,
 			password,
-
 			options: {
 				data: { display_name: displayName }
 			}

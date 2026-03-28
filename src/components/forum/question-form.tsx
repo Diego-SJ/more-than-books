@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { X } from 'lucide-react'
 import { useAuth } from './auth-provider'
-import { useCreateQuestion } from '@/lib/forum-queries'
+import { createQuestion } from '@/lib/forum'
 import RichTextEditor from './rich-text-editor'
 
 type FormData = {
@@ -19,7 +19,7 @@ type FormData = {
 export default function QuestionForm() {
 	const { user } = useAuth()
 	const router = useRouter()
-	const createQuestionMutation = useCreateQuestion()
+	const [isPending, setIsPending] = useState(false)
 	const [hashtags, setHashtags] = useState<string[]>([])
 	const [hashtagInput, setHashtagInput] = useState('')
 	const {
@@ -48,26 +48,26 @@ export default function QuestionForm() {
 		}
 	}
 
-	const onSubmit = (data: FormData) => {
+	const onSubmit = async (data: FormData) => {
 		if (!user) return
 		if (hashtags.length === 0) {
 			toast.error('Agrega al menos un hashtag')
 			return
 		}
-		createQuestionMutation.mutate(
-			{ title: data.title, body: data.body, hashtags, authorId: user.id },
-			{
-				onSuccess: (question) => {
-					if (question) {
-						toast.success('Pregunta creada')
-						router.push(`/foro/${question.id}`)
-					} else {
-						toast.error('Error al crear la pregunta. Inténtalo de nuevo.')
-					}
-				},
-				onError: () => toast.error('Error al crear la pregunta. Inténtalo de nuevo.')
+		setIsPending(true)
+		try {
+			const question = await createQuestion(data.title, data.body, hashtags, user.id)
+			if (question) {
+				toast.success('Pregunta creada')
+				router.push(`/foro/${question.id}`)
+			} else {
+				toast.error('Error al crear la pregunta. Inténtalo de nuevo.')
 			}
-		)
+		} catch {
+			toast.error('Error al crear la pregunta. Inténtalo de nuevo.')
+		} finally {
+			setIsPending(false)
+		}
 	}
 
 	return (
@@ -142,8 +142,8 @@ export default function QuestionForm() {
 					</span>
 				)}
 			</div>
-			<Button type="submit" disabled={createQuestionMutation.isPending} className="w-full">
-				{createQuestionMutation.isPending ? 'Publicando...' : 'Publicar pregunta'}
+			<Button type="submit" disabled={isPending} className="w-full">
+				{isPending ? 'Publicando...' : 'Publicar pregunta'}
 			</Button>
 		</form>
 	)

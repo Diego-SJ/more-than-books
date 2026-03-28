@@ -1,26 +1,32 @@
-'use client'
-
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import Navbar from '@/components/navbar'
 import Footer from '@/components/footer'
 import QuestionForm from '@/components/forum/question-form'
-import { useAuth } from '@/components/forum/auth-provider'
+import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { ArrowLeft } from 'lucide-react'
-import 'aos/dist/aos.css'
 
-export default function NuevaPreguntaPage() {
-	const { user, isAdmin, loading } = useAuth()
-	const router = useRouter()
+export default async function NuevaPreguntaPage() {
+	const supabase = createServerSupabaseClient()
 
-	useEffect(() => {
-		if (!loading && (!user || !isAdmin)) {
-			router.push('/foro')
-		}
-	}, [user, isAdmin, loading, router])
+	const {
+		data: { user }
+	} = await supabase.auth.getUser()
 
-	if (loading || !user || !isAdmin) return null
+	if (!user) {
+		redirect('/foro/iniciar-sesion')
+	}
+
+	// Verify admin role
+	const { data: profile } = await supabase
+		.from('profiles')
+		.select('role')
+		.eq('id', user.id)
+		.single()
+
+	if (profile?.role !== 'admin') {
+		redirect('/foro')
+	}
 
 	return (
 		<>
