@@ -14,6 +14,7 @@ import EventShareButtons from './event-share-buttons'
 dayjs.locale('es')
 
 const EventsPage = ({ event }: { event: Event }) => {
+	const googleCalendarLink = createGoogleCalendarLink(event)
 	return (
 		<>
 			<AosInit />
@@ -34,9 +35,9 @@ const EventsPage = ({ event }: { event: Event }) => {
 				className="relative flex flex-col sm:flex-row bg-white text-secondary-foreground w-full mx-auto max-w-[90%] md:max-w-[900px] rounded-2xl shadow-2xl -mt-20 z-[0]"
 			>
 				<div className="relative sm:w-full border-b-[3px] sm:border-b-transparent sm:border-r-[3px] border-dashed border-black/10 px-6 pt-6 pb-8 before:content-[''] before:w-10 before:h-10 before:bg-white before:rounded-full before:absolute before:left-1/2 sm:before:left-[100%] sm:before:top-1/2 before:-translate-x-1/2 sm:before:-translate-x-1/2 sm:before:-translate-y-1/2 before:-bottom-5 sm:before:bottom-[initial] before:shadow-inner-lg">
-					<h2 className="text-3xl mb-3 font-roboto font-semibold">{event.title}</h2>
+					<h2 className="text-3xl mb-3 font-roboto font-semibold">{event?.title}</h2>
 
-					{event.date && (
+					{event?.date && (
 						<div className="flex items-start gap-2 mb-3">
 							<Clock className="text-primary mt-2 min-w-5" size={18} />
 							<div className="flex flex-col">
@@ -78,7 +79,7 @@ const EventsPage = ({ event }: { event: Event }) => {
 							<div className="flex items-center gap-2">
 								<Crown className="text-primary mt-0 min-w-5" size={19} />
 								<p className="text-base sm:text-lg font-didact text-secondary-foreground/70">
-									{event.author}
+									{event?.author}
 								</p>
 							</div>
 						)}
@@ -110,14 +111,20 @@ const EventsPage = ({ event }: { event: Event }) => {
 
 					<div className="flex flex-col items-start gap-2 w-full">
 						<div className="flex justify-center items-center mb-3 gap-3 w-full md:flex-row">
-							<a href={createGoogleCalendarLink(event)} target="_blank" rel="noreferrer noopener">
-								<Button className="w-full max-w-52 mx-auto font-roboto font-extralight">
-									Agregar al calendario
+							{googleCalendarLink ? (
+								<a href={googleCalendarLink ?? ''} target="_blank" rel="noreferrer noopener">
+									<Button className="w-full max-w-52 mx-auto font-roboto font-extralight">
+										Agregar al calendario
+									</Button>
+								</a>
+							) : (
+								<Button className="w-full max-w-52 mx-auto font-roboto font-extralight" disabled>
+									No disponible
 								</Button>
-							</a>
+							)}
 						</div>
 						<p className="font-roboto text-center w-full font-thin text-base">Comparte en</p>
-						<EventShareButtons title={event.title} slug={event.slug} />
+						<EventShareButtons title={event?.title} slug={event?.slug} />
 					</div>
 				</div>
 			</div>

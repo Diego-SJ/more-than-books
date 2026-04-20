@@ -99,23 +99,28 @@ export async function copyToClipboard(text: string): Promise<void> {
 	}
 }
 
-export const createGoogleCalendarLink = (event: Event): string => {
-	const { title, date, location, content } = event
-	if (!date) return '#'
+export const createGoogleCalendarLink = (event: Event): string | null => {
+	try {
+		const { title, date, location, content } = event
+		if (!date) return null
 
-	const startDate = dayjs(date + ' ' + event?.time || '')
-	const endDate = dayjs(date + ' ' + event?.time || '').add(1, 'hour')
+		const startDate = dayjs(date + ' ' + event?.time || '')
+		const endDate = dayjs(date + ' ' + event?.time || '').add(1, 'hour')
 
-	const startDateISO = startDate.toISOString().replace(/-|:|\.\d\d\d/g, '')
-	const endDateISO = endDate.toISOString().replace(/-|:|\.\d\d\d/g, '')
+		const startDateISO = startDate?.toISOString()?.replace(/-|:|\.\d\d\d/g, '')
+		const endDateISO = endDate?.toISOString()?.replace(/-|:|\.\d\d\d/g, '')
 
-	const eventDetails = encodeURIComponent(`${content}`)
+		const eventDetails = encodeURIComponent(`${content}`)
 
-	const googleCalendarLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
-		title || 'Evento'
-	)}&dates=${startDateISO}/${endDateISO}&details=${
-		eventDetails || ''
-	}&location=${encodeURIComponent(location || 'Virtual')}`
+		const googleCalendarLink = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(
+			title || 'Evento'
+		)}&dates=${startDateISO}/${endDateISO}&details=${
+			eventDetails || ''
+		}&location=${encodeURIComponent(location || 'Virtual')}`
 
-	return googleCalendarLink
+		return googleCalendarLink
+	} catch (error) {
+		console.error('Error al crear el enlace del calendario: ', error)
+		return null
+	}
 }
