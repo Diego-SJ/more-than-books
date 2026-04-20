@@ -1,7 +1,8 @@
+import EventsPage from '@/components/event-page'
 import { getEventBySlug } from '@/lib/events'
 import { markdownToPlainText } from '@/lib/utils'
 import { Metadata } from 'next'
-import dynamic from 'next/dynamic'
+import { notFound } from 'next/navigation'
 import React from 'react'
 
 export async function generateMetadata({
@@ -49,12 +50,14 @@ export async function generateMetadata({
 	}
 }
 
-const EventsPage = dynamic(() => import('../../../components/event-page'), {
-	ssr: false
-})
+const EventPageDetail = async ({ params: { event_id } }: { params: { event_id: string } }) => {
+	const event = await getEventBySlug(event_id)
 
-const EventPageDetail = ({ params: { event_id } }: any) => {
-	return <EventsPage event_id={event_id} />
+	if (!event?.title) {
+		notFound()
+	}
+
+	return <EventsPage event={event} />
 }
 
 export default EventPageDetail

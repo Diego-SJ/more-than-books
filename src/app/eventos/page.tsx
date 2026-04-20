@@ -146,11 +146,11 @@ const EventsPage = () => {
 					<>
 						<div className="flex mt-10 mx-auto max-w-[1200px] px-6 sm:px-0">
 							<h3
-							// data-aos="fade-up"
-							// data-aos-duration="500"
-							// data-aos-delay="0"
-							// data-aos-offset="150"
-							// className="text-3xl font-bold"
+								// data-aos="fade-up"
+								// data-aos-duration="500"
+								// data-aos-delay="0"
+								// data-aos-offset="150"
+								className="text-3xl font-bold"
 							>
 								Próximos Eventos
 							</h3>
@@ -181,7 +181,7 @@ const EventsPage = () => {
 								data-aos="fade-up"
 								data-aos-duration="500"
 								data-aos-delay="0"
-								data-aos-offset="150"
+								data-aos-offset="-200"
 								className="text-3xl font-bold"
 							>
 								Eventos pasados
@@ -196,7 +196,7 @@ const EventsPage = () => {
 											data-aos="fade-up"
 											data-aos-duration="300"
 											data-aos-delay={index * 50}
-											data-aos-offset="150"
+											data-aos-offset="50"
 											className="w-full"
 										>
 											<EventCard {...event} />
